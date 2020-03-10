@@ -1,0 +1,4 @@
+Django==3.0.3
+django-crispy-forms==1.9.0
+django-phonenumber-field==4.0.0
+psycopg2==2.8.4

@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block title%}Edit Account - Saiki{% endblock %}
+
+{% block content %}
+    {% include 'includes/heading.html' with heading="Edit Account" %}
+    <div class="row">
+    <div class="col-6">
+    <form method="post" class="pt-4">
+        {% csrf_token %}
+        {{ form.display_name|as_crispy_field }}
+        <div class="row">
+            <div class="col-6">
+                {{ form.phone_number|as_crispy_field }}
+            </div>
+            <div class="col-6">
+                {{ form.telephone|as_crispy_field }}
+            </div>
+        </div>
+        {{ form.address_1|as_crispy_field }}
+        {{ form.address_2|as_crispy_field }}
+        <button type="submit" class="btn btn-success">Save changes</button>
+    </form>
+    </div>
+    </div>
+{% endblock %}
