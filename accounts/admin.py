@@ -4,6 +4,21 @@ from django.contrib.auth.admin import UserAdmin
 
 from .forms import CustomUserCreationForm, CustomUserChangeForm, EnrollmentActionForm
 from .models import Student, User, Guardian, PrevAcademicRecord
+from course.models import CourseEnrollment, CourseOffering
+from django.contrib import messages
+
+def enroll_student(modeladmin, request, queryset):
+    course = request.POST['course']
+    course_offered = CourseOffering.objects.only('id').get(id=course)
+
+    for student in queryset:
+        student = Student.objects.only('user').get(user__id=student.user.id)
+        CourseEnrollment.objects.get_or_create(
+            course_offered=course_offered,
+            student=student
+        )
+    messages.success(request,'Successfully enrolled {} students'.format(queryset.count()))
+enroll_student.short_description = 'Enroll students to course'
 
 class CustomUserAdmin(UserAdmin):
     model = User
@@ -27,11 +42,6 @@ class CustomUserAdmin(UserAdmin):
         }),
     )
 
-""" TODO: change this method later when course is created """
-def enroll_student(modeladmin, request, queryset):
-	course = request.POST['course']
-	queryset.update(course=course)
-enroll_student.short_description = 'Enroll students to course'
 
 class StudentAdmin(admin.ModelAdmin):
     list_display = ['user', 'display_name', 'email', 'department', 'semester', 'phone_number', 'CNIC']
