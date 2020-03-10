@@ -1,0 +1,18 @@
+{% extends "base_generic.html" %}
+
+{% block body %}
+    
+    {% include "includes/navbar.html" %}
+
+    <div class="container-fluid">
+        <div class="row">
+            {% include "includes/sidenav.html" %}
+            <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+                <div class="pt-4">
+                    {% block content %}{% endblock %}
+                </div>
+            </main>
+        <div>
+    </div>
+
+{% endblock %}
