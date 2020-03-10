@@ -56,7 +56,7 @@ class Student(models.Model):
     department = models.ForeignKey(Department, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.user.username
+        return '{} ({})'.format(self.display_name, self.department.code)
 
 # @receiver(post_save, sender=User)
 # def create_student_profile(sender, instance, created, **kwargs):
