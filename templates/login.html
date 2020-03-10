@@ -6,7 +6,9 @@
 {% block body %}
 <div class="d-flex" style="padding-top: 40px; padding-bottom: 40px">
 <form class="form-signin" method="post">
-    {% csrf_token %}
+
+  {% include 'includes/messages.html' %}
+  {% csrf_token %}
   <div class="text-center mb-4">
     <img class="mb-4" src="{% static 'images/google_logo.png' %}" alt="" height="72">
     <h1 class="h3 mb-3 font-weight-normal">Student Login</h1>
