@@ -27,7 +27,7 @@ class HomePageView(View):
         return render(request, self.template_name, { 'student': student })
 
 class ChangePasswordView(View):
-    template_name = 'change_password.html'
+    template_name = 'accounts/change_password.html'
 
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
@@ -58,7 +58,7 @@ class ChangePasswordView(View):
             return redirect('change_password')
 
 class AccountView(TemplateView):
-    template_name = 'profile.html'
+    template_name = 'accounts/profile.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -68,7 +68,7 @@ class AccountView(TemplateView):
         return context
 
 class AccountEditView(FormView):
-    template_name = 'edit.html'
+    template_name = 'accounts/edit.html'
 
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
@@ -107,7 +107,7 @@ class AccountEditView(FormView):
             return HttpResponse('submitted')
 
 class LoginView(View):
-    template_name = 'login.html'
+    template_name = 'accounts/login.html'
 
     def post(self, request):
         username = request.POST.get('username')

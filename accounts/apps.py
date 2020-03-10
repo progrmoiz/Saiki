@@ -3,4 +3,4 @@ from django.apps import AppConfig
 
 class AccountsConfig(AppConfig):
     name = 'accounts'
-    verbose_name = "Account Management"
+    verbose_name = "Accounts Management"
