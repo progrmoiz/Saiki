@@ -54,6 +54,7 @@ class Student(models.Model):
     guardian = models.ForeignKey(Guardian, on_delete=models.CASCADE)
 
     department = models.ForeignKey(Department, on_delete=models.CASCADE)
+    semester = models.IntegerField(_('semester'), default=1)
 
     def __str__(self):
         return '{} ({})'.format(self.display_name, self.department.code)

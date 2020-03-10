@@ -1,0 +1,8 @@
+.actions label:nth-of-type(2) {
+    display: none !important;
+    margin-left: 10px;
+}
+  
+.actions label:nth-of-type(2).show {
+    display: inline-block !important;
+  }
