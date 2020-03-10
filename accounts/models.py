@@ -5,6 +5,7 @@ from django.db.models.signals import post_save
 from django.utils.translation import ugettext as _
 from phonenumber_field.modelfields import PhoneNumberField
 import datetime
+from university.models import Department
 
 class User(AbstractUser):
     is_student = models.BooleanField('student status', default=False)
@@ -44,7 +45,7 @@ class Student(models.Model):
     gender = models.CharField(_('gender'), max_length=1, choices=GENDER_CHOICES)
     phone_number = PhoneNumberField(_('phone number'))
     telephone = PhoneNumberField(_('telephone'), blank=True)
-    
+
     address_1 = models.CharField(_("address"), max_length=128)
     address_2 = models.CharField(_("address cont'd"), max_length=128, blank=True)
 
@@ -52,8 +53,10 @@ class Student(models.Model):
     academic_records = models.OneToOneField(PrevAcademicRecord, on_delete=models.CASCADE)
     guardian = models.ForeignKey(Guardian, on_delete=models.CASCADE)
 
+    department = models.ForeignKey(Department, on_delete=models.CASCADE)
+
     def __str__(self):
-        return self.user.username   
+        return self.user.username
 
 # @receiver(post_save, sender=User)
 # def create_student_profile(sender, instance, created, **kwargs):
