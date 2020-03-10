@@ -1,7 +1,7 @@
 from django.db import models
+from accounts.models import Student, Teacher
 from university.models import Department, Term
 from django.utils.translation import ugettext as _
-from accounts.models import Student
 
 # Create your models here.
 class Course(models.Model):

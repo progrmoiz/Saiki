@@ -29,7 +29,10 @@ class StudentForm(forms.Form):
 
 """ TODO: change this later when course is created """
 class EnrollmentActionForm(ActionForm):
-    term = Term.objects.all()[:1].get()
+    try:
+        term = Term.objects.all()[:1].get()
+    except Term.DoesNotExist:
+        term = None
 
     course = forms.ChoiceField(
         label='Course:', 

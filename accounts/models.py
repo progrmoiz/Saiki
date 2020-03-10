@@ -31,6 +31,32 @@ class Guardian(models.Model):
     relationship = models.CharField(_('relationship'), max_length=255)
     occupation = models.CharField(_('occupation'), max_length=255)
 
+class Teacher(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
+    display_name = models.CharField(_('display name'), blank=True, max_length=128)
+    GENDER_CHOICES = (
+        ('M', 'Male'),
+        ('F', 'Female'),
+        ('O', 'Other'),
+        ('N', 'Prefer not to say')
+    )
+    gender = models.CharField(_('gender'), max_length=1, choices=GENDER_CHOICES)
+    TITLE_CHOICES = (
+        ('A', 'Professor Emeritus'),
+        ('B', 'Meritorious Professor/ Distinguished National Professor'),
+        ('C', 'Professor'),
+        ('D', 'Associate professor'),
+        ('E', 'Assistant professor'),
+        ('F', 'Lecturer'),
+        ('G', 'Lab Engineer'),
+        ('H', 'Research Associate'),
+    )
+    title = models.CharField(_('title'), max_length=1, choices=TITLE_CHOICES)
+    department = models.ForeignKey(Department, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return '{} {}'.format(dict(self.TITLE_CHOICES)[self.title], self.display_name)
+
 class Student(models.Model):
     # user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile', primary_key=True)
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
