@@ -7,7 +7,10 @@
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
     <h1 class="h2">Profile</h1>
     <div class="btn-toolbar mb-2 mb-md-0">
-        <a href="{% url 'edit_profile' %}" type="button" class="btn btn-sm btn-outline-secondary">Edit Profile</a>
+        <div class="btn-group mr-2">
+            <a href="{% url 'edit_profile' %}" type="button" class="btn btn-sm btn-outline-secondary">Edit Profile</a>
+            <a href="{% url 'change_password' %}" type="button" class="btn btn-sm btn-outline-secondary">Change Password</a>
+        </div>
     </div>
 </div>
 <div class="row">
