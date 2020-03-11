@@ -6,6 +6,7 @@ from django.utils.translation import ugettext as _
 from phonenumber_field.modelfields import PhoneNumberField
 import datetime
 from university.models import Department
+from django.utils.deconstruct import deconstructible
 import os
 
 class User(AbstractUser):
@@ -32,8 +33,24 @@ class Guardian(models.Model):
     relationship = models.CharField(_('relationship'), max_length=255)
     occupation = models.CharField(_('occupation'), max_length=255)
 
+@deconstructible
+class PathAndRename(object):
+
+    def __init__(self, sub_path):
+        self.path = sub_path
+
+    def __call__(self, instance, filename):
+        ext = filename.split('.')[-1]
+        if instance.user:
+            filename = '{}.{}'.format(instance.user, ext)
+        return os.path.join(self.path, filename)
+
+path_and_rename_student = PathAndRename("avatars/s")
+path_and_rename_teacher = PathAndRename("avatars/t")
+
 class Teacher(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
+    profile_picture = models.ImageField(upload_to=path_and_rename_teacher, blank=True, null=True)
     display_name = models.CharField(_('display name'), blank=True, max_length=128)
     GENDER_CHOICES = (
         ('M', 'Male'),
@@ -58,18 +75,10 @@ class Teacher(models.Model):
     def __str__(self):
         return '{} {}'.format(dict(self.TITLE_CHOICES)[self.title], self.display_name)
 
-def path_and_rename(path):
-    def wrapper(instance, filename):
-        ext = filename.split('.')[-1]
-        if instance.user:
-            filename = '{}.{}'.format(instance.user, ext)
-        return os.path.join(path, filename)
-    return wrapper
-
 class Student(models.Model):
     # user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile', primary_key=True)
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
-    profile_pic = models.ImageField(upload_to=path_and_rename('s'), blank=True, null=True)
+    profile_picture = models.ImageField(upload_to=path_and_rename_student, blank=True, null=True)
     display_name = models.CharField(_('display name'), blank=True, max_length=128)
     dob = models.DateField(_('date of birth'), blank=True)
     GENDER_CHOICES = (

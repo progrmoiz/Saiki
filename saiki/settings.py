@@ -142,5 +142,5 @@ MESSAGE_TAGS = {
     messages.ERROR: 'alert-danger',
 }
 
-MEDIA_URL = '/media/avatars/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media/avatars')
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
