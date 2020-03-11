@@ -17,6 +17,7 @@ class Course(models.Model):
 class CourseOffering(models.Model):
     term = models.ForeignKey(Term, on_delete=models.CASCADE)
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
+    teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE)
 
     class Meta:
         ordering = ['-term__year', '-term__half', 'course__code']

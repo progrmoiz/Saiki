@@ -41,5 +41,5 @@ class CourseEnrollmentAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Course, CourseAdmin)
-admin.site.register(CourseOffering, CourseOfferingAdmin)
+admin.site.register(CourseOffering)
 admin.site.register(CourseEnrollment, CourseEnrollmentAdmin)
