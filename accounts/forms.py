@@ -5,7 +5,8 @@ from django.core.validators import RegexValidator
 from django.forms import ModelForm
 from .models import User, Student
 from django.contrib.admin.helpers import ActionForm
-from university.models import Department
+from course.models import CourseOffering
+from university.models import Term
 
 class CustomUserCreationForm(UserCreationForm):
 
@@ -28,8 +29,13 @@ class StudentForm(forms.Form):
 
 """ TODO: change this later when course is created """
 class EnrollmentActionForm(ActionForm):
+    try:
+        term = Term.objects.all()[:1].get()
+    except Term.DoesNotExist:
+        term = None
+
     course = forms.ChoiceField(
         label='Course:', 
         required=False, 
-        choices=[(f.code, f.description) for f in Department.objects.all()]
+        choices=[(f.id, f) for f in CourseOffering.objects.filter(term=term)]
     )
