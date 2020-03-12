@@ -22,7 +22,11 @@ class HomePageView(View):
     template_name = 'home.html'
 
     def get(self, request):
-        student = Student.objects.get(user__username=request.user.username)
+        try:
+            student = Student.objects.get(user__username=request.user.username)
+        except Student.DoesNotExist:
+            student = None
+            messages.info(request, 'You are logged in with admin (not student).')
 
         return render(request, self.template_name, { 'student': student })
 
