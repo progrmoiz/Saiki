@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block title%}Announcement - Saiki{% endblock %}
+
+{% block content %}
+    <div>
+    {% include '../includes/heading.html' with heading=announcement.title %}
+    <table class="table table-borderless">
+        <tr>
+        <td class="w-25">By</td>
+        <td class="w-75"><b>{{ announcement.created_by.first_name}} {{announcement.created_by.last_name }}</b></td>
+        </tr>
+        <tr>
+        <td>Under</td>
+        <td><b>
+        {% if '1' in announcement.tags %}
+            University
+        {% elif '2' in announcement.tags and '3' in announcement.tags %}
+            {% for department in announcement.announcement_filters.department.all %}
+                {{ department }},
+            {% endfor %}
+            Semester {{ student.semester }}
+        {% elif '2' in announcement.tags %}
+            {% for department in announcement.announcement_filters.department.all %}
+                {{ department }}
+            {% endfor %}
+        {% elif '3' in announcement.tags %}
+            {{ announcement.announcement_filters.semesters }}
+        {% elif '4' in announcement.tags %}
+            {% for course in announcement.announcement_filters.course.all %}
+                {{ course.course.code }}
+            {% endfor %}
+        {% endif %}
+        </b>
+        </td>
+        </tr>
+        <tr>
+        <td class="w-25">Date</td>
+        <td class="w-75"><b>{{ announcement.start_date.date }}</b></td>
+        </tr>
+        <tr>
+        <td class="w-75" colspan="2">
+        {{announcement.description}}
+        </td>
+        </tr>
+    </table>
+    </div>
+{% endblock %}

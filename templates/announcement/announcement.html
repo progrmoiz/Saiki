@@ -14,7 +14,6 @@
         </tr>
     <tbody class="table-borderless">
         {% for a in announcement %}
-        
             {% if '1' in a.tags %}
                 <tr class="table-success"><td>University</td>
             {% elif '2' in a.tags and '3' in a.tags %}
@@ -39,7 +38,7 @@
                 {% endfor %}
                 </td>
             {% endif %}
-            <td>{{ a.title }}</td>
+            <td><a class="text-dark" href="{% url 'announcement_detail' a.pk %}" title="{{ a.title }}">{{ a.title }}</a></td>
             <td>{{ a.created_by.first_name}} {{a.created_by.last_name }}</td>
             <td>on {{ a.start_date.date }}</td>
         </tr>
