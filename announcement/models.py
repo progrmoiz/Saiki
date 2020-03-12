@@ -32,7 +32,7 @@ class AnnouncementFilter(models.Model):
 
     def get_courses(self):
         return ", ".join([str(p) for p in self.course.all()])
-    get_courses.short_description = 'Courses'
+    get_courses.short_description = 'Courses Enrolled'
 
     def __str__(self):
         return '[{}] {}'.format(self.id, self.title)
