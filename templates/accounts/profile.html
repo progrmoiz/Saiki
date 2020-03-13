@@ -1,5 +1,6 @@
 {% extends "../base.html" %}
 {% load static %}
+{% load avatar_tags %}
 
 {% block title%}Profile - Saiki{% endblock %}
 
@@ -15,11 +16,7 @@
 </div>
 <div class="row">
     <div class="col-3">
-        {% if student.profile_picture %}
-            <img src="{% get_media_prefix %}{{student.profile_picture}}" alt="Profile picture" class="img-thumbnail img-fluid">
-        {% else %}
-            <img src="{% get_media_prefix %}avatars/default/profile.png" alt="Profile picture" class="img-thumbnail img-fluid">
-        {% endif %}
+        {% avatar user 240 class="img-thumbnail img-fluid" id="user_avatar" %}
     </div>
     <div class="col-9">
         <table class="table table-bordered table-hover table-sm">
