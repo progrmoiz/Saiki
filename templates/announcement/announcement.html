@@ -1,7 +1,7 @@
 {% extends "base.html" %}
-
 {% block title%}Announcement - Saiki{% endblock %}
 
+{% comment %} 
 {% block content %}
     <div>
     {% include '../includes/heading.html' with heading="Announcement" %}
@@ -62,5 +62,42 @@
             <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
         {% endif %}
     </span>
+</div>
+{% endblock %} {% endcomment %}
+
+{% block content %}
+<!-- Header -->
+<div class="header bg-primary pb-6">
+    <div class="container-fluid">
+    <div class="header-body">
+        <div class="row align-items-center py-4">
+        <div class="col-lg-6 col-7">
+            <h6 class="h2 text-white d-inline-block mb-0">Announcement</h6>
+            <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
+            <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+                <li class="breadcrumb-item"><a href="#"><i class="fas fa-home"></i></a></li>
+                <li class="breadcrumb-item"><a href="#">Tables</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Tables</li>
+            </ol>
+            </nav>
+        </div>
+        </div>
+    </div>
+    </div>
+</div>
+
+
+
+{% regroup announcement by tags as announcement_list %}
+
+<div class="container-fluid mt--6">
+    <div class="row">
+    <div class="col">
+
+{% for tag in announcement_list %}
+  {% include './card.html' %}
+{% endfor %}
+    </div>
+    </div>
 </div>
 {% endblock %}

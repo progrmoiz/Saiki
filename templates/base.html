@@ -1,8 +1,7 @@
 {% extends "base_generic.html" %}
 
-{% block body %}
+{% comment %} {% block body %}
     
-    {% include "includes/navbar.html" %}
 
     <div class="container-fluid">
         <div class="row">
@@ -16,4 +15,14 @@
         <div>
     </div>
 
+{% endblock %} {% endcomment %}
+
+{% block body %}
+{% include "includes/sidenav.html" %}
+  <!-- Main content -->
+  <div class="main-content" id="panel">
+    <!-- Topnav -->
+    {% include "includes/navbar.html" %}
+    {% block content %}{% endblock %}
+  </div>
 {% endblock %}

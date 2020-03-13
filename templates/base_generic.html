@@ -1,5 +1,5 @@
 {% load static %}
-<!DOCTYPE html>
+{% comment %} <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -23,4 +23,46 @@
 
     <script src="{% static '/js/main.js' %}"></script>
 </body>
+</html> {% endcomment %}
+
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <!-- Favicon -->
+        <link href="{% static "img/brand/favicon.png" %}" rel="icon" type="image/png">
+
+        <!-- Fonts -->
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
+
+        <!-- Icons -->
+        <link href="{% static "/vendor/nucleo/css/nucleo.css" %}" rel="stylesheet">
+        <link href="{% static "/vendor/@fortawesome/fontawesome-free/css/all.min.css" %}" rel="stylesheet">
+
+        <!-- Argon CSS -->
+        <link type="text/css" href="{% static '/css/argon.min.css' %}" rel="stylesheet">
+        {% comment %} <link type="text/css" href="{% static '/css/main.css' %}" rel="stylesheet" > {% endcomment %}
+
+        <title>{% block title %}Saiki{% endblock %}</title>
+    </head>
+
+    <body>
+        {% block body %}{% endblock %}
+
+        <!-- Core -->
+        <script src="{% static "/vendor/jquery/dist/jquery.min.js" %}"></script>
+        <script src="{% static "/vendor/bootstrap/dist/js/bootstrap.bundle.min.js" %}"></script>
+        <script src="{% static "/vendor/js-cookie/js.cookie.js" %}"></script>
+        <script src="{% static "/vendor/jquery.scrollbar/jquery.scrollbar.min.js" %}"></script>
+        <script src="{% static "/vendor/jquery-scroll-lock/dist/jquery-scrollLock.min.js" %}"></script>
+  
+        <!-- Argon JS -->
+        <script src="{% static "/js/argon.js" %}"></script>
+        <script src="{% static "/js/demo.js" %}"></script>
+        {% comment %} <script src="{% static '/js/main.js' %}"></script> {% endcomment %}
+    </body>
+
 </html>

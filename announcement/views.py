@@ -16,7 +16,6 @@ class AnnouncementListView(ListView):
     model = Announcement
     context_object_name = 'announcement'
     ordering = ['tags', '-updated_at']
-    paginate_by = 12
 
     def get_context_data(self, **kwargs):
         context = super(AnnouncementListView,self).get_context_data(**kwargs)
@@ -38,7 +37,7 @@ class AnnouncementListView(ListView):
         a_s = a_d.filter(Q(announcement_filters__semesters=[student.semester]))
         a_c = a_d.filter(Q(announcement_filters__course__in=student_courses))
 
-        return a_g | a_s | a_c | a_d
+        return (a_g | a_s | a_c | a_d)
 
 class AnnouncementDetailView(DetailView):
     # template_name = 'announcement/announcement_detail.html'
