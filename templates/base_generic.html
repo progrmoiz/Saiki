@@ -1,26 +1,44 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<html>
 
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <link rel="stylesheet" href="{% static '/css/main.css' %}">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <title>{% block title %}Saiki{% endblock %}</title>
-</head>
+        <!-- Favicon -->
+        <link href="{% static "img/brand/favicon.png" %}" rel="icon" type="image/png">
 
-<body>
-    {% block body %}{% endblock %}
+        <!-- Fonts -->
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
 
-    <!-- Icons -->
-    <script src="https://unpkg.com/feather-icons/dist/feather.min.js"></script>
+        <!-- Icons -->
+        <link href="{% static "/vendor/nucleo/css/nucleo.css" %}" rel="stylesheet">
+        <link href="{% static "/vendor/@fortawesome/fontawesome-free/css/all.min.css" %}" rel="stylesheet">
 
-    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+        <link type="text/css" href="{% static '/css/argon.min.css' %}" rel="stylesheet">
+        <link type="text/css" href="{% static '/css/main.css' %}" rel="stylesheet" >
+        {% block style %}{% endblock %}
 
-    <script src="{% static '/js/main.js' %}"></script>
-</body>
+        <title>{% block title %}Saiki{% endblock %}</title>
+    </head>
+
+    <body {% block body__attributes %}{% endblock %}>
+        {% block body %}{% endblock %}
+
+        <!-- Core -->
+        {% block script %}{% endblock %}
+        <script src="{% static "/vendor/jquery/dist/jquery.min.js" %}"></script>
+        <script src="{% static "/vendor/bootstrap/dist/js/bootstrap.bundle.min.js" %}"></script>
+        <script src="{% static "/vendor/js-cookie/js.cookie.js" %}"></script>
+        <script src="{% static "/vendor/jquery.scrollbar/jquery.scrollbar.min.js" %}"></script>
+        <script src="{% static "/vendor/jquery-scroll-lock/dist/jquery-scrollLock.min.js" %}"></script>
+        {% block script_1 %}{% endblock %}
+
+        <script src="{% static "/js/argon.js" %}"></script>
+        <script src="{% static "/js/demo.js" %}"></script>
+        <script src="{% static '/js/main.js' %}"></script>
+        {% block script_2 %}{% endblock %}
+    </body>
+
 </html>

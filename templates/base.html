@@ -1,19 +1,11 @@
 {% extends "base_generic.html" %}
 
 {% block body %}
-    
+  {% include "includes/sidenav.html" %}
+  <!-- Main content -->
+  <div class="main-content" id="panel">
+    <!-- Topnav -->
     {% include "includes/navbar.html" %}
-
-    <div class="container-fluid">
-        <div class="row">
-            {% include "includes/sidenav.html" %}
-            <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
-                <div class="pt-4">
-                    {% include 'includes/messages.html' %}
-                    {% block content %}{% endblock %}
-                </div>
-            </main>
-        <div>
-    </div>
-
+    {% block content %}{% endblock %}
+  </div>
 {% endblock %}

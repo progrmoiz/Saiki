@@ -1,0 +1,18 @@
+
+Hope you enjoy your new logo, here are the people that
+made your beautiful logo happen :)
+font name: Barlow-ExtraBold
+font link: https://fonts.google.com/specimen/Barlow
+font author: Jeremy Tribby
+font author site: https://tribby.com/
+
+
+icon designer: frederick allen
+icon designer link: /frederickallen
+        
+
+fontColor: {"hex":"#FFFFFF"}
+bgColor: {"hex":"transparent"}
+iconColor: {"hex":"#FFFFFF"}
+
+      

@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% load static %}
+{% load avatar_tags %}
+
+{% block title%}Announcement - Saiki{% endblock %}
+{% block script_1 %}
+<script src="{% static "/vendor/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js" %}"></script>
+{% endblock %}
+
+{% block content %}
+<!-- Header -->
+{% include '../includes/header.html' with heading=announcement.title %}
+
+<div class="container-fluid mt--6">
+    <div class="row">
+        <div class="col">
+
+            <div class="card">
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <div>
+                            <table class="table align-items-center">
+                                <tbody class="list">
+                                    <tr>
+                                        <th class="w-25" scope="row">By</th>
+                                        <td class="w-75">
+                                            <span class="avatar avatar-sm rounded-circle" data-toggle="tooltip"
+                                                data-original-title="{{ announcement.created_by.first_name }} {{ announcement.created_by.last_name }}">
+                                                {% avatar announcement.created_by 36 %}
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th class="w-25" scope="row">Date</th>
+                                        <td class="w-75">
+                                            on {{ announcement.start_date.date }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th class="w-25" scope="row">Tags</th>
+                                        <td class="w-75">
+                                            <input type="text" class="form-control" value="
+                                        {% if '1' in announcement.tags %}
+                                            University
+                                        {% elif '3' in announcement.tags and '2' in announcement.tags %}
+                                            {{ student.department.description }},
+                                            Semester {{ student.semester }}
+                                        {% elif '2' in announcement.tags %}
+                                            {{ student.department.description }}
+                                        {% elif '3' in announcement.tags %}
+                                            Semester {{ student.semester }}
+                                        {% elif '4' in announcement.tags %}
+                                            {% for course in announcement.announcement_filters.course.all %}
+                                                {{ course.course.code }},
+                                            {% endfor %}
+                                        {% endif %}
+                                        " data-toggle="tags" disabled />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th class="w-25" scope="row">Status</th>
+                                        <td class="w-75">
+                                            <span class="badge badge-dot mr-4">
+                                                <i class="bg-success"></i>
+                                                <span class="status">active</span>
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    </thead>
+                            </table>
+                        </div>
+                    </div>
+                    <p class="card-text mb-4 mt-3">{{announcement.description}}</p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    {% endblock %}
