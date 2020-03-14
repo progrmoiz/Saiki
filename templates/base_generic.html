@@ -44,7 +44,7 @@
 
         <!-- Argon CSS -->
         <link type="text/css" href="{% static '/css/argon.min.css' %}" rel="stylesheet">
-        {% comment %} <link type="text/css" href="{% static '/css/main.css' %}" rel="stylesheet" > {% endcomment %}
+        <link type="text/css" href="{% static '/css/main.css' %}" rel="stylesheet" >
 
         <title>{% block title %}Saiki{% endblock %}</title>
     </head>
@@ -58,11 +58,12 @@
         <script src="{% static "/vendor/js-cookie/js.cookie.js" %}"></script>
         <script src="{% static "/vendor/jquery.scrollbar/jquery.scrollbar.min.js" %}"></script>
         <script src="{% static "/vendor/jquery-scroll-lock/dist/jquery-scrollLock.min.js" %}"></script>
+        {% block script %}{% endblock %}
   
         <!-- Argon JS -->
         <script src="{% static "/js/argon.js" %}"></script>
         <script src="{% static "/js/demo.js" %}"></script>
-        {% comment %} <script src="{% static '/js/main.js' %}"></script> {% endcomment %}
+        <script src="{% static '/js/main.js' %}"></script>
     </body>
 
 </html>

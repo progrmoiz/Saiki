@@ -1,27 +1,63 @@
 {% extends "../base.html" %}
 {% load crispy_forms_tags %}
+{% load avatar_tags %}
+{% load static %}
 
 {% block title%}Edit Account - Saiki{% endblock %}
 
 {% block content %}
-    {% include '../includes/heading.html' with heading="Edit Account" %}
+{% include '../includes/header_2.html' with heading="Edit Account"  heading_url_1='profile' heading_title_1='View Profile' heading_url_2='change_password' heading_title_2='Change Password' %}
+<div class="container-fluid mt--6">
     <div class="row">
-    <div class="col-6">
-    <form method="post" class="pt-4">
-        {% csrf_token %}
-        {{ form.display_name|as_crispy_field }}
-        <div class="row">
-            <div class="col-6">
-                {{ form.phone_number|as_crispy_field }}
-            </div>
-            <div class="col-6">
-                {{ form.telephone|as_crispy_field }}
+        <div class="col-xl-8">
+            <div class="card">
+                <div class="card-body">
+                    <form method="post" class="pt-4">
+                        {% csrf_token %}
+                        {{ form.display_name|as_crispy_field }}
+                        <div class="row">
+                            <div class="col-6">
+                                {{ form.phone_number|as_crispy_field }}
+                            </div>
+                            <div class="col-6">
+                                {{ form.telephone|as_crispy_field }}
+                            </div>
+                        </div>
+                        {{ form.address_1|as_crispy_field }}
+                        {{ form.address_2|as_crispy_field }}
+                        <button type="submit" class="btn btn-success">Save changes</button>
+                    </form>
+                </div>
+
             </div>
         </div>
-        {{ form.address_1|as_crispy_field }}
-        {{ form.address_2|as_crispy_field }}
-        <button type="submit" class="btn btn-success">Save changes</button>
-    </form>
+        <div class="col-xl-4">
+            <div class="card card-profile">
+                <img src="{% static 'img/theme/img-1-1000x600.jpg' %}" alt="Image placeholder" class="card-img-top">
+                <div class="row justify-content-center">
+                    <div class="col-lg-3 order-lg-2">
+                        <div class="card-profile-image">
+                            <a href="#">
+                                {% avatar user 134 class="rounded-circle" id="user_avatar" %}
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body mt-6">
+                    <div class="text-center">
+                        <h5 class="h3">
+                            {{ student.display_name }}
+                        </h5>
+                        <div class="h5 mt-4">
+                            Semester {{ student.semester }}
+                        </div>
+                        <div>
+                            {{ student.department.description }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    </div>
+</div>
 {% endblock %}
