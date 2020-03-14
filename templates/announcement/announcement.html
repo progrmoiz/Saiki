@@ -1,70 +1,6 @@
 {% extends "base.html" %}
 {% block title%}Announcement - Saiki{% endblock %}
 
-{% comment %} 
-{% block content %}
-    <div>
-    {% include '../includes/heading.html' with heading="Announcement" %}
-    <table class="table table-bordered table-rounded table-hover">
-        <tr>
-            <th>Tag</th>
-            <th class="w-50">Title</th>
-            <th>Announcement by</th>
-            <th>Date</th>
-        </tr>
-    <tbody class="table-borderless">
-        {% for a in announcement %}
-            {% if '1' in a.tags %}
-                <tr class="table-success"><td>University</td>
-            {% elif '2' in a.tags and '3' in a.tags %}
-                <tr><td>
-                {% for department in a.announcement_filters.department.all %}
-                    {{ department }},
-                {% endfor %}
-                Semester {{ student.semester }}</td>
-                </td>
-            {% elif '2' in a.tags %}
-                <tr class="table-warning"><td>
-                {% for department in a.announcement_filters.department.all %}
-                    {{ department }}
-                {% endfor %}
-                </td>
-            {% elif '3' in a.tags %}
-                <tr><td>{{ a.announcement_filters.semesters }}</td>
-            {% elif '4' in a.tags %}
-                <tr><td>
-                {% for course in a.announcement_filters.course.all %}
-                    {{ course.course.code }}
-                {% endfor %}
-                </td>
-            {% endif %}
-            <td><a class="text-dark" href="{% url 'announcement_detail' a.pk %}" title="{{ a.title }}">{{ a.title }}</a></td>
-            <td>{{ a.created_by.first_name}} {{a.created_by.last_name }}</td>
-            <td>on {{ a.start_date.date }}</td>
-        </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-    </div>
-    <div class="pagination">
-    <span class="step-links">
-        {% if page_obj.has_previous %}
-            <a href="?page=1">&laquo; first</a>
-            <a href="?page={{ page_obj.previous_page_number }}">previous</a>
-        {% endif %}
-
-        <span class="current">
-            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
-        </span>
-
-        {% if page_obj.has_next %}
-            <a href="?page={{ page_obj.next_page_number }}">next</a>
-            <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
-        {% endif %}
-    </span>
-</div>
-{% endblock %} {% endcomment %}
-
 {% block content %}
 <!-- Header -->
 {% include '../includes/header.html' with heading='Announcement' %}
@@ -75,9 +11,9 @@
     <div class="row">
     <div class="col">
 
-{% for tag in announcement_list %}
-  {% include './card.html' %}
-{% endfor %}
+    {% for tag in announcement_list %}
+        {% include './card.html' %}
+    {% endfor %}
     </div>
     </div>
 </div>
