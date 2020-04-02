@@ -20,14 +20,14 @@ from django.utils.translation import ugettext as _
 
 class HomePageView(View):
     template_name = 'home.html'
-    
+
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
         return super(HomePageView, self).dispatch(*args, **kwargs)
 
     def get(self, request):
         # add validation for just student login
-        
+
         return redirect('announcement')
 
 class ChangePasswordView(View):
@@ -68,7 +68,7 @@ class AccountView(TemplateView):
         context = super().get_context_data(**kwargs)
         context['is_account_page'] = 'active'
         context['student'] = get_current_student(self.request)
-
+        context['cgpa'] = get_current_student(self.request).get_cgpa()
         return context
 
 class ForgetPasswordView(TemplateView):
@@ -118,9 +118,9 @@ class LoginView(View):
 
     def post(self, request):
         # TODO: add remember me feature
-        
+
         username = request.POST.get('username')
-        password = request.POST.get('password') 
+        password = request.POST.get('password')
         user = authenticate(username=username, password=password)
         # TODO: only if user is student can logged in right now
         if user:

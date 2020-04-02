@@ -34,6 +34,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'result.apps.ResultConfig',
     'accounts.apps.AccountsConfig',
     'university.apps.UniversityConfig',
     'course.apps.CourseConfig',
@@ -46,6 +47,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'crispy_forms',
     'avatar',
+    'mathfilters',
+    'result.templatetags'
 ]
 
 MIDDLEWARE = [
