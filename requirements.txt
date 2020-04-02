@@ -5,8 +5,10 @@ Django==3.0.4
 django-appconf==1.0.3
 django-avatar==5.0.0
 django-crispy-forms==1.9.0
+django-mathfilters==1.0.0
 django-multiselectfield==0.1.12
 django-phonenumber-field==4.0.0
+olefile==0.46
 phonenumbers==8.11.5
 Pillow==7.0.0
 psycopg2==2.8.4

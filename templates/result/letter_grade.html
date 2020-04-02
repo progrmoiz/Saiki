@@ -1,0 +1,21 @@
+{% if grade.letter_grade == 4.00 %}
+    <td>A</td>
+{% elif grade.letter_grade == 3.67 %}
+    <td>A-</td>
+{% elif grade.letter_grade == 3.33 %}
+    <td>B+</td>
+{% elif grade.letter_grade == 3.00 %}
+    <td>B</td>
+{% elif grade.letter_grade == 2.67 %}
+    <td>B-</td>
+{% elif grade.letter_grade == 2.33 %}
+    <td>C+</td>
+{% elif grade.letter_grade == 2.00 %}
+    <td>C</td>
+{% elif grade.letter_grade == 1.67 %}
+    <td>D</td>
+{% elif grade.letter_grade == 0.00 %}
+    <td>F</td>
+{% else %}
+    <td>-</td>
+{% endif %}

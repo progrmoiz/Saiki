@@ -7,6 +7,8 @@ from phonenumber_field.modelfields import PhoneNumberField
 import datetime
 from university.models import Department
 from django.utils.deconstruct import deconstructible
+import result.models
+from result.utils import SemesterGradeHelper
 import os
 
 class User(AbstractUser):
@@ -84,9 +86,35 @@ class Student(models.Model):
     department = models.ForeignKey(Department, on_delete=models.CASCADE)
     semester = models.IntegerField(_('semester'), default=1)
 
+    is_graduated = models.BooleanField('Graduated', default=False)
+
     def __str__(self):
         return '{} ({})'.format(self.display_name, self.department.code)
 
+    def get_semester_grades(self):
+        return result.models.SemesterGrade.objects.filter(student=self).order_by('term')
+
+    def get_cgpa(self, hterm=None):
+        cumulative_total_get_gwa = 0
+        cumulative_total_credit_hour = 0
+        semester_grades = self.get_semester_grades()
+
+        # how many terms
+        if hterm == None:
+            index = 0
+        else:
+            for index, semester_grade in enumerate(semester_grades):
+                if semester_grade == hterm:
+                    break;
+
+        semester_grades = semester_grades[index:]
+        for semester_grade in semester_grades:
+            cumulative_total_get_gwa += SemesterGradeHelper.get_gwa(semester_grade)
+            cumulative_total_credit_hour += SemesterGradeHelper.get_total_credit_hour(semester_grade)
+        if (cumulative_total_credit_hour):
+            return round(cumulative_total_get_gwa / cumulative_total_credit_hour, 2)
+        else:
+            return 0.00
 
 
 # @receiver(post_save, sender=User)

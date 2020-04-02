@@ -35,7 +35,7 @@ class EnrollmentActionForm(ActionForm):
         term = None
 
     course = forms.ChoiceField(
-        label='Course:', 
-        required=False, 
+        label='Course:',
+        required=False,
         choices=[(f.id, f) for f in CourseOffering.objects.filter(term=term)]
     )

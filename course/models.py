@@ -1,6 +1,7 @@
 from django.db import models
 from accounts.models import Student, Teacher
 from university.models import Department, Term
+import result.models
 from django.utils.translation import ugettext as _
 
 # Create your models here.
@@ -31,3 +32,8 @@ class CourseEnrollment(models.Model):
 
     def __str__(self):
         return '{} enrolled in {}'.format(self.student, self.course_offered)
+
+    def save(self, *args, **kwargs):
+        grade = result.models.Grade(course_offering=self.course_offered, student=self.student)
+        grade.save()
+        super(CourseEnrollment, self).save(*args, **kwargs) # Call the real save() method
