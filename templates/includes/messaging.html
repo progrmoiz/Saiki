@@ -1,0 +1,26 @@
+{% if messages %}
+    <script>
+        const Toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+        },
+        });
+    </script>
+    {% for message in messages %}
+        {% if message.tags == 'alert-success'%}
+            <script>Toast.fire( 'Success', "{{ message }}", 'success' );</script>
+        {% elif message.tags == 'alert-info'%}
+            <script>Toast.fire( 'Info', "{{ message }}", 'info' );</script>
+        {% elif message.tags == 'alert-warning'%}
+            <script>Toast.fire( 'Warning', "{{ message }}", 'warning' );</script>
+        {% elif message.tags == 'alert-error'%}
+            <script>Toast.fire( 'Error', "{{ message }}", 'error' );</script>
+        {% endif %}
+    {% endfor %}
+{% endif %}

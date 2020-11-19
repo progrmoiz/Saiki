@@ -2559,7 +2559,7 @@ var OnScreen = (function() {
 //
 // Quill.js
 //
-
+/*
 'use strict';
 
 var QuillEditor = (function() {
@@ -2604,7 +2604,7 @@ var QuillEditor = (function() {
 	}
 
 })();
-
+*/
 //
 // Select2.js
 //

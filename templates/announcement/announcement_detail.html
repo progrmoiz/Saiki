@@ -43,10 +43,10 @@
                                         {% if '1' in announcement.tags %}
                                             University
                                         {% elif '3' in announcement.tags and '2' in announcement.tags %}
-                                            {{ student.department.description }},
+                                            {{ student.program.description }},
                                             Semester {{ student.semester }}
                                         {% elif '2' in announcement.tags %}
-                                            {{ student.department.description }}
+                                            {{ student.program.description }}
                                         {% elif '3' in announcement.tags %}
                                             Semester {{ student.semester }}
                                         {% elif '4' in announcement.tags %}
@@ -70,7 +70,8 @@
                             </table>
                         </div>
                     </div>
-                    <p class="card-text mb-4 mt-3">{{announcement.description}}</p>
+                    
+                    <div class="card-text mb-4 mt-3 text-sm">{{announcement.description|safe}}</div>
                 </div>
 
             </div>

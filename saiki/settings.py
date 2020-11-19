@@ -34,6 +34,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'assignment.apps.AssignmentConfig',
     'result.apps.ResultConfig',
     'accounts.apps.AccountsConfig',
     'university.apps.UniversityConfig',
@@ -48,8 +49,14 @@ INSTALLED_APPS = [
     'crispy_forms',
     'avatar',
     'mathfilters',
-    'result.templatetags'
+    'result.templatetags',
+    'notifications',
+    # 'dbbackup'
 ]
+
+# DBBACKUP_STORAGE = 'django.core.files.storage.FileSystemStorage'
+# print("ABBE PATH YE HAI", os.path.join(BASE_DIR, 'backup'))
+# DBBACKUP_STORAGE_OPTIONS = {'location': os.path.join(BASE_DIR, 'backup')}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -57,6 +64,8 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'accounts.middleware.AccountMiddleware',
+    'announcement.middleware.NotificationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
@@ -88,7 +97,7 @@ WSGI_APPLICATION = 'saiki.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'SaikiDB_4',
+        'NAME': 'Saiki_DB',
         'USER': 'postgres',
         'PASSWORD': '123456',
         'HOST': 'localhost',
@@ -149,3 +158,4 @@ MESSAGE_TAGS = {
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+DJANGO_NOTIFICATIONS_CONFIG = { 'USE_JSONFIELD': True }

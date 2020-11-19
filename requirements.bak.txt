@@ -1,0 +1,17 @@
+asgiref==3.2.5
+Babel==2.8.0
+certifi==2019.11.28
+Django==3.0.4
+django-appconf==1.0.3
+django-avatar==5.0.0
+django-crispy-forms==1.9.2
+django-mathfilters==1.0.0
+django-multiselectfield==0.1.12
+django-phonenumber-field==4.0.0
+olefile==0.46
+phonenumbers==8.11.5
+Pillow==7.0.0
+psycopg2==2.8.4
+pytz==2019.3
+six==1.14.0
+sqlparse==0.3.1

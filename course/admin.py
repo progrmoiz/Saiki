@@ -20,7 +20,7 @@ class CourseAdmin(admin.ModelAdmin):
     prereq_course_code.short_description = "Prereq Course Code"
 
 class CourseOfferingAdmin(admin.ModelAdmin):
-    pass
+    list_display = ["term", "course", "slug"]
 
 class CourseEnrollmentAdmin(admin.ModelAdmin):
     search_fields = [
@@ -32,14 +32,17 @@ class CourseEnrollmentAdmin(admin.ModelAdmin):
         'course_offered__course__code'
     ]
     list_filter = ['course_offered__course__department', 'course_offered__term']
-    list_display = ["course_offered", "student", "get_author"]
+    list_display = ["course_offered", "get_student_id", "get_author"]
     
     def get_author(self, obj):
         return obj.course_offered.course.department
     get_author.short_description = 'Department'
     get_author.admin_order_field = 'course_offered__course__department'
 
+    def get_student_id(self, obj):
+        return obj.student.user.username
+    get_student_id.short_description = 'Student ID'
 
 admin.site.register(Course, CourseAdmin)
-admin.site.register(CourseOffering)
+admin.site.register(CourseOffering, CourseOfferingAdmin)
 admin.site.register(CourseEnrollment, CourseEnrollmentAdmin)

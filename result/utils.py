@@ -13,7 +13,8 @@ class SemesterGradeHelper:
         grades = SemesterGradeHelper.get_grades(obj);
         for i, grade in enumerate(grades):
             unit = grade.course_offering.course.units
-            gp_earned.append((grade.course_offering, unit, grade.letter_grade * unit))
+            if grade.letter_grade != None:
+                gp_earned.append((grade.course_offering, unit, grade.letter_grade * unit))
         return gp_earned;
 
     # grade weight average as per selected term

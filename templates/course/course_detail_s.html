@@ -1,0 +1,35 @@
+<div class="card">
+    <div class="card-body">
+        <div class="table-responsive">
+            <div>
+                <table class="table align-items-center">
+                    <tbody class="list">
+                        <tr>
+                            <th class="w-25" scope="row">Instructor</th>
+                            <td class="w-75">
+                                {% comment %} <span class="avatar avatar-sm rounded-circle" >
+                                    {% avatar course.teacher 36 %}
+                                </span> {% endcomment %}
+                                {{ course.teacher }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th class="w-25" scope="row">Code</th>
+                            <td class="w-75">
+                                {{ course.course.code }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th class="w-25" scope="row">Term</th>
+                            <td class="w-75">
+                                {{ course.term }}
+                            </td>
+                        </tr>
+                        </thead>
+                </table>
+            </div>
+        </div>
+        <p class="card-text mb-4 mt-3">{{announcement.description}}</p>
+    </div>
+
+</div>

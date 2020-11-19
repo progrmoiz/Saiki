@@ -12,10 +12,10 @@
                         {% if '1' in tag.grouper %}
                         University
                         {% elif '3' in tag.grouper and '2' in tag.grouper %}
-                        {{ student.department.description }} >
+                        {{ student.program.description }} >
                         Semester {{ student.semester }}
                         {% elif '2' in tag.grouper %}
-                        {{ student.department.description }}
+                        {{ student.program.description }}
                         {% elif '3' in tag.grouper %}
                         Semester {{ student.semester }}
                         {% elif '4' in tag.grouper %}

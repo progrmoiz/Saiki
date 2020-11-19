@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block title%}My Courses - Saiki{% endblock %}
+
+{% block content %}
+<!-- Header -->
+{% if archives %}
+    {% include '../includes/header.html' with heading="Archived Courses" %}
+{% else %}
+    {% include '../includes/header.html' with heading="My Courses" %}
+{% endif %}
+
+{% if is_student %}
+    {% include './course_s.html' %}
+{% elif is_teacher %}
+    {% include './course_t.html' %}
+{% endif %}
+
+{% endblock %}

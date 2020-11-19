@@ -1,0 +1,41 @@
+<div class="header bg-primary pb-6">
+    <div class="container-fluid">
+    <div class="header-body">
+        <div class="row align-items-center py-4">
+            <div class="col-lg-6 col-7">
+                <h6 class="h2 text-white d-inline-block mb-0">{{ assignment.title }}</h6>
+                <h5 class="text-light">Due {{assignment.deadline|date:"F d, Y f A"}}</h5>
+            </div>
+
+    {% if is_student %}
+                {% if work.points < 0 %}
+            <div class="col-lg-6 col-5 text-right">
+            <form method="POST" id="form1" action="">
+                {% csrf_token %}
+                {% if turned %}
+                    <input type="hidden" id="turn" name="turn" value="False" />
+                    <button type="submit" class="btn btn-sm btn-neutral">
+                        {% if assignment.is_not_in_deadline %}
+                            Undo turn in late
+                        {% else %}
+                            Undo turn in
+                        {% endif %}
+                    </button>
+                {% else %}
+                    <input type="hidden" id="turn" name="turn" value="True" />
+                    <button type="submit" class="btn btn-sm btn-neutral">
+                        {% if assignment.is_not_in_deadline %}
+                            Turn in late
+                        {% else %}
+                            Turn in
+                        {% endif %}
+                    </button>
+                {% endif %}
+                </form>
+            </div>
+                {% endif %}
+    {% endif %}
+        </div>
+    </div>
+    </div>
+</div>

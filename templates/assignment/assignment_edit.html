@@ -1,0 +1,268 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title%}Assignments - Saiki{% endblock %}
+
+{% block script_1 %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/min/dropzone.min.js"></script>
+<script src="{% static "/vendor/quill/dist/quill.min.js" %}"></script>
+{% include '../includes/messaging.html' %}
+<script>
+
+'use strict';
+
+var Dropzones = (function() {
+
+	var $dropzone = $('[data-toggle="dropzone"]');
+	var $dropzonePreview = $('.dz-preview');
+
+	function init($this) {
+		var multiple = ($this.data('dropzone-multiple') !== undefined) ? true : false;
+		var preview = $this.find($dropzonePreview);
+		var currentFile = undefined;
+        var csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+
+		// Init options
+		var options = {
+			url: '{% url 'assignment_edit_upload' assignment.slug %}',
+			thumbnailWidth: null,
+			thumbnailHeight: null,
+			previewsContainer: preview.get(0),
+			previewTemplate: preview.html(),
+			maxFiles: (!multiple) ? 1 : null,
+            // autoProcessQueue: false,
+            headers: {
+                'X-CSRFToken': csrftoken
+            },
+			acceptedFiles: (!multiple) ? 'image/*' : null,
+			init: function() {
+				this.on("addedfile", function(file) {
+					if (!multiple && currentFile) {
+						this.removeFile(currentFile);
+					}
+					currentFile = file;
+				})
+			}
+		}
+		preview.html('');
+
+		$this.dropzone(options)
+	}
+
+	function globalOptions() {
+		Dropzone.autoDiscover = false;
+	}
+
+	if ($dropzone.length) {
+		globalOptions();
+		$dropzone.each(function() {
+			init($(this));
+		});
+	}
+})();
+
+var QuillEditor = (function() {
+
+  function debounce(callback, wait, immediate = false) {
+    let timeout = null 
+    
+    return function() {
+      const callNow = immediate && !timeout
+      const next = () => callback.apply(this, arguments)
+      
+      clearTimeout(timeout)
+      timeout = setTimeout(next, wait)
+
+      if (callNow) {
+        next()
+      }
+    }
+  }
+
+	// Variables
+
+	var $quill = $('[data-toggle="quill"]');
+  
+  var quill = new Quill($quill.get(0), {
+    modules: {
+      toolbar: [
+        ['bold', 'italic'],
+        ['link'],
+        [{
+          'list': 'ordered'
+        }, {
+          'list': 'bullet'
+        }]
+      ]
+    },
+    theme: 'snow'
+  });
+  quill.root.innerHTML = "{{ assignment.description|safe }}"
+
+
+  window.addEventListener("beforeunload", function (e) {
+    if (window.unsavedChanges) {
+      e.returnValue = 'Unsaved Changes!';
+      return 'Unsaved Changes!';
+    };
+    return;
+  });
+
+  var syncHtml = debounce(function() {
+    var contents = $(".ql-editor").html();
+    $('#description').val(contents);
+    console.log(contents)
+    window.unsavedChanges = false;
+  }, 500);
+
+  quill.on('text-change', function() {
+    window.unsavedChanges = true;
+    syncHtml();
+  });
+
+})();
+
+</script>
+{% endblock %}
+
+{% block style %}
+<link type="text/css" href="{% static '/vendor/quill/dist/quill.core.css' %}" rel="stylesheet" >
+<link type="text/css" href="{% static '/css/file-icon-square-o.min.css' %}" rel="stylesheet" >
+{% endblock %}
+
+{% block content %}
+
+
+<!-- Header -->
+{% url 'assignment_detail' assignment.slug as assignment_detail_url %}
+{% url 'assignment_delete' assignment.slug as assignment_delete_url %}
+{% include '../includes/header.html' with heading="Edit assignment" btn1_url=assignment_detail_url btn1_title="View" btn2_url=assignment_delete_url btn2_title="Delete" %}
+
+<div class="container-fluid mt--6">
+<div class="row">
+    <div class="col">
+<div class="card mb-4">
+        <!-- Card header -->
+        <div class="card-header">
+          <h3 class="mb-0">{{ assignment.title }} - {{ assignment.course_offering.course.code }} - {{ assignment.course_offering.term }}</h3>
+        </div>
+        <!-- Card body -->
+        <div class="card-body">
+          <!-- Form groups used in grid -->
+          <div class="row">
+            <div class="col-md-6">
+              <form action="" method="POST">
+                {% csrf_token %}
+                <div class="row">
+                <div class="col-12">
+                  <div class="form-group">
+                    <label class="form-control-label">Title</label>
+                    <input value="{{ assignment.title }}" type="text" class="form-control placeholder="One of three cols" name="title" required>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-12">
+                  <div class="form-group">
+                    <label class="form-control-label">Points</label>
+                    <input type="number" class="form-control" name="points" value="{{ assignment.points }}" min="0">
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-6">
+                  <div class="form-group">
+                    <label class="form-control-label">Deadline</label>
+                    <input type="date" class="form-control" name="date" value="{{ assignment.deadline|date:"Y-m-d" }}">
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="form-group">
+                    <label class="form-control-label invisible">Deadline</label>
+                    <input type="time" class="form-control" name="time" value="{{ assignment.deadline|date:"H:i" }}">
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-12">
+                  <div class="form-group">
+                    <label class="form-control-label" for="example4cols1Input">Instruction</label>
+                    <input name="description" type="hidden" id="description" value="{{ assignment.description }}">
+                    <div data-toggle="quill"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-12">
+                  <div class="form-group">
+                    <button class="btn btn-primary" type="submit">Save changes</button>
+                  </div>
+                </div>
+              </div>
+              </form>
+            </div>
+            <div class="col-md-6">
+                <div class="col-12">
+                  <div class="form-group">
+                    <form method="POST" enctype="multipart/form-data" id="form" action="">
+                      {% csrf_token %}
+                      <label class="form-control-label">Work material</label>
+<div
+            class="dropzone dropzone-multiple"
+            data-toggle="dropzone"
+            data-dropzone-multiple
+          >
+            <div class="fallback">
+              <div class="custom-file">
+                <input
+                  type="file"
+                  class="custom-file-input"
+                  name="file"
+                  id="file"
+                  multiple
+                />
+                <label class="custom-file-label" for="dropzoneMultipleUpload">Choose file</label>
+              </div>
+            </div>
+            <ul class="mt-2 material dz-preview dz-preview-multiple">
+              <li class="mb-2">
+                <a href="#" class="position-relative">
+                  <span class="fiv-sqo fiv-icon-blank"></span>
+                  <span class="text-sm font-weight-bold text-dark" data-dz-name>...</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </form>
+        <div class="dropzone">
+          <ul class="material">
+            {% for assignment_file in assignment_files %}
+
+            <li class="mb-2">
+              <a
+                href="{{ assignment_file.file.url }}"
+                target="_blank"
+                class="position-relative">
+                <span class="fiv-sqo fiv-icon-{{ assignment_file.extension }}"></span>
+                <span class="text-sm font-weight-bold text-dark" data-dz-name
+                  >{{ assignment_file.filename }}</span>
+                <span class="px-2 position-absolute right-0"
+                  ><i class="ni ni-fat-remove"></i></span>
+              </a>
+            </li>
+
+            {% endfor %}
+          </ul>
+        </div>
+                  </div>
+                </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+
+
+</div>
+{% endblock %}

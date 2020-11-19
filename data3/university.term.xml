@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="utf-8"?>
+<django-objects version="1.0"><object model="university.term" pk="1"><field name="half" type="IntegerField">2</field><field name="year" type="IntegerField">2020</field></object><object model="university.term" pk="2"><field name="half" type="IntegerField">2</field><field name="year" type="IntegerField">2019</field></object></django-objects>

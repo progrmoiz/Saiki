@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="utf-8"?>
+<django-objects version="1.0"><object model="assignment.assignmentworkfile" pk="1"><field name="file" type="FileField">assignment/cdb2127d-437a-4a29-86ab-dbba79b98a03/work/1000/DB-ASGN-TRIGGERS-18087_1.txt</field><field name="assignment_work" rel="ManyToOneRel" to="assignment.assignmentwork">1</field></object></django-objects>

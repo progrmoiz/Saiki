@@ -1,0 +1,1 @@
+[{"model": "assignment.assignmentwork", "pk": 1, "fields": {"assignment": 1, "student": 2, "submit_date": "2020-11-17T00:21:00.303Z", "submitted": true, "points": -1}}]

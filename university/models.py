@@ -20,6 +20,14 @@ class Department(models.Model):
     def __str__(self):
         return self.code
 
+class Program(models.Model):
+    code = models.CharField(_('code'), max_length=10, primary_key=True)
+    description = models.CharField(_('description'), max_length=128)
+    university = models.ForeignKey(University, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.code
+
 def year_choices():
     return [(r, r) for r in range(1984, datetime.date.today().year+1)]
 

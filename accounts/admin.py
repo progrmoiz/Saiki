@@ -44,8 +44,8 @@ class CustomUserAdmin(UserAdmin):
 
 
 class StudentAdmin(admin.ModelAdmin):
-    list_display = ['user', 'display_name', 'email', 'department', 'semester', 'phone_number', 'CNIC']
-    list_filter = ['gender', 'department', 'semester']
+    list_display = ['user', 'display_name', 'email', 'program', 'semester', 'phone_number', 'CNIC']
+    list_filter = ['gender', 'program', 'semester']
     search_fields = ['display_name', 'user__username', 'user__email', 'user__first_name', 'user__last_name']
 
     action_form = EnrollmentActionForm

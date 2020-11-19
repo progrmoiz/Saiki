@@ -1,0 +1,123 @@
+<div class="card">
+  <div class="card-body">
+    <div class="row">
+      <div class="col-lg-6">
+        <h4>Instruction</h4>
+        <p class="text-sm">
+          {% if assignment.description|length > 0 %} {{ assignment.description|safe }} {% else %}
+          <em>None</em>
+          {% endif %}
+        </p>
+        <h4 class="mt-3">Reference material</h4>
+        <ul class="material">
+          {% for material in materials %}
+          <li class="mb-2">
+            <a href="{{ material.file.url }}" target="_blank">
+              <span class="fiv-sqo fiv-icon-{{ material.extension }}"></span>
+              <span class="text-sm font-weight-bold text-dark"
+                >{{ material.filename }}</span
+              >
+            </a>
+          </li>
+          {% endfor %}
+        </ul>
+        <h4 class="mt-3">My work</h4>
+        <form method="POST" enctype="multipart/form-data" id="form" action="">
+          {% csrf_token %} {% if not turned %}
+          <div
+            class="dropzone dropzone-multiple"
+            data-toggle="dropzone"
+            data-dropzone-multiple
+          >
+            <div class="fallback">
+              <div class="custom-file">
+                <input
+                  type="file"
+                  class="custom-file-input"
+                  name="file"
+                  id="file"
+                  multiple
+                />
+                <label class="custom-file-label" for="dropzoneMultipleUpload">Choose file</label>
+              </div>
+            </div>
+            <ul class="mt-2 material dz-preview dz-preview-multiple">
+              <li class="mb-2">
+                <a href="#" class="position-relative">
+                  <span class="fiv-sqo fiv-icon-blank"></span>
+                  <span class="text-sm font-weight-bold text-dark" data-dz-name>...</span>
+                </a>
+                <div class="progress">
+                  <div class="progress-bar bg-default" role="progressbar" data-dz-uploadprogress>
+                  </div>
+                </div>
+              </li>
+
+              {% comment %}
+              <li class="list-group-item px-0 pb-3">
+                <div class="row align-items-center">
+                  <div class="col-auto">
+                    <div class="avatar">
+                      <span class="fiv-sqo fiv-icon-blank fiv-size-md"></span>
+                    </div>
+                  </div>
+                  <div class="col ml--3">
+                    <h4 class="mb-1" data-dz-name>...</h4>
+                    <p class="small text-muted mb-0" data-dz-size>...</p>
+                  </div>
+                  <div class="col-auto">
+                    <div class="dropdown">
+                      <a
+                        href="#"
+                        class="dropdown-ellipses dropdown-toggle"
+                        role="button"
+                        data-toggle="dropdown"
+                        aria-haspopup="true"
+                        aria-expanded="false"
+                      >
+                        <i class="fe fe-more-vertical"></i>
+                      </a>
+                      <div class="dropdown-menu dropdown-menu-right">
+                        <a href="#" class="dropdown-item" data-dz-remove>
+                          Remove
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </li>
+              {% endcomment %}
+            </ul>
+          </div>
+          {% endif %}
+        </form>
+        <div class="dropzone">
+          <ul class="material">
+            {% for work_file in work_files %}
+
+            <li class="mb-2">
+              <a
+                href="{{ work_file.file.url }}"
+                target="_blank"
+                class="position-relative">
+                <span class="fiv-sqo fiv-icon-{{ work_file.extension }}"></span>
+                <span class="text-sm font-weight-bold text-dark" data-dz-name
+                  >{{ work_file.filename }}</span>
+                <span class="px-2 position-absolute right-0"
+                  ><i class="ni ni-fat-remove"></i></span>
+              </a>
+            </li>
+
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+      <div class="col-2">
+        <h4>Points</h4>
+        <p class="text-sm">
+          {% if work.points < 0 %} {{ assignment.points }} point{{ assignment.points|pluralize }} possible {% else %} {{ work.points }}/{{ work.assignment.points }} point{{ work.assignment.points|pluralize }} {% endif %}
+        </p>
+      </div>
+    </div>
+  </div>
+</div>

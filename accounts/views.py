@@ -10,7 +10,7 @@ from .forms import StudentForm
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from .models import Student
-from .utils import get_current_student
+from .utils import get_current_student, is_student, is_teacher
 from django.views.generic.edit import FormView
 from django.contrib import messages
 from django.contrib.auth import update_session_auth_hash
@@ -27,6 +27,9 @@ class HomePageView(View):
 
     def get(self, request):
         # add validation for just student login
+
+        if is_teacher(request):
+            return redirect('course')
 
         return redirect('announcement')
 

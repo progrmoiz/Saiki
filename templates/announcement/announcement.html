@@ -1,19 +1,147 @@
 {% extends "base.html" %}
+{% load avatar_tags %}
+{% load static %}
+{% load notifications_tags %}
+
 {% block title%}Announcement - Saiki{% endblock %}
 
 {% block content %}
 <!-- Header -->
-{% include '../includes/header.html' with heading='Announcement' %}
+{% include '../includes/header.html' with heading='Announcements' %}
+{% comment %} <script src="{% static 'notifications/notify.js' %}" type="text/javascript"></script> {% endcomment %}
 
-{% regroup announcement by tags as announcement_list %}
+<script>
+var notify_badge_class;
+var notify_menu_class;
+var notify_api_url;
+var notify_fetch_count;
+var notify_unread_url;
+var notify_mark_all_unread_url;
+var notify_refresh_period = 15000;
+var consecutive_misfires = 0;
+var registered_functions = [];
+
+function fill_notification_badge(data) {
+    var badges = document.getElementsByClassName(notify_badge_class);
+    if (badges) {
+        for(var i = 0; i < badges.length; i++){
+            badges[i].innerHTML = data.unread_count;
+        }
+    }
+}
+
+function fill_notification_list(data) {
+    var menus = document.getElementsByClassName(notify_menu_class);
+    if (menus) {
+        var messages = data.unread_list.map(function (item) {
+            console.log(item)
+            var message = "";
+            if(typeof item.actor !== 'undefined'){
+                message = item.actor;
+            }
+            if(typeof item.verb !== 'undefined'){
+                message = message + " " + item.verb;
+            }
+            if(typeof item.target !== 'undefined'){
+                message = message + " " + item.target;
+            }
+            if(typeof item.timestamp !== 'undefined'){
+                message = message + " " + item.timestamp;
+            }
+            return '<li>' + message + '</li>';
+        }).join('')
+
+        for (var i = 0; i < menus.length; i++){
+            menus[i].innerHTML = messages;
+        }
+    }
+}
+
+function register_notifier(func) {
+    registered_functions.push(func);
+}
+
+function fetch_api_data() {
+    if (registered_functions.length > 0) {
+        //only fetch data if a function is setup
+        var r = new XMLHttpRequest();
+        r.addEventListener('readystatechange', function(event){
+            if (this.readyState === 4){
+                if (this.status === 200){
+                    consecutive_misfires = 0;
+                    var data = JSON.parse(r.responseText);
+                    registered_functions.forEach(function (func) { func(data); });
+                }else{
+                    consecutive_misfires++;
+                }
+            }
+        })
+        r.open("GET", notify_api_url+'?max='+notify_fetch_count, true);
+        r.send();
+    }
+    if (consecutive_misfires < 10) {
+        setTimeout(fetch_api_data,notify_refresh_period);
+    } else {
+        var badges = document.getElementsByClassName(notify_badge_class);
+        if (badges) {
+            for (var i = 0; i < badges.length; i++){
+                badges[i].innerHTML = "!";
+                badges[i].title = "Connection lost!"
+            }
+        }
+    }
+}
+
+setTimeout(fetch_api_data, 1000);
+</script>
+{% register_notify_callbacks callbacks='fill_notification_list,fill_notification_badge' %}
 
 <div class="container-fluid mt--6">
     <div class="row">
     <div class="col">
 
-    {% for tag in announcement_list %}
-        {% include './card.html' %}
-    {% endfor %}
+<div class="card">
+        <!-- Card header -->
+        <div class="card-header border-0">
+          <div class="row">
+            <div class="col-6">
+              <h3 class="mb-0">Announcements</h3>
+            </div>
+          </div>
+        </div>
+        <div class="table-responsive">
+          <table class="table align-items-center table-flush table-hover">
+            <thead class="thead-light">
+              <tr>
+                <th class="w-10">Author</th>
+                <th class="w-auto">Title</th>
+                <th class="w-10">Date</th>
+              </tr>
+            </thead>
+            <tbody>
+{% for a in announcement %}
+
+              <tr>
+                <td class="table-user">
+    {% avatar a.created_by 32 class="avatar avatar-xs rounded-circle mr-2" %}
+    <b>{{ a.created_by }}</b>
+                </td>
+                <td>
+    <a href={% url 'announcement_detail' a.pk %} class="font-weight-bold">
+        {{ a.title }}
+    </a>
+                </td>
+                <td>
+                    <span class="text-muted">{{ a.start_date.date|date:"N d, Y" }}</span>
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+
     </div>
     </div>
 </div>

@@ -49,7 +49,7 @@ class ResultListView(ListView):
 class ViewMyGrades(ListView):
     model = SemesterGrade
     template_name='result/my_grades.html'
-    semester_grades = None;
+    semester_grades = None
     term = None
 
     def get_context_data(self, **kwargs):

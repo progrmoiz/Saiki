@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block title%}Assignments - Saiki{% endblock %}
+
+{% block script_1 %}
+
+{% include '../includes/messaging.html' %}
+
+{% endblock %}
+
+{% block content %}
+
+{% url 'notifications:all' as notifcations_all_url %}
+{% url 'notifications:unread' as notifications_unread_url %}
+
+<!-- Header -->
+{% ifequal request.path notifications_unread_url %}
+  {% include '../includes/header.html' with heading="Unread notifcations" btn1_url=notifcations_all_url btn1_title='All' %}
+{% else %}
+  {% include '../includes/header.html' with heading="All notifcations" btn1_url=notifications_unread_url btn1_title='Unread' %}
+{% endifequal %}
+
+<div class="container-fluid mt--6">
+    <div class="row">
+    <div class="col">
+<div class="card">
+  
+        <!-- Card header -->
+        <div class="card-header border-0">
+          <div class="row">
+            <div class="col-6">
+              <h3 class="mb-0"></h3>
+            </div>
+            <div class="col-6 text-right">
+              <a href="{% url 'notifications:mark_all_as_read' %}" class="btn btn-sm btn-primary btn-round">
+                <span class="btn-inner--text">Mark all as read</span>
+              </a>
+            </div>
+          </div>
+        </div>
+        <!-- Light table -->
+        <div class="table-responsive">
+          <table class="table align-items-center table-flush table-hover">
+            <thead class="thead-light">
+              <tr>
+                <th class"w-auto">Message</th>
+                <th class="w-10"></th>
+                <th class="w-10"></th>
+              </tr>
+            </thead>
+            <tbody>
+            {% for notice in notifications %}
+                {% include 'notifications/notice.html' %}
+            {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    </div>
+</div>
+{% endblock %}

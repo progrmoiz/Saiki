@@ -4,12 +4,13 @@ from django.dispatch import receiver
 from django.db.models.signals import post_save
 from django.utils.translation import ugettext as _
 from phonenumber_field.modelfields import PhoneNumberField
-import datetime
-from university.models import Department
 from django.utils.deconstruct import deconstructible
+import os
+import datetime
+
+import university.models
 import result.models
 from result.utils import SemesterGradeHelper
-import os
 
 class User(AbstractUser):
     is_student = models.BooleanField('student status', default=False)
@@ -56,7 +57,7 @@ class Teacher(models.Model):
         ('H', 'Research Associate'),
     )
     title = models.CharField(_('title'), max_length=1, choices=TITLE_CHOICES)
-    department = models.ForeignKey(Department, on_delete=models.CASCADE)
+    department = models.ForeignKey('university.Department', on_delete=models.CASCADE)
 
     def __str__(self):
         return '{} {}'.format(dict(self.TITLE_CHOICES)[self.title], self.display_name)
@@ -83,13 +84,13 @@ class Student(models.Model):
     academic_records = models.OneToOneField(PrevAcademicRecord, on_delete=models.CASCADE)
     guardian = models.ForeignKey(Guardian, on_delete=models.CASCADE)
 
-    department = models.ForeignKey(Department, on_delete=models.CASCADE)
+    program = models.ForeignKey('university.Program', on_delete=models.CASCADE)
     semester = models.IntegerField(_('semester'), default=1)
 
     is_graduated = models.BooleanField('Graduated', default=False)
 
     def __str__(self):
-        return '{} ({})'.format(self.display_name, self.department.code)
+        return '{}'.format(self.user)
 
     def get_semester_grades(self):
         return result.models.SemesterGrade.objects.filter(student=self).order_by('term')

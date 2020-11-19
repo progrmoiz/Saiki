@@ -7,7 +7,7 @@ from django.urls import reverse
 
 class AnnouncementAdmin(admin.ModelAdmin):
     search_fields = ['title']
-    list_filter = ['active', 'is_global', 'announcement_filters__department', 'announcement_filters__course', 'announcement_filters__semesters']
+    list_filter = ['active', 'is_global', 'announcement_filters__program', 'announcement_filters__course', 'announcement_filters__semesters']
     list_display = ["id", "created_by", "title", "start_date", "end_date", "is_global", "active", "get_announcement_filters", "tags", "updated_at"]
 
     def get_display_link(self, obj):
@@ -31,8 +31,8 @@ class AnnouncementAdmin(admin.ModelAdmin):
 
 class AnnouncementFilterAdmin(admin.ModelAdmin):
     search_fields = ['title']
-    list_filter = ['department', 'course', 'semesters']
-    list_display = ["id", "title", "get_departments", "get_courses", "semesters"]
+    list_filter = ['program', 'course', 'semesters']
+    list_display = ["id", "title", "get_programs", "get_courses", "semesters"]
 
 
 admin.site.register(AnnouncementFilter, AnnouncementFilterAdmin)

@@ -1,0 +1,109 @@
+<div class="row">
+        <div class="col">
+            <div class="card">
+                <div class="card-header border-0">
+                    <h3 class="mb-0">
+                        Assigned
+                    </h3>
+                </div>
+                <div class="table-responsive">
+                    <table class="table align-items-center table-flush table-hover">
+                        <thead class="thead-light">
+                            <tr>
+                                <th scope="col" class="w-50">Assignment</th>
+                                <th scope="col" class="w-30">Due Date</th>
+                                <th scope="col" class="w-10">Points</th>
+                                {% if not course %}
+                                <th scope="col" class="w-10">Course Code</th>
+                                {% endif %}
+                                <th scope="col" class="w-10">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for assignment in assignments %}
+                                {% if assignment.is_not_in_deadline %}
+                                    <tr class="table-danger">
+                                {% else %}
+                                    <tr>
+                                {% endif %}
+                                    <td class="font-weight-bold">
+                                    <a class="text-dark" href="{% url 'assignment_detail' assignment.slug %}">{{ assignment.title }}</a>
+                                    </td>
+                                    <td>Due {{ assignment.deadline|date:"F d, Y f A" }}</td>
+                                    {% if assignment.points == 0 %}
+                                    <td>No points</td>
+                                    {% else %}
+                                    <td>{{ assignment.points }} point{{ assignment.points|pluralize }}</td>
+                                    {% endif %}
+                                    {% if not course %}
+                                    <td>{{ assignment.course_offering.course.code }}</td>
+                                    {% endif %}
+                                    {% if assignment.is_not_in_deadline %}
+                                        <td class="text-danger font-weight-bold">Past due</td>
+                                    {% else %}
+                                        <td class="font-weight-bold">Turn in</td>
+                                    {% endif %}
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+    </div>
+</div>
+
+    <div class="row">
+        <div class="col">
+            <div class="card bg-default">
+                <div class="card-header bg-transparent border-0">
+                    <h3 class="text-white mb-0">
+                        Completed
+                    </h3>
+                </div>
+                <div class="table-responsive">
+                    <table class="table align-items-center table-dark table-flush">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th scope="col" class="w-50">Assignment</th>
+                                <th scope="col" class="w-30">Submission Date</th>
+                                <th scope="col" class="w-10">Points</th>
+                                {% if not course %}
+                                <th scope="col" class="w-10">Course Code</th>
+                                {% endif %}
+                                <th scope="col" class="w-10">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for as in assignments_submitted %}
+                                {% if assignment.is_not_in_deadline %}
+                                    <tr class="table-danger">
+                                {% else %}
+                                    <tr>
+                                {% endif %}
+                                    <td class="font-weight-bold">
+                                        <a class="text-white" href="{% url 'assignment_detail' as.assignment.slug %}">{{ as.assignment.title }}</a>
+                                    </td>
+                                    <td>On {{ as.submit_date|date:"F d, Y f A" }}</td>
+                                    {% if as.assignment.points == 0 %}
+                                    <td>No points</td>
+                                    {% elif as.points < 0 %}
+                                    <td>{{ as.assignment.points }} point{{ as.assignment.points|pluralize }}</td>
+                                    {% else %}
+                                    <td>{{ as.points }}/{{ as.assignment.points }} point{{ as.assignment.points|pluralize }}</td>
+                                    {% endif %}
+                                    {% if not course %}
+                                    <td>{{ as.assignment.course_offering.course.code }}</td>
+                                    {% endif %}
+                                    {% if as.is_submitted_on_time %}
+                                        <td class="text-success font-weight-bold">Submitted</td>
+                                    {% else %}
+                                        <td class="text-danger font-weight-bold">Late</td>
+                                    {% endif %}
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>

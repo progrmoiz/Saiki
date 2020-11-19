@@ -6,7 +6,8 @@
 
 {% block content %}
 <!-- Header -->
-{% include '../includes/header_1.html' with heading=semester_grade.term|addstr:student.department.university.name heading_url_1='my_grades' heading_title_1='View My Grades' %}
+{% url 'my_grades' as my_grades_url %}
+{% include '../includes/header.html' with heading=grades.first.course_offering.term|addstr:" | "|addstr:student.program.university.name btn1_url=my_grades_url btn1_title='View My Grades' %}
 
 <div class="container-fluid mt--6">
     <div class="row">
@@ -34,9 +35,9 @@
                                 <td>{{ grade.course_offering.course.code }}</td>
                                 <td>{{ grade.course_offering.course.description }}</td>
                                 <td>{{ grade.course_offering.course.units }}</td>
-                                {% include './letter_grade.html' %}
+                                <td>{% include './letter_grade.html' %}</td>    
 
-                                {% if grade.letter_grade %}
+                                {% if grade.letter_grade != None %}
                                 <td>{{ grade.letter_grade|mul:grade.course_offering.course.units }}</td>
                                 {% else %}
                                 <td>-</td>

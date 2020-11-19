@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title%}Announcement - Saiki{% endblock %}
+
+{% block content %}
+<!-- Header -->
+{% include '../includes/header.html' with heading='Announcement' %}
+
+{% regroup announcement by tags as announcement_list %}
+
+<div class="container-fluid mt--6">
+    <div class="row">
+    <div class="col">
+
+    {% for tag in announcement_list %}
+        {% include './card.html' %}
+    {% endfor %}
+    </div>
+    </div>
+</div>
+{% endblock %}

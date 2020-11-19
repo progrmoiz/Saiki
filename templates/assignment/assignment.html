@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% load result_extras %}
+
+{% block title%}Assignments - Saiki{% endblock %}
+
+{% block script_1 %}
+
+{% include '../includes/messaging.html' %}
+
+{% endblock %}
+
+{% block content %}
+
+<!-- Header -->
+{% if course %}
+
+{% if is_student %}
+
+{% include '../includes/header.html' with heading="Assignment - "|addstr:course.course.code %}
+
+{% elif is_teacher %}
+
+{% url 'assignment_create' course.slug as assignment_create_url %}
+{% include '../includes/header.html' with heading="Assignment - "|addstr:course.course.code sep='' btn1_url=assignment_create_url btn1_title="Create" %}
+
+{% endif %}
+
+{% else %}
+
+{% include '../includes/header.html' with heading="Assignments" %}
+
+{% endif %}
+
+<div class="container-fluid mt--6">
+    {% if is_student %}
+    {% include './assignment_s.html' %}
+    {% elif is_teacher %}
+    {% include './assignment_t.html' %}
+    {% endif %}
+</div>
+{% endblock %}

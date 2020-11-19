@@ -1,10 +1,12 @@
 from django.db import models
-from accounts.models import User
-from university.models import Department
-from course.models import CourseOffering
 from django.utils.translation import ugettext as _
 from django import forms
 from multiselectfield import MultiSelectField
+
+
+import accounts.models
+import university.models
+import course.models
 
 # https://stackoverflow.com/questions/4670783/make-the-user-in-a-model-default-to-the-current-user
 
@@ -12,8 +14,8 @@ from multiselectfield import MultiSelectField
 
 class AnnouncementFilter(models.Model):
     title = models.CharField(_('title'), max_length=128, default='Untitled Filter')
-    department = models.ManyToManyField(Department)
-    course = models.ManyToManyField(CourseOffering, blank=True, help_text="<b>Remember course and semester must not be selected at same time.</b>")
+    program = models.ManyToManyField('university.Program')
+    course = models.ManyToManyField('course.CourseOffering', blank=True, help_text="<b>Remember course and semester must not be selected at same time.</b>")
     SEMESTER_CHOICES = (
         (1, _('Semester 1')),
         (2, _('Semester 2')),
@@ -26,9 +28,9 @@ class AnnouncementFilter(models.Model):
     )
     semesters = MultiSelectField(_('semesters'), choices=SEMESTER_CHOICES, blank=True, null=True, help_text="<b>Remember course and semester must not be selected at same time</b>")
 
-    def get_departments(self):
-        return ", ".join([p.code for p in self.department.all()])
-    get_departments.short_description = 'Departments'
+    def get_programs(self):
+        return ", ".join([p.code for p in self.program.all()])
+    get_programs.short_description = 'Programs'
 
     def get_courses(self):
         return ", ".join([str(p) for p in self.course.all()])
@@ -41,7 +43,7 @@ class Announcement(models.Model):
     title = models.CharField(_('title'), max_length=128)
     description = models.TextField(_('description'), blank=True, null=True)
 
-    created_by = models.ForeignKey(User, on_delete=models.CASCADE)
+    created_by = models.ForeignKey("accounts.User", on_delete=models.CASCADE)
 
     start_date = models.DateTimeField(_('start date'))
     end_date = models.DateTimeField(_('end date'))
@@ -55,7 +57,7 @@ class Announcement(models.Model):
 
     TAGS_CHOICES = (
         (1, _('University Specific')),
-        (2, _('Department Specifc')),
+        (2, _('Program Specifc')),
         (3, _('Semester Specifc')),
         (4, _('Course Specifc')),
     )
