@@ -23,18 +23,19 @@
     <div class="col">
       <div class="card">
         <div class="card-header">
-            <h3 class="mb-0 position-relative d-flex">
-            <span class="">{{ student_.user.first_name }} {{ student_.user.last_name }} - {{ student_.user.username }}</span>
-            {% if assignment_work.is_submitted_on_time %}
-            <span class="text-xs position-absolute right-0 text-gray font-weight-bold">
-            Submitted on {{ assignment_work.submit_date|date:"F d, Y f A" }}</span>
-            {% else %}
-            <span class="text-xs position-absolute right-0 text-danger font-weight-bold">
-            Submitted on {{ assignment_work.submit_date|date:"F d, Y f A" }} (Late)</span>
-            {% endif %}    
-            </span>
-            </h3>
-            
+            <div class="d-flex mb-0 position-relative">
+              <h3 class="mb-0">
+                <span class="">{{ student_.user.first_name }} {{ student_.user.last_name }} - {{ student_.user.username }}</span>
+              </h3>
+              {% if assignment_work.is_submitted_on_time %}
+              <span class="text-xs position-absolute right-0 text-gray font-weight-bold">
+              Submitted on {{ assignment_work.submit_date|date:"F d, Y f A" }}</span>
+              {% else %}
+              <span class="text-xs position-absolute right-0 text-danger font-weight-bold">
+              Submitted on {{ assignment_work.submit_date|date:"F d, Y f A" }} (Late)</span>
+              {% endif %}    
+              </span>
+            </div>
         </div>
         <div class="card-body">
           <div class="row">
@@ -86,7 +87,7 @@
                 {% endfor %}
               </ul>
             </div>
-            <div class="col-6">
+            <div class="col-lg-6">
               <h4>Points</h4>
               {% if assignment.points != 0 %}
               <form action="" method="POST">

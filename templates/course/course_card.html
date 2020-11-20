@@ -8,7 +8,6 @@
         <a href="{% url 'course_detail' course_off.slug %}" class="btn btn-sm btn-primary">View Course </a>
         <a class="position-absolute right-0 p-1 text-sm text-gray" href="#" id="dropdown-{{ course_off.course.code }}" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <i class="fas fa-ellipsis-h"></i>
-            <span class="nav-link-inner--text d-lg-none">Menu</span>
         </a>
         <div class="dropdown-menu dropdown-menu-left" aria-labelledby="dropdown-{{ course_off.slug }}">
             {% include './course_hide_form.html' %}

@@ -112,7 +112,7 @@
           </ul>
         </div>
       </div>
-      <div class="col-2">
+      <div class="col-lg-2 col-md-12">
         <h4>Points</h4>
         <p class="text-sm">
           {% if work.points < 0 %} {{ assignment.points }} point{{ assignment.points|pluralize }} possible {% else %} {{ work.points }}/{{ work.assignment.points }} point{{ work.assignment.points|pluralize }} {% endif %}
