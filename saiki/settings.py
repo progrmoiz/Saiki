@@ -30,6 +30,7 @@ DEBUG = True
 
 ALLOWED_HOSTS =  ['localhost', '127.0.0.1', '[::1]', '.herokuapp.com']
 
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Application definition
 
@@ -60,6 +61,7 @@ INSTALLED_APPS = [
 # DBBACKUP_STORAGE_OPTIONS = {'location': os.path.join(BASE_DIR, 'backup')}
 
 MIDDLEWARE = [
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
