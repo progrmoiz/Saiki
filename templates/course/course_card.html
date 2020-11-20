@@ -1,0 +1,19 @@
+<div class="col-lg-3">
+<div class="card">
+    {% comment %} <img class="card-img-top" src="https://dummyimage.com/600x400/4e4c57/ffffff&text={{course_off.course.code}}" alt="Image placeholder"> {% endcomment %}
+    <div class="card-body">
+        <h3 class="card-title mb-3">{{ course_off.course.description }}</h3>
+        <h5 class="card-text mb-4">{{ course_off.course.code }} - {{ course_off.term }}</h5>
+        <div class="position-relative">
+        <a href="{% url 'course_detail' course_off.slug %}" class="btn btn-sm btn-primary">View Course </a>
+        <a class="position-absolute right-0 p-1 text-sm text-gray" href="#" id="dropdown-{{ course_off.course.code }}" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="fas fa-ellipsis-h"></i>
+            <span class="nav-link-inner--text d-lg-none">Menu</span>
+        </a>
+        <div class="dropdown-menu dropdown-menu-left" aria-labelledby="dropdown-{{ course_off.slug }}">
+            {% include './course_hide_form.html' %}
+        </div>
+        </div>
+    </div>
+</div>
+</div>

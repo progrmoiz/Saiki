@@ -1,16 +1,7 @@
 <div class="container-fluid mt--6">
     <div class="row">
         {% for course_off in courses_offering %}
-            <div class="col-lg-3">
-            <div class="card">
-                <img class="card-img-top" src="https://dummyimage.com/600x400/4e4c57/ffffff&text={{course_off.course.code}}" alt="Image placeholder">
-                <div class="card-body">
-                    <h3 class="card-title mb-3">{{ course_off.course.description }}</h3>
-                    <h5 class="card-text mb-4">{{ course_off.course.code }} - {{ course_off.term }}</h5>
-                    <a href="{{ course_off.slug }}" class="btn btn-sm btn-primary">View Course </a>
-                </div>
-            </div>
-            </div>
+            {% include './course_card.html' %}
         {% endfor %}
     </div>
 </div>

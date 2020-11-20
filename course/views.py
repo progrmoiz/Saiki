@@ -15,6 +15,7 @@ from result.models import Grade, SemesterGrade
 from django.urls import reverse
 from django.contrib import messages
 from notifications.signals import notify
+from django.views.generic.edit import UpdateView
 
 class CourseStudentRecordView(LoginRequiredMixin, FormMixin, DetailView):
     redirect_field_name = 'login'
@@ -23,20 +24,22 @@ class CourseStudentRecordView(LoginRequiredMixin, FormMixin, DetailView):
     context_object_name = 'course'
     form_class = GradeForm
 
+    def get(self, request, *args, **kwargs):
+        if not request.user.is_teacher:
+            return HttpResponseForbidden()
+        
+        teacher = get_current_teacher(self.request)
+        obj = self.get_object()
+
+        if not teacher.user.has_perm('view_courseoffering', obj):
+            return HttpResponseForbidden()
+            
+        return super().get(self, request, *args, **kwargs)
+
     def get_success_url(self):
         slug = self.kwargs['slug']
         username = self.kwargs['username']
-        
         return reverse('course_detail', kwargs={'slug': slug})
-
-    def get(self, request, *args, **kwargs):
-        teacher = get_current_teacher(self.request)
-
-        if not teacher:
-            return HttpResponseForbidden()
-
-        return super().get(self, request, *args, **kwargs)
-
 
     def post(self, request, *args, **kwargs):
         teacher = get_current_teacher(self.request)
@@ -55,8 +58,8 @@ class CourseStudentRecordView(LoginRequiredMixin, FormMixin, DetailView):
 
         if form.is_valid():
             obj = Grade.objects.filter(
-                course_offering=self.object,
-                student=student
+                course_enrollment__student=student,
+                course_enrollment__course_offered=self.object
             )[0]
             obj.letter_grade = form.cleaned_data['grade']
             obj.save()
@@ -89,10 +92,11 @@ class CourseStudentRecordView(LoginRequiredMixin, FormMixin, DetailView):
     def get_context_data(self, **kwargs):
         context = super(CourseStudentRecordView,self).get_context_data(**kwargs)
         username = self.kwargs['username']
+        student = Student.objects.filter(user__username=username)[0]
 
         context['is_course_page'] = 'active'
-        context['grade'] = Grade.objects.filter(course_offering=self.object, student__user__username=username)[0]
-        context['student_'] = Student.objects.filter(user__username=username)[0]
+        context['grade'] = Grade.objects.filter(course_enrollment__course_offered=self.object, course_enrollment__student=student)[0]
+        context['student_'] = student
         context['form'] = self.form_class()
         context['form']['grade'].initial = context['grade'].letter_grade
 
@@ -113,12 +117,35 @@ class CourseDetailView(LoginRequiredMixin, DetailView):
     model = CourseOffering
     context_object_name = 'course'
 
+    def get(self, request, *args, **kwargs):
+        is_teacher = request.user.is_teacher
+        is_student = request.user.is_student
+
+        obj = self.get_object()
+
+        if is_student:
+            student = get_current_student(self.request)
+
+            if not student.user.has_perm('view_courseoffering', obj):
+                return HttpResponseForbidden()
+
+            return super().get(self, request, *args, **kwargs)
+        elif is_teacher:
+            teacher = get_current_teacher(self.request)
+
+            if not teacher.user.has_perm('view_courseoffering', obj):
+                return HttpResponseForbidden()
+
+            return super().get(self, request, *args, **kwargs)
+        else:
+            return HttpResponseForbidden()
+
     def get_context_data(self, **kwargs):
         context = super(CourseDetailView,self).get_context_data(**kwargs)
         context['is_course_page'] = 'active'
 
         if is_teacher:
-            context['students'] = Student.objects.filter(courseenrollment__course_offered=self.object, grade__course_offering=self.object)
+            context['students'] = Student.objects.filter(courseenrollment__course_offered=self.object)
 
         return context
 
@@ -137,6 +164,13 @@ class CourseListView(LoginRequiredMixin, ListView):
     template_name = 'course/course.html'
     course_offering = CourseOffering.objects.all()
 
+    def get(self, request, *args, **kwargs):
+        if not (request.user.is_teacher or request.user.is_student):
+            return HttpResponseForbidden()
+
+        return super().get(self, request, *args, **kwargs)
+
+
     def get_context_data(self, **kwargs):
         context = super(CourseListView, self).get_context_data(**kwargs)
         student = get_current_student(self.request)
@@ -144,18 +178,8 @@ class CourseListView(LoginRequiredMixin, ListView):
 
         context['is_course_page'] = 'active'
         if student:
-            letter_grades = [4.00,
-                             3.67,
-                             3.33,
-                             3.00,
-                             2.67,
-                             2.33,
-                             2.00,
-                             1.67,
-                             0.00]
-            
-            context['archives'] = CourseOffering.objects.filter(
-                courseenrollment__student=student, grade__student=student, grade__letter_grade__in=letter_grades)
+            context['hidden_courses'] = CourseOffering.objects.filter(
+                courseenrollment__student=student, courseenrollment__is_hidden=True)
         elif teacher:
             context['archives'] = CourseOffering.objects.filter(teacher=teacher, archive=True)
 
@@ -167,7 +191,7 @@ class CourseListView(LoginRequiredMixin, ListView):
 
         queryset = super(CourseListView, self).get_queryset()
         if student:
-            queryset = queryset.filter(courseenrollment__student=student, grade__student=student, grade__letter_grade__isnull=True)
+            queryset = queryset.filter(courseenrollment__student=student, courseenrollment__is_hidden=False)
         elif teacher:
             queryset = queryset.filter(teacher=teacher, archive=False)
 
@@ -180,3 +204,11 @@ class CourseListView(LoginRequiredMixin, ListView):
     #         return redirect('my_grades')
     #     else:
     #         return super(ResultListView, self).dispatch(request, *args, **kwargs)
+
+class CourseHideFormView(LoginRequiredMixin, UpdateView):
+    model = CourseEnrollment
+    fields = ['is_hidden'] 
+    template_name = 'course_hide_form.html' 
+    
+    def get_success_url(self):
+        return reverse('course')

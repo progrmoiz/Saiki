@@ -1,18 +1,19 @@
 from django.contrib import admin
 from .models import University, Department, Term, Program
+from guardian.admin import GuardedModelAdmin
 
 # Register your models here.
 
-class DepartmentAdmin(admin.ModelAdmin):
+class DepartmentAdmin(GuardedModelAdmin):
     list_display = ["code", "description"]
 
-class ProgramAdmin(admin.ModelAdmin):
+class ProgramAdmin(GuardedModelAdmin):
     list_display = ["code", "description"]
 
-class UniversityAdmin(admin.ModelAdmin):
+class UniversityAdmin(GuardedModelAdmin):
     list_display = ["name"]
 
-class TermAdmin(admin.ModelAdmin):
+class TermAdmin(GuardedModelAdmin):
     pass
 
 

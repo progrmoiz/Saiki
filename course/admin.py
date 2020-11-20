@@ -1,10 +1,10 @@
 from django.contrib import admin
 from .models import Course, CourseOffering, CourseEnrollment
 from django.utils.html import format_html
-
+from guardian.admin import GuardedModelAdmin
 # Register your models here.
 
-class CourseAdmin(admin.ModelAdmin):
+class CourseAdmin(GuardedModelAdmin):
     list_display = ["code", "description", "units", "prereq_course_code", "department"]
     search_fields = [
         'course__description',
@@ -19,10 +19,10 @@ class CourseAdmin(admin.ModelAdmin):
             return None
     prereq_course_code.short_description = "Prereq Course Code"
 
-class CourseOfferingAdmin(admin.ModelAdmin):
+class CourseOfferingAdmin(GuardedModelAdmin):
     list_display = ["term", "course", "slug"]
 
-class CourseEnrollmentAdmin(admin.ModelAdmin):
+class CourseEnrollmentAdmin(GuardedModelAdmin):
     search_fields = [
         'student__display_name', 
         'student__user__first_name', 

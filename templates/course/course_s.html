@@ -3,24 +3,15 @@
 {% if courses_offering %}
     <div class="row">
         {% for course_off in courses_offering %}
-            <div class="col-lg-3">
-            <div class="card">
-                <img class="card-img-top" src="https://dummyimage.com/600x400/4e4c57/ffffff&text={{course_off.course.code}}" alt="Image placeholder">
-                <div class="card-body">
-                    <h3 class="card-title mb-3">{{ course_off.course.description }}</h3>
-                    <h5 class="card-text mb-4">{{ course_off.course.code }} - {{ course_off.term }}</h5>
-                    <a href="{{ course_off.slug }}" class="btn btn-sm btn-primary">View Course </a>
-                </div>
-            </div>
-            </div>
+            {% include './course_card.html' %}
         {% endfor %}
     </div>
 
-{% if archives %}
+{% if hidden_courses %}
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
         {% comment %} <h1 data-toggle="collapse" href="#collapseArchive" aria-expanded="false" aria-controls="collapseArchive">Archived Courses</h1> {% endcomment %}
         <h1 class="w-100 text-left h3" data-toggle="collapse" data-target="#collapseArchive" aria-expanded="false" aria-controls="collapseArchive">
-        Archived Courses
+        Hidden courses
             <i class="ni ni-bold-down float-right"></i>
         </h1>
     </div>
@@ -29,17 +20,8 @@
 {% else %}
     <div class="row">
 {% endif %}
-        {% for course_off in archives %}
-            <div class="col-lg-3">
-            <div class="card">
-                <img class="card-img-top" src="https://dummyimage.com/1000x600/000/fff&text={{course_off.course.code}}" alt="Image placeholder">
-                <div class="card-body">
-                    <h3 class="card-title mb-3">{{ course_off.course.description }}</h3>
-                    <h5 class="card-text mb-4">{{ course_off.course.code }} - {{ course_off.term }}</h5>
-                    <a href="{{ course_off.slug }}" class="btn btn-sm btn-primary">View Course </a>
-                </div>
-            </div>
-            </div>
+        {% for course_off in hidden_courses %}
+            {% include './course_card.html' %}
         {% endfor %}
     </div>
 </div>

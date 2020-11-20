@@ -22,11 +22,7 @@ class AnnouncementListView(LoginRequiredMixin, ListView):
     context_object_name = 'announcement'
     
     def get(self, request, *args, **kwargs):
-        student = get_current_student(self.request)
-
-        # notify.send(student.user, recipient=student.user, verb='you reached level 10')
-
-        if not student:
+        if not request.user.is_student:
             return HttpResponseForbidden()
 
         return super().get(self, request, *args, **kwargs)
@@ -34,7 +30,6 @@ class AnnouncementListView(LoginRequiredMixin, ListView):
     def get_context_data(self, **kwargs):
         context = super(AnnouncementListView,self).get_context_data(**kwargs)
         context['is_announcement_page'] = 'active'
-        # context['student'] = get_current_student(self.request)
         return context
 
     def get_queryset(self):
@@ -53,23 +48,21 @@ class AnnouncementListView(LoginRequiredMixin, ListView):
 
         return (a_g | a_s | a_c | a_d).order_by('-start_date')
 
-class AnnouncementDetailView(DetailView):
+class AnnouncementDetailView(LoginRequiredMixin, DetailView):
+    redirect_field_name = 'login'
     template_name = 'announcement/announcement_detail.html'
     model = Announcement
     context_object_name = 'announcement'
 
     def get(self, request, *args, **kwargs):
-        student = get_current_student(self.request)
-
-        if not student:
-            return HttpResponse(status=403)
+        if not request.user.is_student:
+            return HttpResponseForbidden()
 
         return super().get(self, request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
         context = super(AnnouncementDetailView,self).get_context_data(**kwargs)
         context['is_announcement_page'] = 'active'
-        context['student'] = get_current_student(self.request)
         return context
 
     def get_queryset(self):

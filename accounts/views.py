@@ -1,4 +1,5 @@
 # pages/views.py
+from django.http.response import HttpResponseForbidden
 from django.shortcuts import render
 from django.views.generic import TemplateView
 from django.contrib.auth import authenticate, login, logout
@@ -26,12 +27,14 @@ class HomePageView(View):
         return super(HomePageView, self).dispatch(*args, **kwargs)
 
     def get(self, request):
-        # add validation for just student login
+        # TODO: add validation for just student login
 
-        if is_teacher(request):
+        if request.user.is_teacher:
             return redirect('course')
-
-        return redirect('announcement')
+        elif request.user.is_student:
+            return redirect('announcement')
+        
+        return HttpResponseForbidden()
 
 class ChangePasswordView(View):
     template_name = 'accounts/change_password.html'
@@ -41,6 +44,8 @@ class ChangePasswordView(View):
         return super(ChangePasswordView, self).dispatch(*args, **kwargs)
 
     def get(self, request):
+        # TODO: add student login
+        
         student = get_current_student(request)
 
         form = PasswordChangeForm(request.user)

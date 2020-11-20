@@ -8,6 +8,7 @@ import uuid
 import os
 from notifications.signals import notify
 from django.urls import reverse
+from guardian.shortcuts import assign_perm
 
 import accounts.models
 import course.models
@@ -68,9 +69,19 @@ class Assignment(models.Model):
         return self.deadline < datetime.datetime.now(self.deadline.tzinfo)
 
 def assignment_save_handler(sender, instance, created, **kwargs):
+    # users who can view assignment
     users = accounts.models.User.objects.filter(student__courseenrollment__course_offered=instance.course_offering)
-    
+
+    # add permission to teacher, so only teacher can edit and view this assignment
+
     if created:
+        assign_perm('add_assignment', instance.course_offering.teacher.user, instance)
+        assign_perm('change_assignment', instance.course_offering.teacher.user, instance)
+        assign_perm('delete_assignment', instance.course_offering.teacher.user, instance)
+        assign_perm('view_assignment', instance.course_offering.teacher.user, instance)
+
+        assign_perm('view_assignment', users, instance)
+
         verb = 'assigned'
     else:
         verb = 'updated'

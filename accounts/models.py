@@ -8,11 +8,12 @@ from django.utils.deconstruct import deconstructible
 import os
 import datetime
 
+from guardian.mixins import GuardianUserMixin
 import university.models
 import result.models
 from result.utils import SemesterGradeHelper
 
-class User(AbstractUser):
+class User(AbstractUser, GuardianUserMixin):
     is_student = models.BooleanField('student status', default=False)
     is_teacher = models.BooleanField('teacher status', default=False)
 
@@ -29,7 +30,7 @@ class PrevAcademicRecord(models.Model):
     end_date = models.DateField(_('end date'))
     percentage = models.FloatField(_('percentage'))
 
-class Guardian(models.Model):
+class StudentGuardian(models.Model):
     guardian_name = models.CharField(_('guardian name'), max_length=255)
     CNIC = models.CharField(_('CNIC'), max_length=13)
     phone_number = PhoneNumberField(_('phone number'))
@@ -82,7 +83,7 @@ class Student(models.Model):
 
     CNIC = models.CharField(_('CNIC'), max_length=13)
     academic_records = models.OneToOneField(PrevAcademicRecord, on_delete=models.CASCADE)
-    guardian = models.ForeignKey(Guardian, on_delete=models.CASCADE)
+    guardian = models.ForeignKey(StudentGuardian, on_delete=models.CASCADE)
 
     program = models.ForeignKey('university.Program', on_delete=models.CASCADE)
     semester = models.IntegerField(_('semester'), default=1)

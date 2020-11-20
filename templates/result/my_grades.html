@@ -20,31 +20,16 @@
                     <table class="table align-items-center table-dark table-flush">
                         <thead class="thead-dark">
                             <tr>
-                                <th scope="col">Term</th>
-                                <th scope="col">Program</th>
-                                <th scope="col">Institute</th>
-                                <th scope="col">SGPA</th>
+                                <th class="w-auto">Term</th>
+                                <th class="w-10">SGPA</th>
                             </tr>
                         </thead>
                         <tbody class="list">
-{% comment %}                             {% if not student.is_graduated and term != None %}
-                                <tr>
-                                    <td>
-                                        <a href={% url 'result' %} class="name mb-0 text-sm text-white">{{term}}</a>
-                                    </td>
-                                    <td>{{student.program.code}}</td>
-                                    <td>{{student.program.university.name}}</td>
-                                    <td>-</td>
-                                </tr>
-                            {% endif %} {% endcomment %}
-
                             {% for semester_grade in semester_grades %}
                                 <tr>
                                     <td>
                                         <a href={% url 'term' semester_grade.term.pk %} class="name mb-0 text-sm text-white">{{semester_grade.term}}</a>
                                     </td>
-                                    <td>{{student.program.code}}</td>
-                                    <td>{{student.program.university.name}}</td>
                                     <td>{{semester_grade.semester_gpa}}</td>
                                 </tr>
                             {% endfor %}

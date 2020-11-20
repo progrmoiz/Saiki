@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'mathfilters',
     'result.templatetags',
     'notifications',
+    'guardian',
     # 'dbbackup'
 ]
 
@@ -69,6 +70,13 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend', # this is default
+    'guardian.backends.ObjectPermissionBackend',
+)
+
+GUARDIAN_MONKEY_PATCH = False
 
 ROOT_URLCONF = 'saiki.urls'
 
@@ -90,14 +98,13 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'saiki.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'Saiki_DB',
+        'NAME': 'SaikiDB_7',
         'USER': 'postgres',
         'PASSWORD': '123456',
         'HOST': 'localhost',

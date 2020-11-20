@@ -35,10 +35,12 @@
             <span class="text-muted">{{ student.program.code }}</span>
           </td>
           <td>
-            {% for grade in student.grade_set.all %}
-              {% if grade.course_offering == course %}
-                  {% include '../result/letter_grade.html' %}
-              {% endif %}
+            {% for ce in student.courseenrollment_set.all %}
+              {% for grade in ce.grade_set.all %}
+                {% if grade.course_enrollment.course_offered == course %}
+                    {% include '../result/letter_grade.html' %}
+                {% endif %}
+              {% endfor %}
             {% endfor %}
           </td>
           <td class="table-actions">

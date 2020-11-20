@@ -1,9 +1,10 @@
 from django.contrib import admin
 from .models import Assignment, AssignmentFile, AssignmentWork, AssignmentFile, AssignmentWorkFile
+from guardian.admin import GuardedModelAdmin
 
 # Register your models here.
 
-class AssignmentAdmin(admin.ModelAdmin):
+class AssignmentAdmin(GuardedModelAdmin):
     list_display = ['title', 'get_term',  'get_course', 'get_teacher', 'deadline']
     list_filter = ['course_offering__term', 'course_offering__course__code']
     search_fields = [
@@ -25,7 +26,7 @@ class AssignmentAdmin(admin.ModelAdmin):
         return obj.course_offering.teacher
     get_teacher.short_description = "Teacher"
 
-class AssignmentWorkAdmin(admin.ModelAdmin):
+class AssignmentWorkAdmin(GuardedModelAdmin):
     list_display = ['assignment', 'student',  'submit_date', 'get_status']
     list_filter = ['assignment__course_offering__course__code']
 
@@ -39,7 +40,7 @@ class AssignmentWorkAdmin(admin.ModelAdmin):
             return "Not submitted"
     get_status.short_description = "Status"
 
-class AssignmentFileAdmin(admin.ModelAdmin):
+class AssignmentFileAdmin(GuardedModelAdmin):
     list_display = ['assignment', 'get_filename']
     list_filter = ['assignment__course_offering__term', 'assignment__course_offering__course__code']
 
@@ -48,7 +49,7 @@ class AssignmentFileAdmin(admin.ModelAdmin):
     get_filename.short_description = "Reference material"
 
 
-class AssignmentWorkFileAdmin(admin.ModelAdmin):
+class AssignmentWorkFileAdmin(GuardedModelAdmin):
     list_display = ['get_assignment', 'get_student', 'get_filename']
     list_filter = ['assignment_work__assignment__course_offering__course__code']
 

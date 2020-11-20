@@ -8,7 +8,7 @@ import argparse
 logging.basicConfig(level=logging.INFO)
 
 models = [
-    # 'university.university',
+    'university.university',
     'university.department',
     'university.program',
     'university.term',

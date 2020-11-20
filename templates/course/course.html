@@ -4,10 +4,20 @@
 
 {% block content %}
 <!-- Header -->
+{% if is_student %}
+    {% if courses_offering %}
+        {% include '../includes/header.html' with heading="My courses" %}
+    {% else %}
+        {% include '../includes/header.html' with heading="Hidden courses" %}
+    {% endif %}
+{% endif %}
+
+{% if is_teacher %}
 {% if archives %}
-    {% include '../includes/header.html' with heading="Archived Courses" %}
+    {% include '../includes/header.html' with heading="Archived courses" %}
 {% else %}
-    {% include '../includes/header.html' with heading="My Courses" %}
+    {% include '../includes/header.html' with heading="My courses" %}
+{% endif %}
 {% endif %}
 
 {% if is_student %}

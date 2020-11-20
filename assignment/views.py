@@ -1,5 +1,6 @@
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import PermissionRequiredMixin
 from accounts.models import Student
 from django.shortcuts import render, redirect
 from django.urls.base import reverse
@@ -35,9 +36,12 @@ class AssignStudentPointView(LoginRequiredMixin, FormMixin, DetailView):
         return reverse('assignment_detail', kwargs={'slug': slug})
 
     def get(self, request, *args, **kwargs):
+        if not request.user.teacher:
+            return HttpResponseForbidden()
+        
         teacher = get_current_teacher(self.request)
 
-        if not teacher:
+        if not teacher.user.has_perm('view_assignment', self.get_object()):
             return HttpResponseForbidden()
 
         return super().get(self, request, *args, **kwargs)
@@ -60,15 +64,15 @@ class AssignStudentPointView(LoginRequiredMixin, FormMixin, DetailView):
         return context
 
     def post(self, request, *args, **kwargs):
+        if not request.user.teacher:
+            return HttpResponseForbidden()
+        
         teacher = get_current_teacher(self.request)
-
-        if not request.user.is_authenticated:
-            return HttpResponseForbidden()
-
-        if not teacher:
-            return HttpResponseForbidden()
-
         self.object = self.get_object()
+
+        if not teacher.user.has_perm('change_assignment', self.object):
+            return HttpResponseForbidden()
+
         username = self.kwargs['username']
         slug = self.kwargs['slug']
 
@@ -114,6 +118,12 @@ class AssignmentListView(LoginRequiredMixin, ListView):
     context_object_name = 'assignments'
     template_name = 'assignment/assignment.html'
 
+    def get(self, request, *args, **kwargs):
+        if not (request.user.is_teacher or request.user.is_student):
+            return HttpResponseForbidden()
+
+        return super().get(self, request, *args, **kwargs)
+
     def get_context_data(self, **kwargs):
         context = super(AssignmentListView, self).get_context_data(**kwargs)
         student = get_current_student(self.request)
@@ -121,7 +131,6 @@ class AssignmentListView(LoginRequiredMixin, ListView):
         context['is_assignment_page'] = 'active'
         
         course_slug = self.kwargs.get('slug')
-        print("hello", course_slug)
 
         try:
             course_offering = course.models.CourseOffering.objects.filter(slug=course_slug)[:1].get()
@@ -132,11 +141,14 @@ class AssignmentListView(LoginRequiredMixin, ListView):
 
         if student:
             if not course_slug:
-                context['assignments_submitted'] = AssignmentWork.objects.filter(assignment__course_offering__grade__letter_grade__isnull=True, student=student, submitted=True).order_by('-submit_date')
+                context['assignments_submitted'] = AssignmentWork.objects.filter(
+                    assignment__course_offering__courseenrollment__is_hidden=False,
+                    assignment__course_offering__courseenrollment__student=student,
+                    student=student, submitted=True
+                ).order_by('-submit_date')
             else:
                 context['assignments_submitted'] = AssignmentWork.objects.filter(student=student, submitted=True, assignment__course_offering=course_offering)
 
-            
         elif teacher:
             if not course_slug:
                 context['courses'] = course.models.CourseOffering.objects.filter(teacher=teacher, archive=False)
@@ -157,11 +169,14 @@ class AssignmentListView(LoginRequiredMixin, ListView):
         
         if student:
             if not course_slug:
-                queryset = queryset.filter(course_offering__grade__student=student,course_offering__grade__letter_grade__isnull=True, 
-                course_offering__courseenrollment__student=student).exclude(assignmentwork__student=student, assignmentwork__submitted=True).order_by('deadline')
+                queryset = queryset.filter(
+                    course_offering__courseenrollment__is_hidden=False,
+                    course_offering__courseenrollment__student=student
+                ).exclude(assignmentwork__student=student, assignmentwork__submitted=True).order_by('deadline')
             else:
                 queryset = queryset.filter(course_offering=course_offering, course_offering__courseenrollment__student=student).exclude(assignmentwork__student=student, assignmentwork__submitted=True)
         elif teacher:
+
             if not course_slug:
                 queryset = queryset.filter(course_offering__teacher=teacher, course_offering__archive=False)
             else:
@@ -182,14 +197,26 @@ class AssignmentDetailView(LoginRequiredMixin, FormMixin, DetailView):
         return reverse('assignment', kwargs={'slug': slug})
 
     def get(self, request, *args, **kwargs):
-        student = get_current_student(self.request)
-        teacher = get_current_teacher(self.request)
+        is_teacher = request.user.is_teacher
+        is_student = request.user.is_student
 
-        if student:
-            object = self.get_object()
-            self.asgmt_work, _created = AssignmentWork.objects.get_or_create(assignment=self.get_object(), student=student)
-        elif teacher:
-            pass
+        obj = self.get_object()
+
+        if is_student:
+            student = get_current_student(self.request)
+
+            if not student.user.has_perm('view_assignment', obj):
+                return HttpResponseForbidden()
+                
+            self.asgmt_work, _created = AssignmentWork.objects.get_or_create(assignment=obj, student=student)
+        elif is_teacher:
+            teacher = get_current_teacher(self.request)
+
+            if not teacher.user.has_perm('view_assignment', obj):
+                return HttpResponseForbidden()
+        else:
+            return HttpResponseForbidden()
+
 
         return super().get(self, request, *args, **kwargs)
 
@@ -285,18 +312,10 @@ class AssignmentCreateView(LoginRequiredMixin, FormMixin, DetailView):
     assignment_slug = uuid.uuid4()
 
     def get_success_url(self):
-        # slug = self.kwargs['slug']
-        # username = self.kwargs['username']
-
-        # print(slug)
-      
         return reverse('assignment_edit', kwargs={'slug': self.assignment_slug})
 
     def get(self, request, *args, **kwargs):
-        teacher = get_current_teacher(self.request)
-        # self.assignment_slug = uuid.uuid4()
-
-        if not teacher:
+        if not request.user.is_teacher:
             return HttpResponseForbidden()
 
         return super().get(self, request, *args, **kwargs)
@@ -304,9 +323,8 @@ class AssignmentCreateView(LoginRequiredMixin, FormMixin, DetailView):
 
     def post(self, request, *args, **kwargs):
         self.object = self.get_object()
-        teacher = get_current_teacher(self.request)
 
-        if not teacher:
+        if not request.user.is_teacher:
             return HttpResponseForbidden()
 
         form = self.form_class(request.POST)
@@ -337,7 +355,6 @@ class AssignmentCreateView(LoginRequiredMixin, FormMixin, DetailView):
 
     def get_context_data(self, **kwargs):
         context = super(AssignmentCreateView,self).get_context_data(**kwargs)
-        teacher = get_current_teacher(self.request)
         context['is_assignment_page'] = 'active'
         return context
 
@@ -355,19 +372,15 @@ class AssignmentDeleteView(LoginRequiredMixin, DeleteView):
     template_name = 'assignment/assignment_delete.html'
 
     def get(self, request, *args, **kwargs):
-        teacher = get_current_teacher(self.request)
-
-        if not teacher:
+        if not request.user.is_teacher:
             return HttpResponseForbidden()
-        
+
         return super().get(self, request, *args, **kwargs)  
 
     def post(self, request, *args, **kwargs):
-        teacher = get_current_teacher(self.request)
-
-        if not teacher:
+        if not request.user.is_teacher:
             return HttpResponseForbidden()
-        
+
         return super().post(self, request, *args, **kwargs)  
 
     def get_success_url(self):
@@ -385,19 +398,20 @@ class AssignmentEditUploadView(LoginRequiredMixin, FormMixin, DetailView):
         return reverse('assignment_edit', kwargs={'slug': slug})
 
     def get(self, request, *args, **kwargs):
+        if not request.user.is_teacher:
+            return HttpResponseForbidden()
+        
         slug = self.kwargs.get('slug')
 
         return redirect('assignment_edit', slug=slug)
 
     def post(self, request, *args, **kwargs):
-        self.object = self.get_object()
-        slug = self.kwargs.get('slug')
-        
-        teacher = get_current_teacher(self.request)
-
-        if not teacher:
+        if not request.user.is_teacher:
             return HttpResponseForbidden()
 
+        self.object = self.get_object()
+
+        slug = self.kwargs.get('slug')
         form = self.form_class(request.POST, request.FILES)
 
         if form.is_valid():
@@ -425,16 +439,19 @@ class AssignmentEditView(LoginRequiredMixin, FormMixin, DetailView):
         return reverse('assignment_edit', kwargs={'slug': slug})
 
     def get(self, request, *args, **kwargs):
+        if not request.user.is_teacher:
+            return HttpResponseForbidden()
+        
         return super().get(self, request, *args, **kwargs)
 
     def post(self, request, *args, **kwargs):
+        if not request.user.is_teacher:
+            return HttpResponseForbidden()
+        
         self.object = self.get_object()
         slug = self.kwargs.get('slug')
         
         teacher = get_current_teacher(self.request)
-
-        if not teacher:
-            return HttpResponseForbidden()
 
         form = self.form_class(request.POST)
 

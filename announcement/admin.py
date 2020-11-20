@@ -2,10 +2,11 @@ from django.contrib import admin
 from .models import Announcement, AnnouncementFilter
 from django.utils.html import format_html
 from django.urls import reverse
+from guardian.admin import GuardedModelAdmin
 
 # Register your models here.
 
-class AnnouncementAdmin(admin.ModelAdmin):
+class AnnouncementAdmin(GuardedModelAdmin):
     search_fields = ['title']
     list_filter = ['active', 'is_global', 'announcement_filters__program', 'announcement_filters__course', 'announcement_filters__semesters']
     list_display = ["id", "created_by", "title", "start_date", "end_date", "is_global", "active", "get_announcement_filters", "tags", "updated_at"]
@@ -29,7 +30,7 @@ class AnnouncementAdmin(admin.ModelAdmin):
         get_data['created_by'] = request.user.pk
         return get_data
 
-class AnnouncementFilterAdmin(admin.ModelAdmin):
+class AnnouncementFilterAdmin(GuardedModelAdmin):
     search_fields = ['title']
     list_filter = ['program', 'course', 'semesters']
     list_display = ["id", "title", "get_programs", "get_courses", "semesters"]

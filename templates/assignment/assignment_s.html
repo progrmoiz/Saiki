@@ -10,13 +10,13 @@
                     <table class="table align-items-center table-flush table-hover">
                         <thead class="thead-light">
                             <tr>
-                                <th scope="col" class="w-50">Assignment</th>
-                                <th scope="col" class="w-30">Due Date</th>
-                                <th scope="col" class="w-10">Points</th>
+                                <th class="w-auto">Assignment</th>
+                                <th class="w-10">Due Date</th>
+                                <th class="w-10">Points</th>
                                 {% if not course %}
-                                <th scope="col" class="w-10">Course Code</th>
+                                <th class="w-10">Course Code</th>
                                 {% endif %}
-                                <th scope="col" class="w-10">Status</th>
+                                <th class="w-10">Status</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -64,8 +64,8 @@
                     <table class="table align-items-center table-dark table-flush">
                         <thead class="thead-dark">
                             <tr>
-                                <th scope="col" class="w-50">Assignment</th>
-                                <th scope="col" class="w-30">Submission Date</th>
+                                <th scope="col" class="w-auto">Assignment</th>
+                                <th scope="col" class="w-10">Submission Date</th>
                                 <th scope="col" class="w-10">Points</th>
                                 {% if not course %}
                                 <th scope="col" class="w-10">Course Code</th>
@@ -89,13 +89,13 @@
                                     {% elif as.points < 0 %}
                                     <td>{{ as.assignment.points }} point{{ as.assignment.points|pluralize }}</td>
                                     {% else %}
-                                    <td>{{ as.points }}/{{ as.assignment.points }} point{{ as.assignment.points|pluralize }}</td>
+                                    <td>{{ as.points }}/{{ as.assignment.points }}</td>
                                     {% endif %}
                                     {% if not course %}
                                     <td>{{ as.assignment.course_offering.course.code }}</td>
                                     {% endif %}
                                     {% if as.is_submitted_on_time %}
-                                        <td class="text-success font-weight-bold">Submitted</td>
+                                        <td class="text-success font-weight-bold">Done</td>
                                     {% else %}
                                         <td class="text-danger font-weight-bold">Late</td>
                                     {% endif %}

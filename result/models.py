@@ -22,14 +22,13 @@ class Grade(models.Model):
     )
 
     letter_grade = models.FloatField(_('grade'), choices=GRADE_POINT_EQUIVALENT, blank=True, null=True)
-    course_offering = models.ForeignKey('course.CourseOffering', on_delete=models.CASCADE)
-    student = models.ForeignKey('accounts.Student', on_delete=models.CASCADE)
+    course_enrollment = models.ForeignKey('course.CourseEnrollment', on_delete=models.CASCADE, null=True)
 
     def __str__(self):
-        return '{} - {}'.format(self.student.user, self.course_offering.course.code)
+        return '{} - {}'.format(self.course_enrollment.student.user, self.course_enrollment.course_offered.course.code)
 
 def grade_handler(sender, instance, created, **kwargs):
-    s, created = SemesterGrade.objects.get_or_create(student=instance.student, term=instance.course_offering.term)
+    s, created = SemesterGrade.objects.get_or_create(student=instance.course_enrollment.student, term=instance.course_enrollment.course_offered.term)
     s.semester_gpa = SemesterGradeHelper.get_sgpa(s)
     s.save(force_update=True)
 
@@ -42,4 +41,4 @@ class SemesterGrade(models.Model):
     student = models.ForeignKey('accounts.Student', on_delete=models.CASCADE)
 
     def __str__(self):
-        return '{}'.format(self.term)
+        return '{}'.format(self.term)   

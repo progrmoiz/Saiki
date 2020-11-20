@@ -4,6 +4,7 @@ from django.urls.base import reverse
 from django.utils.translation import ugettext as _
 from shortuuidfield import ShortUUIDField
 from notifications.signals import notify
+from guardian.shortcuts import assign_perm
 
 import accounts.models
 import university.models
@@ -33,27 +34,37 @@ class CourseOffering(models.Model):
     def __str__(self):
         return '{} - {}'.format(self.course.code, self.term)
 
+
+def courseoffering_save_handler(sender, instance, created, **kwargs):
+    # add permission to teacher, so only teacher can edit and view this assignment
+    if created:
+        assign_perm('view_courseoffering', instance.teacher.user, instance)
+
+post_save.connect(courseoffering_save_handler, sender=CourseOffering)
+
 class CourseEnrollment(models.Model):
     course_offered = models.ForeignKey(CourseOffering, on_delete=models.CASCADE)
     student = models.ForeignKey('accounts.Student', on_delete=models.CASCADE)
+    is_hidden = models.BooleanField(default=False)
 
     def __str__(self):
         return '{} enrolled in {}'.format(self.student, self.course_offered)
-
-    def save(self, *args, **kwargs):
-        grade = result.models.Grade(course_offering=self.course_offered, student=self.student)
-        grade.save()
-        super(CourseEnrollment, self).save(*args, **kwargs) # Call the real save() method
-
 
 def course_enrollment_save_handler(sender, instance, created, **kwargs):
     # users = accounts.models.User.objects.filter(student__courseenrollment__course_offered=instance.course_offering)
     user = accounts.models.User.objects.filter(pk=1)[0] # action taken by (admin can only perform these actions)
     href = reverse('course_detail', kwargs={'slug': instance.course_offered.slug})
 
+    # give permission to student to view course
+
     if created:
+        assign_perm('view_courseoffering', instance.student.user, instance.course_offered)
+        
+        result.models.Grade(course_enrollment=instance).save()
+
         description = f'enrolled you in { instance.course_offered.course.code }'
         notify.send(user, verb='enrolled', recipient=instance.student.user, action_object=instance, target=instance.course_offered, description=description, href=href)
+
 
 def course_enrollment_delete_handler(sender, instance, *args, **kwargs):
     user = accounts.models.User.objects.filter(pk=1)[0] # action taken by (admin can only perform these actions)
