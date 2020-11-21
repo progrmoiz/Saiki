@@ -24,7 +24,7 @@ from accounts.views import HomePageView
 urlpatterns = [
     path('', HomePageView.as_view(), name='index'),
     path('c/', include('course.urls', namespace='course')),
-    path('a/', include('accounts.urls', namespace='accounts')),
+    path('accounts/', include('accounts.urls', namespace='accounts')),
     path('announcement/', include('announcement.urls', namespace='announcement')),
     path('r/', include('result.urls', namespace='result')),
     path('w/', include('assignment.urls', namespace='assignment')),
