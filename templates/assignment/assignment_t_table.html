@@ -6,16 +6,16 @@
                         <div class="col-6">
                         <h3 class="mb-0">{{ heading }}</h3>
                         </div>
-                        {% if courses %}
                         <div class="col-6 text-right">
                             <a href="{% url 'course:assignment:create' course.slug %}" class="btn btn-sm btn-primary btn-round">
                                 <span class="btn-inner--text">Create</span>
                             </a>
+                            {% if courses %}
                             <a href="{% url 'course:assignment:index' course.slug %}" class="btn btn-sm btn-primary btn-round">
                                 <span class="btn-inner--text">View</span>
                             </a>
+                            {% endif %}
                         </div>
-                        {% endif %}
                     </div>
                 </div>
                 <div class="table-responsive">

@@ -113,6 +113,58 @@ class CourseStudentRecordView(LoginRequiredMixin, FormMixin, DetailView):
         else:
             return CourseOffering.objects.none()
 
+class CoursePeopleView(LoginRequiredMixin, DetailView):
+    redirect_field_name = 'accounts:login'
+    template_name = 'course/course_people.html'
+    model = CourseOffering
+    context_object_name = 'course'
+
+    def get(self, request, *args, **kwargs):
+        is_teacher = request.user.is_teacher
+        is_student = request.user.is_student
+
+        obj = self.get_object()
+
+        if is_student:
+            student = get_current_student(self.request)
+
+            if not student.user.has_perm('view_courseoffering', obj):
+                return HttpResponseForbidden()
+
+            return super().get(self, request, *args, **kwargs)
+        elif is_teacher:
+            teacher = get_current_teacher(self.request)
+
+            if not teacher.user.has_perm('view_courseoffering', obj):
+                return HttpResponseForbidden()
+
+            return super().get(self, request, *args, **kwargs)
+        else:
+            return HttpResponseForbidden()
+
+    def get_context_data(self, **kwargs):
+        context = super(CoursePeopleView,self).get_context_data(**kwargs)
+        context['is_course_page'] = 'active'
+        context['is_people_page'] = 'active'
+        meta = Meta(
+            title=get_site_title(f'People - { self.get_object().course.code }')
+        )
+
+        context['is_course_page'] = 'active'
+        context['meta'] = meta
+
+        if is_teacher:
+            context['students'] = Student.objects.filter(courseenrollment__course_offered=self.object)
+
+        return context
+
+    def get_queryset(self):
+        slug = self.kwargs['slug']
+        if self.request.user.is_authenticated:
+            return CourseOffering.objects.filter(slug=slug)
+        else:
+            return CourseOffering.objects.none()
+
 # TODO: Cannot be authorized by unenrolled student
 class CourseDetailView(LoginRequiredMixin, DetailView):
     redirect_field_name = 'accounts:login'
@@ -138,7 +190,7 @@ class CourseDetailView(LoginRequiredMixin, DetailView):
 
             if not teacher.user.has_perm('view_courseoffering', obj):
                 return HttpResponseForbidden()
-
+            
             return super().get(self, request, *args, **kwargs)
         else:
             return HttpResponseForbidden()

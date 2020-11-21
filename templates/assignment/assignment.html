@@ -1,5 +1,4 @@
 {% extends "base.html" %}
-{% load result_extras %}
 
 {% block title%}Assignments - Saiki{% endblock %}
 
@@ -8,16 +7,8 @@
 <!-- Header -->
 {% if course %}
 
-{% if is_student %}
 
-{% include '../includes/header.html' with heading="Assignment - "|addstr:course.course.code %}
-
-{% elif is_teacher %}
-
-{% url 'course:assignment:create' course.slug as assignment_create_url %}
-{% include '../includes/header.html' with heading="Assignment - "|addstr:course.course.code sep='' btn1_url=assignment_create_url btn1_title="Create" %}
-
-{% endif %}
+{% include '../includes/header_course.html' %}
 
 {% else %}
 

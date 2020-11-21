@@ -1,0 +1,5 @@
+{% load result_extras %}
+
+{% url 'course:people' course.slug as people_url %}
+{% url 'course:assignment:index' course.slug as assignment_url %}
+{% include '../includes/header.html' with heading=course.course.description subheading=course.course.code|addstr:" | "|addstr:course.term btn1_url=people_url btn1_title="People" btn1_class=is_people_page|yesno:"btn-default," btn2_url=assignment_url btn2_title="Assignment" btn2_class=is_assignment_page|yesno:"btn-default," %}

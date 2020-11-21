@@ -12,10 +12,10 @@
             {% if btn1_url or btn2_url %}
             <div class="col-lg-6 text-right">
             {% if btn1_url %}
-                <a href="{{ btn1_url }}" class="btn btn-sm btn-neutral {{ btn1_class }}">{{ btn1_title }}</a>
+                <a href="{{ btn1_url }}" class="btn btn-sm {{ btn1_class|default:"btn-neutral" }}">{{ btn1_title }}</a>
             {% endif %}
             {% if btn2_url %}
-                <a href="{{ btn2_url }}" class="btn btn-sm btn-neutral {{ btn2_class }}">{{ btn2_title }}</a>
+                <a href="{{ btn2_url }}" class="btn btn-sm {{ btn2_class|default:"btn-neutral" }}">{{ btn2_title }}</a>
             {% endif %}
             </div>
             {% endif %}
