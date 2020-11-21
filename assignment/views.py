@@ -131,13 +131,10 @@ class AssignmentListView(LoginRequiredMixin, ListView):
         context = super(AssignmentListView, self).get_context_data(**kwargs)
         student = get_current_student(self.request)
         teacher = get_current_teacher(self.request)
-        meta = Meta(
-            title=get_site_title('Assignments')
-        )
+        course_slug = self.kwargs.get('slug')
+        
         
         context['is_assignment_page'] = 'active'
-        context['meta'] = meta
-        course_slug = self.kwargs.get('slug')
 
         try:
             course_offering = course.models.CourseOffering.objects.filter(slug=course_slug)[:1].get()
@@ -145,6 +142,16 @@ class AssignmentListView(LoginRequiredMixin, ListView):
             course_offering = None
 
         context['course'] = course_offering
+
+        title = 'Assignments'
+        if (course_offering):
+            title = f'Assignment - { course_offering.course.code }'
+        
+        meta = Meta(
+            title=get_site_title(title)
+        )
+        
+        context['meta'] = meta
 
         if student:
             if not course_slug:
