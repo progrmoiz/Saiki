@@ -27,7 +27,7 @@
                                     <tr>
                                 {% endif %}
                                     <td class="font-weight-bold">
-                                    <a class="text-dark" href="{% url 'assignment_detail' assignment.slug %}">{{ assignment.title }}</a>
+                                    <a class="text-dark" href="{% url 'assignment:detail' assignment.slug %}">{{ assignment.title }}</a>
                                     </td>
                                     <td>Due {{ assignment.deadline|date:"F d, Y f A" }}</td>
                                     {% if assignment.points == 0 %}
@@ -81,7 +81,7 @@
                                     <tr>
                                 {% endif %}
                                     <td class="font-weight-bold">
-                                        <a class="text-white" href="{% url 'assignment_detail' as.assignment.slug %}">{{ as.assignment.title }}</a>
+                                        <a class="text-white" href="{% url 'assignment:detail' as.assignment.slug %}">{{ as.assignment.title }}</a>
                                     </td>
                                     <td>On {{ as.submit_date|date:"F d, Y f A" }}</td>
                                     {% if as.assignment.points == 0 %}

@@ -63,7 +63,7 @@
           </td>
           {% endif %}
           <td class="table-actions">
-            <a href="{% url 'assign_student_point' assignment.slug student.user.username %}" class="table-action" data-toggle="tooltip" data-original-title="View submission">
+            <a href="{% url 'assignment:assign_student_point' assignment.slug student.user.username %}" class="table-action" data-toggle="tooltip" data-original-title="View submission">
               <i class="fas fa-eye"></i>
             </a>
           </td>

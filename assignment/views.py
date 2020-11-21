@@ -14,6 +14,8 @@ import uuid
 from django.shortcuts import redirect
 from django.template.defaultfilters import pluralize
 from notifications.signals import notify
+from meta.views import Meta
+from saiki.utils import get_site_title
 
 from course.models import CourseOffering
 
@@ -23,7 +25,7 @@ from accounts.utils import get_current_student, get_current_teacher, is_student
 import course.models
 
 class AssignStudentPointView(LoginRequiredMixin, FormMixin, DetailView):
-    redirect_field_name = 'login'
+    redirect_field_name = 'accounts:login'
     template_name = 'assignment/assign_student_point.html'
     model = Assignment
     context_object_name = 'assignment'
@@ -33,7 +35,7 @@ class AssignStudentPointView(LoginRequiredMixin, FormMixin, DetailView):
         slug = self.kwargs['slug']
         username = self.kwargs['username']
 
-        return reverse('assignment_detail', kwargs={'slug': slug})
+        return reverse('assignment:detail', kwargs={'slug': slug})
 
     def get(self, request, *args, **kwargs):
         if not request.user.teacher:
@@ -54,6 +56,7 @@ class AssignStudentPointView(LoginRequiredMixin, FormMixin, DetailView):
         username = self.kwargs['username']
 
         context['is_assignment_page'] = 'active'
+        context['meta'] = self.get_object().as_meta(self.request)
         context['submission'] = AssignmentWorkFile.objects.filter(assignment_work__assignment__slug=slug, assignment_work__student__user__username=username)
         context['materials'] = AssignmentFile.objects.filter(assignment__slug=slug)
         context['student_'] = Student.objects.filter(user__username=username)[0]
@@ -90,7 +93,7 @@ class AssignStudentPointView(LoginRequiredMixin, FormMixin, DetailView):
                 messages.info(request, f"Assignment ungraded for {username}")
             
             description = f"returned <b>{ self.object.title }</b> in { self.object.course_offering.course.code }"
-            href = reverse('assignment_detail', kwargs={'slug': self.object.slug})
+            href = reverse('assignment:detail', kwargs={'slug': self.object.slug})
 
             notify.send(teacher.user, verb='returned', recipient=student.user, action_object=self.object, target=self.object.course_offering, description=description, href=href)
 
@@ -113,7 +116,7 @@ class AssignStudentPointView(LoginRequiredMixin, FormMixin, DetailView):
         return queryset
 
 class AssignmentListView(LoginRequiredMixin, ListView):
-    redirect_field_name = 'login'
+    redirect_field_name = 'accounts:login'
     model = Assignment
     context_object_name = 'assignments'
     template_name = 'assignment/assignment.html'
@@ -128,8 +131,12 @@ class AssignmentListView(LoginRequiredMixin, ListView):
         context = super(AssignmentListView, self).get_context_data(**kwargs)
         student = get_current_student(self.request)
         teacher = get_current_teacher(self.request)
-        context['is_assignment_page'] = 'active'
+        meta = Meta(
+            title=get_site_title('Assignments')
+        )
         
+        context['is_assignment_page'] = 'active'
+        context['meta'] = meta
         course_slug = self.kwargs.get('slug')
 
         try:
@@ -185,7 +192,7 @@ class AssignmentListView(LoginRequiredMixin, ListView):
         return queryset
 
 class AssignmentDetailView(LoginRequiredMixin, FormMixin, DetailView):
-    redirect_field_name = 'login'
+    redirect_field_name = 'accounts:login'
     template_name = 'assignment/assignment_detail.html'
     model = Assignment
     context_object_name = 'assignment'
@@ -194,7 +201,7 @@ class AssignmentDetailView(LoginRequiredMixin, FormMixin, DetailView):
     def get_success_url(self):
         slug = self.kwargs.get('slug')
 
-        return reverse('assignment', kwargs={'slug': slug})
+        return reverse('course:assignment:index', kwargs={'slug': slug})
 
     def get(self, request, *args, **kwargs):
         is_teacher = request.user.is_teacher
@@ -274,6 +281,7 @@ class AssignmentDetailView(LoginRequiredMixin, FormMixin, DetailView):
         teacher = get_current_teacher(self.request)
 
         context['is_assignment_page'] = 'active'
+        context['meta'] = self.get_object().as_meta(self.request)
         
         if student:
             # context['student'] = self.student
@@ -304,7 +312,7 @@ class AssignmentDetailView(LoginRequiredMixin, FormMixin, DetailView):
         return queryset
 
 class AssignmentCreateView(LoginRequiredMixin, FormMixin, DetailView):
-    redirect_field_name = 'login'
+    redirect_field_name = 'accounts:login'
     template_name = 'assignment/assignment_create.html'
     model = course.models.CourseOffering
     context_object_name = 'course'
@@ -312,7 +320,7 @@ class AssignmentCreateView(LoginRequiredMixin, FormMixin, DetailView):
     assignment_slug = uuid.uuid4()
 
     def get_success_url(self):
-        return reverse('assignment_edit', kwargs={'slug': self.assignment_slug})
+        return reverse('assignment:edit', kwargs={'slug': self.assignment_slug})
 
     def get(self, request, *args, **kwargs):
         if not request.user.is_teacher:
@@ -355,7 +363,13 @@ class AssignmentCreateView(LoginRequiredMixin, FormMixin, DetailView):
 
     def get_context_data(self, **kwargs):
         context = super(AssignmentCreateView,self).get_context_data(**kwargs)
+        meta = Meta(
+            title=get_site_title('Create assignment')
+        )
+        
         context['is_assignment_page'] = 'active'
+        context['meta'] = meta
+        
         return context
 
     def form_valid(self, form):
@@ -371,6 +385,18 @@ class AssignmentDeleteView(LoginRequiredMixin, DeleteView):
     model = Assignment
     template_name = 'assignment/assignment_delete.html'
 
+    def get_context_data(self, **kwargs):
+        context = super(AssignmentDeleteView,self).get_context_data(**kwargs)
+
+        meta = Meta(
+            title=get_site_title(f'Delete Assignment')
+        )
+        
+        context['is_assignment_page'] = 'active'
+        context['meta'] = meta
+        
+        return context
+
     def get(self, request, *args, **kwargs):
         if not request.user.is_teacher:
             return HttpResponseForbidden()
@@ -384,10 +410,10 @@ class AssignmentDeleteView(LoginRequiredMixin, DeleteView):
         return super().post(self, request, *args, **kwargs)  
 
     def get_success_url(self):
-        return reverse('assignment')
+        return reverse('assignment:index')
 
 class AssignmentEditUploadView(LoginRequiredMixin, FormMixin, DetailView):
-    redirect_field_name = 'login'
+    redirect_field_name = 'accounts:login'
     model = Assignment
     context_object_name = 'assignment'
     form_class = AssignmentMaterialForm
@@ -395,7 +421,7 @@ class AssignmentEditUploadView(LoginRequiredMixin, FormMixin, DetailView):
     def get_success_url(self):
         slug = self.kwargs.get('slug')
 
-        return reverse('assignment_edit', kwargs={'slug': slug})
+        return reverse('assignment:edit', kwargs={'slug': slug})
 
     def get(self, request, *args, **kwargs):
         if not request.user.is_teacher:
@@ -403,7 +429,7 @@ class AssignmentEditUploadView(LoginRequiredMixin, FormMixin, DetailView):
         
         slug = self.kwargs.get('slug')
 
-        return redirect('assignment_edit', slug=slug)
+        return redirect('assignment:edit', slug=slug)
 
     def post(self, request, *args, **kwargs):
         if not request.user.is_teacher:
@@ -427,7 +453,7 @@ class AssignmentEditUploadView(LoginRequiredMixin, FormMixin, DetailView):
         return super(AssignmentEditUploadView, self).form_valid(form)
 
 class AssignmentEditView(LoginRequiredMixin, FormMixin, DetailView):
-    redirect_field_name = 'login'
+    redirect_field_name = 'accounts:login'
     template_name = 'assignment/assignment_edit.html'
     model = Assignment
     context_object_name = 'assignment'
@@ -436,7 +462,7 @@ class AssignmentEditView(LoginRequiredMixin, FormMixin, DetailView):
     def get_success_url(self):
         slug = self.kwargs.get('slug')
 
-        return reverse('assignment_edit', kwargs={'slug': slug})
+        return reverse('assignment:edit', kwargs={'slug': slug})
 
     def get(self, request, *args, **kwargs):
         if not request.user.is_teacher:
@@ -478,7 +504,12 @@ class AssignmentEditView(LoginRequiredMixin, FormMixin, DetailView):
         context = super(AssignmentEditView,self).get_context_data(**kwargs)
         teacher = get_current_teacher(self.request)
 
+        meta = Meta(
+            title=get_site_title(f'Edit assignment')
+        )
+        
         context['is_assignment_page'] = 'active'
+        context['meta'] = meta
         context['assignment_files'] = AssignmentFile.objects.filter(assignment=self.object)
         context['form'] = self.form_class()
 

@@ -2,6 +2,7 @@ from django.db import models
 from django.utils.translation import ugettext as _
 from django.db.models.signals import post_delete, post_save, pre_save
 from django.dispatch import receiver
+from meta.models import ModelMeta
 from .utils import file_cleanup
 import datetime
 import uuid
@@ -9,6 +10,7 @@ import os
 from notifications.signals import notify
 from django.urls import reverse
 from guardian.shortcuts import assign_perm
+from saiki.utils import get_site_title
 
 import accounts.models
 import course.models
@@ -50,7 +52,7 @@ def delete_file_if_unused(model,instance,field,instance_file_field):
     if not other_refs_exist:
         instance_file_field.delete(False)
 
-class Assignment(models.Model):
+class Assignment(ModelMeta, models.Model):
 
     title = models.CharField(_('title'), max_length=256)
     description = models.TextField(_('description'), blank=True, null=True, max_length=256)
@@ -60,6 +62,17 @@ class Assignment(models.Model):
     course_offering = models.ForeignKey('course.CourseOffering', on_delete=models.CASCADE)
     slug = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
     points = models.PositiveIntegerField(_("points"), default=0)
+
+    _metadata = {
+        'title': 'get_meta_assignment_title',
+        'description': 'get_meta_assignment_description',
+    }
+
+    def get_meta_assignment_title(self):
+        return get_site_title(f'{ self.title } - { self.course_offering.course.code }')
+
+    def get_meta_assignment_description(self):
+        return self.description[:120] + (self.description[120:] and '..')
 
     def __str__(self):
         return '{} - {}'.format(self.course_offering, self.title)
@@ -87,7 +100,7 @@ def assignment_save_handler(sender, instance, created, **kwargs):
         verb = 'updated'
     
     description = f'{ verb } <b>{ instance.title }</b> in { instance.course_offering.course.code }'
-    href = reverse('assignment_detail', kwargs={'slug': instance.slug})
+    href = reverse('assignment:detail', kwargs={'slug': instance.slug})
     notify.send(instance.course_offering.teacher.user, verb='updated', recipient=users, action_object=instance, target=instance.course_offering, description=description, href=href)
 
 def assignment_delete_handler(sender, instance, *args, **kwargs):

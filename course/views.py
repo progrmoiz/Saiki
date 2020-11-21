@@ -16,9 +16,11 @@ from django.urls import reverse
 from django.contrib import messages
 from notifications.signals import notify
 from django.views.generic.edit import UpdateView
+from meta.views import Meta
+from saiki.utils import get_site_title
 
 class CourseStudentRecordView(LoginRequiredMixin, FormMixin, DetailView):
-    redirect_field_name = 'login'
+    redirect_field_name = 'accounts:login'
     template_name = 'course/course_student_record.html'
     model = CourseOffering
     context_object_name = 'course'
@@ -39,7 +41,7 @@ class CourseStudentRecordView(LoginRequiredMixin, FormMixin, DetailView):
     def get_success_url(self):
         slug = self.kwargs['slug']
         username = self.kwargs['username']
-        return reverse('course_detail', kwargs={'slug': slug})
+        return reverse('course:detail', kwargs={'slug': slug})
 
     def post(self, request, *args, **kwargs):
         teacher = get_current_teacher(self.request)
@@ -73,7 +75,7 @@ class CourseStudentRecordView(LoginRequiredMixin, FormMixin, DetailView):
                 s = f" <b>{ obj.letter_grade } GPA</b>"
                 
             description = f"{ verb }{ s } in { self.object.course.code }"
-            href = reverse('term', kwargs={'pk': self.object.term.id})
+            href = reverse('result:by_term', kwargs={'pk': self.object.term.id})
 
             notify.send(teacher.user, verb=verb, recipient=student.user, action_object=obj, target=self.object, description=description, href=href)
 
@@ -95,6 +97,7 @@ class CourseStudentRecordView(LoginRequiredMixin, FormMixin, DetailView):
         student = Student.objects.filter(user__username=username)[0]
 
         context['is_course_page'] = 'active'
+        context['meta'] = self.get_object().as_meta(self.request)
         context['grade'] = Grade.objects.filter(course_enrollment__course_offered=self.object, course_enrollment__student=student)[0]
         context['student_'] = student
         context['form'] = self.form_class()
@@ -112,7 +115,7 @@ class CourseStudentRecordView(LoginRequiredMixin, FormMixin, DetailView):
 
 # TODO: Cannot be authorized by unenrolled student
 class CourseDetailView(LoginRequiredMixin, DetailView):
-    redirect_field_name = 'login'
+    redirect_field_name = 'accounts:login'
     template_name = 'course/course_detail.html'
     model = CourseOffering
     context_object_name = 'course'
@@ -143,6 +146,7 @@ class CourseDetailView(LoginRequiredMixin, DetailView):
     def get_context_data(self, **kwargs):
         context = super(CourseDetailView,self).get_context_data(**kwargs)
         context['is_course_page'] = 'active'
+        context['meta'] = self.get_object().as_meta(self.request)
 
         if is_teacher:
             context['students'] = Student.objects.filter(courseenrollment__course_offered=self.object)
@@ -158,7 +162,7 @@ class CourseDetailView(LoginRequiredMixin, DetailView):
 
 # # Create your views here.
 class CourseListView(LoginRequiredMixin, ListView):
-    redirect_field_name = 'login'
+    redirect_field_name = 'accounts:login'
     model = CourseOffering
     context_object_name = 'courses_offering'
     template_name = 'course/course.html'
@@ -175,8 +179,12 @@ class CourseListView(LoginRequiredMixin, ListView):
         context = super(CourseListView, self).get_context_data(**kwargs)
         student = get_current_student(self.request)
         teacher = get_current_teacher(self.request)
+        meta = Meta(
+            title=get_site_title('Courses')
+        )
 
         context['is_course_page'] = 'active'
+        context['meta'] = meta
         if student:
             context['hidden_courses'] = CourseOffering.objects.filter(
                 courseenrollment__student=student, courseenrollment__is_hidden=True)
@@ -201,7 +209,7 @@ class CourseListView(LoginRequiredMixin, ListView):
     #     student = get_current_student(self.request)
 
     #     if student.is_graduated:
-    #         return redirect('my_grades')
+    #         return redirect('result:select_term')
     #     else:
     #         return super(ResultListView, self).dispatch(request, *args, **kwargs)
 
@@ -211,4 +219,4 @@ class CourseHideFormView(LoginRequiredMixin, UpdateView):
     template_name = 'course_hide_form.html' 
     
     def get_success_url(self):
-        return reverse('course')
+        return reverse('course:index')

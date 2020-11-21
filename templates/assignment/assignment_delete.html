@@ -24,7 +24,7 @@
                 {% csrf_token %} 
                 <p class="font-weight-bold">Are you sure you want to delete "{{ object }}"?</p> 
                 <input type="submit" value="Confirm" class="btn btn-primary btn-sm">
-                <a href="{% url 'assignment_edit' assignment.slug %}" type="button" class="btn btn-secondary btn-sm">Cancel</a>
+                <a href="{% url 'assignment:edit' assignment.slug %}" type="button" class="btn btn-secondary btn-sm">Cancel</a>
             </form> 
             </div>
           </div>

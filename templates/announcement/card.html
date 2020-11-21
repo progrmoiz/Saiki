@@ -54,12 +54,12 @@
                                         </td>
                                         <th scope="row">
                                             {% if '3' in tag.grouper or '4' in tag.grouper %}
-                                            <a href={% url 'announcement_detail' a.pk %}
+                                            <a href={% url 'announcement:detail' a.pk %}
                                                 class="name mb-0 text-sm text-dark">
                                                 {{ a.title }}
                                             </a>
                                             {% else %}
-                                            <a href={% url 'announcement_detail' a.pk %}
+                                            <a href={% url 'announcement:detail' a.pk %}
                                                 class="name mb-0 text-sm text-white">
                                                 {{ a.title }}
                                             </a>

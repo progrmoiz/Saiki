@@ -7,8 +7,8 @@
 
 {% block content %}
 
-{% url 'assignment_create' course.slug as assignment_create_url %}
-{% url 'assignment' course.slug as assignment_url %}
+{% url 'course:assignment:create' course.slug as assignment_create_url %}
+{% url 'course:assignment:index' course.slug as assignment_url %}
 {% if is_teacher %}
 {% include '../includes/header.html' with heading=course.course.description subheading=course.course.code|addstr:" | "|addstr:course.term btn1_url=assignment_create_url btn1_title="Create assignment" btn2_url=assignment_url btn2_title="View assignments" %}
 {% else %}

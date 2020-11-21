@@ -11,9 +11,9 @@
 
             <div class="col-lg-6 col-5 text-right">
                 {% if teacher %}
-                    <a href="{% url 'assignment_create' course.slug %}" class="btn btn-sm btn-neutral">Create assignments</a>
+                    <a href="{% url 'course:assignment:create' course.slug %}" class="btn btn-sm btn-neutral">Create assignments</a>
                 {% endif %}
-                <a href="{% url 'assignment' course.slug %}" class="btn btn-sm btn-neutral">View assignments</a>
+                <a href="{% url 'course:assignment:index' course.slug %}" class="btn btn-sm btn-neutral">View assignments</a>
             </div>
         </div>
     </div>

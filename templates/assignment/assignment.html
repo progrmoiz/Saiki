@@ -14,7 +14,7 @@
 
 {% elif is_teacher %}
 
-{% url 'assignment_create' course.slug as assignment_create_url %}
+{% url 'course:assignment:create' course.slug as assignment_create_url %}
 {% include '../includes/header.html' with heading="Assignment - "|addstr:course.course.code sep='' btn1_url=assignment_create_url btn1_title="Create" %}
 
 {% endif %}

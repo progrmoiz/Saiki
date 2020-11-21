@@ -1,10 +1,8 @@
 {% extends "base.html" %}
 
-{% block title%}View My Grades - Saiki{% endblock %}
-
 {% block content %}
 <!-- Header -->
-{% url 'result' as result_url %}
+{% url 'result:index' as result_url %}
 {% include '../includes/header.html' with heading='My grades' btn1_url=result_url btn1_title='Current results' %}
 
 <div class="container-fluid mt--6">
@@ -28,7 +26,7 @@
                             {% for semester_grade in semester_grades %}
                                 <tr>
                                     <td>
-                                        <a href={% url 'term' semester_grade.term.pk %} class="name mb-0 text-sm text-white">{{semester_grade.term}}</a>
+                                        <a href={% url 'result:by_term' semester_grade.term.pk %} class="name mb-0 text-sm text-white">{{semester_grade.term}}</a>
                                     </td>
                                     <td>{{semester_grade.semester_gpa}}</td>
                                 </tr>

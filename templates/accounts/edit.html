@@ -3,10 +3,13 @@
 {% load avatar_tags %}
 {% load static %}
 
-{% block title%}Edit Account - Saiki{% endblock %}
-
 {% block content %}
-{% include '../includes/header_2.html' with heading="Edit Account"  heading_url_1='profile' heading_title_1='View Profile' heading_url_2='change_password' heading_title_2='Change Password' %}
+
+
+{% url 'accounts:profile' as accounts_profile_url %}
+{% url 'accounts:change_pwd' as accounts_change_pwd_url %}
+{% include '../includes/header.html' with heading="Edit account" btn1_url=accounts_profile_url btn1_title="View profile" btn2_url=accounts_change_pwd_url btn2_title="Change password" %}
+
 <div class="container-fluid mt--6">
     <div class="row">
         <div class="col-xl-8">

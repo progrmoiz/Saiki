@@ -8,10 +8,10 @@
                         </div>
                         {% if courses %}
                         <div class="col-6 text-right">
-                            <a href="{% url 'assignment_create' course.slug %}" class="btn btn-sm btn-primary btn-round">
+                            <a href="{% url 'course:assignment:create' course.slug %}" class="btn btn-sm btn-primary btn-round">
                                 <span class="btn-inner--text">Create</span>
                             </a>
-                            <a href="{% url 'assignment' course.slug %}" class="btn btn-sm btn-primary btn-round">
+                            <a href="{% url 'course:assignment:index' course.slug %}" class="btn btn-sm btn-primary btn-round">
                                 <span class="btn-inner--text">View</span>
                             </a>
                         </div>
@@ -32,7 +32,7 @@
                                 {% if assignment.course_offering == course %}
                                     <tr>
                                     <td class="font-weight-bold">
-                                    <a class="text-dark" href="{% url 'assignment_detail' assignment.slug %}">{{ assignment.title }}</a>
+                                    <a class="text-dark" href="{% url 'assignment:detail' assignment.slug %}">{{ assignment.title }}</a>
                                     </td>
                                     <td>Due {{ assignment.deadline|date:"F d, Y f A" }}</td>
                                     {% if assignment.points == 0 %}

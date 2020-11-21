@@ -44,7 +44,7 @@
             {% endfor %}
           </td>
           <td class="table-actions">
-            <a href="{% url 'course_student_student' course.slug student.user.username %}" class="table-action" data-toggle="tooltip" data-original-title="Edit record">
+            <a href="{% url 'course:student' course.slug student.user.username %}" class="table-action" data-toggle="tooltip" data-original-title="Edit record">
               <i class="fas fa-user-edit"></i>
             </a>
           </td>

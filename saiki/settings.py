@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     'result.templatetags',
     'notifications',
     'guardian',
+    'meta'
     # 'dbbackup'
 ]
 
@@ -181,3 +182,8 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 DJANGO_NOTIFICATIONS_CONFIG = { 'USE_JSONFIELD': True }
 
 AVATAR_AUTO_GENERATE_SIZES = (36, 240)
+
+META_SITE_NAME='Saiki'
+META_USE_TITLE_TAG=True
+META_USE_SITES=True
+META_USE_OG_PROPERTIES=True

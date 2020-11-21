@@ -5,9 +5,11 @@ from django.views.generic.list import ListView
 from .models import Grade, SemesterGrade
 from university.models import Term
 from accounts.utils import get_current_student
+from meta.views import Meta
+from saiki.utils import get_site_title
 
 class ResultListView(LoginRequiredMixin, ListView):
-    redirect_field_name = 'login'
+    redirect_field_name = 'accounts:login'
     model = Grade
     context_object_name = 'grades'
     template_name = 'result/result.html'
@@ -23,7 +25,13 @@ class ResultListView(LoginRequiredMixin, ListView):
 
     def get_context_data(self, **kwargs):
         context = super(ResultListView, self).get_context_data(**kwargs)
+        meta = Meta(
+            title=get_site_title('Results')
+        )
+        
+
         context['is_result_page'] = 'active'
+        context['meta'] = meta
         context['student'] = get_current_student(self.request)
         context['semester_grades'] = self.semester_grade
         context['cgpa'] = self.cgpa
@@ -50,12 +58,12 @@ class ResultListView(LoginRequiredMixin, ListView):
         student = get_current_student(self.request)
 
         if student.is_graduated:
-            return redirect('my_grades')
+            return redirect('result:select_term')
         else:
             return super(ResultListView, self).dispatch(request, *args, **kwargs)
 
 class ViewMyGrades(LoginRequiredMixin, ListView):
-    redirect_field_name = 'login'
+    redirect_field_name = 'accounts:login'
     model = SemesterGrade
     template_name='result/my_grades.html'
     semester_grades = None
@@ -69,7 +77,13 @@ class ViewMyGrades(LoginRequiredMixin, ListView):
 
     def get_context_data(self, **kwargs):
         context = super(ViewMyGrades, self).get_context_data(**kwargs)
+        meta = Meta(
+            title=get_site_title('Select Term')
+        )
+
         context['is_result_page'] = 'active'
+        context['meta'] = meta
+        
         context['student'] = get_current_student(self.request)
         context['semester_grades'] = self.semester_grades
         context['term'] = self.term
@@ -91,7 +105,7 @@ class ViewMyGrades(LoginRequiredMixin, ListView):
         return queryset
 
 class SelectedTerm(LoginRequiredMixin, ListView):
-    redirect_field_name = 'login'
+    redirect_field_name = 'accounts:login'
     model = Grade
     context_object_name = 'grades'
     template_name = 'result/result.html'
@@ -106,7 +120,22 @@ class SelectedTerm(LoginRequiredMixin, ListView):
 
     def get_context_data(self, **kwargs):
         context = super(SelectedTerm, self).get_context_data(**kwargs)
+        try:
+            term = Term.objects.filter(pk=self.kwargs['pk'])[:1].get()
+        except Term.DoesNotExist:
+            term = None
+        
+        title = f'Result - {term}'
+        if not term:
+            title = 'Result'
+
+        meta = Meta(
+            title=get_site_title(title)
+        )
+
         context['is_result_page'] = 'active'
+        context['meta'] = meta
+
         context['student'] = get_current_student(self.request)
         context['semester_grade'] = self.semester_grade[:1].get()
         context['cgpa'] = self.cgpa

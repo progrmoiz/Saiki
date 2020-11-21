@@ -6,8 +6,8 @@
 
 {% block content %}
 <!-- Header -->
-{% url 'my_grades' as my_grades_url %}
-{% include '../includes/header.html' with heading=grades.first.course_enrollment.course_offered.term|addstr:" | "|addstr:student.program.university.name btn1_url=my_grades_url btn1_title='View My Grades' %}
+{% url 'result:select_term' as my_grades_url %}
+{% include '../includes/header.html' with heading=grades.first.course_enrollment.course_offered.term|addstr:" | "|addstr:student.program.university.name btn1_url=my_grades_url btn1_title='Select term' %}
 
 <div class="container-fluid mt--6">
     <div class="row">

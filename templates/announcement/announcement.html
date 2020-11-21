@@ -127,7 +127,7 @@ setTimeout(fetch_api_data, 1000);
     <b>{{ a.created_by }}</b>
                 </td>
                 <td>
-    <a href={% url 'announcement_detail' a.pk %} class="font-weight-bold">
+    <a href={% url 'announcement:detail' a.pk %} class="font-weight-bold">
         {{ a.title }}
     </a>
                 </td>

@@ -2,11 +2,11 @@
 {% load static %}
 {% load avatar_tags %}
 
-{% block title%}Profile - Saiki{% endblock %}
-
 {% block content %}
 <!-- Header -->
-{% include '../includes/header_2.html' with heading='Profile' heading_url_1='edit_profile' heading_title_1='Edit Profile' heading_url_2='change_password' heading_title_2='Change Password' %}
+{% url 'accounts:edit' as accounts_edit_url %}
+{% url 'accounts:change_pwd' as accounts_change_pwd_url %}
+{% include '../includes/header.html' with heading="Profile" btn1_url=accounts_edit_url btn1_title="Edit profile" btn2_url=accounts_change_pwd_url btn2_title="Change password" %}
 
 <div class="container-fluid mt--6">
     <div class="row">

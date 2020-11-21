@@ -1,4 +1,4 @@
-<form id="form-{{ course_off.slug }}" method="POST" action="{% for ce in course_off.courseenrollment_set.all %}{% url 'course_hide' course_off.slug ce.pk %}{% endfor %}">
+<form id="form-{{ course_off.slug }}" method="POST" action="{% for ce in course_off.courseenrollment_set.all %}{% url 'course:hide' course_off.slug ce.pk %}{% endfor %}">
     {% csrf_token %}
     {% for ce in course_off.courseenrollment_set.all %}
         {% if ce.is_hidden %}

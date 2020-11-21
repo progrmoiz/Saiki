@@ -53,3 +53,4 @@ tzlocal==2.1
 urllib3==1.25.11
 gunicorn==20.0.4
 whitenoise==5.2.0
+django-meta==2.0.0

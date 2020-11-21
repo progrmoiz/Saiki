@@ -1,13 +1,12 @@
 from django.urls import include, path
 from .views import ResultListView, ViewMyGrades, SelectedTerm
 
+app_name = 'result'
 urlpatterns = [
-    path('result/', include([
-        path('', ResultListView.as_view(), name='result'),
-        path('grades/', include([
-            path('', ViewMyGrades.as_view(), name='my_grades'),
-            path('<int:pk>/', SelectedTerm.as_view(), name='term'),
-        ]))
+    path('', ResultListView.as_view(), name='index'),
+    path('terms/', include([
+        path('', ViewMyGrades.as_view(), name='select_term'),
+        path('<int:pk>/', SelectedTerm.as_view(), name='by_term'),
     ]))
 ]
 

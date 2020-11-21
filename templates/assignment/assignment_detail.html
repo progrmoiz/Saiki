@@ -21,7 +21,7 @@ var Dropzones = (function() {
 
 		// Init options
 		var options = {
-			url: '{% url 'assignment_detail' assignment.slug %}',
+			url: '{% url 'assignment:detail' assignment.slug %}',
 			thumbnailWidth: null,
 			thumbnailHeight: null,
 			previewsContainer: preview.get(0),
@@ -83,7 +83,7 @@ var Dropzones = (function() {
 {% if is_student %}
 	{% include '../includes/header_ad.html' %}
 {% elif is_teacher %}
-	{% url 'assignment_edit' assignment.slug as assignment_edit_url %}
+	{% url 'assignment:edit' assignment.slug as assignment_edit_url %}
 	{% with assignment.deadline|date:"F d, Y f A" as assignment_deadline %}
 	{% include '../includes/header.html' with heading=assignment.title subheading="Due "|addstr:assignment_deadline btn1_url=assignment_edit_url btn1_title="Edit" %}
 	{% endwith %}

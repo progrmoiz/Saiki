@@ -23,7 +23,7 @@ var Dropzones = (function() {
 
 		// Init options
 		var options = {
-			url: '{% url 'assignment_edit_upload' assignment.slug %}',
+			url: '{% url 'assignment:edit_upload' assignment.slug %}',
 			thumbnailWidth: null,
 			thumbnailHeight: null,
 			previewsContainer: preview.get(0),
@@ -133,8 +133,8 @@ var QuillEditor = (function() {
 
 
 <!-- Header -->
-{% url 'assignment_detail' assignment.slug as assignment_detail_url %}
-{% url 'assignment_delete' assignment.slug as assignment_delete_url %}
+{% url 'assignment:detail' assignment.slug as assignment_detail_url %}
+{% url 'assignment:delete' assignment.slug as assignment_delete_url %}
 {% include '../includes/header.html' with heading="Edit assignment" btn1_url=assignment_detail_url btn1_title="View" btn2_url=assignment_delete_url btn2_title="Delete" %}
 
 <div class="container-fluid mt--6">

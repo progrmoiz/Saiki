@@ -1,8 +1,10 @@
 {% load static %}
+{% load meta %}
+
 <!DOCTYPE html>
 <html>
 
-    <head>
+    <head {% meta_namespaces %}>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -22,7 +24,7 @@
 
         {% block style %}{% endblock %}
 
-        <title>{% block title %}Saiki{% endblock %}</title>
+        {% include 'meta/meta.html' %}
     </head>
 
     <body {% block body__attributes %}{% endblock %}>

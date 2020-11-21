@@ -13,10 +13,12 @@ from itertools import chain
 import datetime
 from django.http import HttpResponse
 from notifications.signals import notify
+from meta.views import Meta
+from saiki.utils import get_site_title
 
 # add mark as read
 class AnnouncementListView(LoginRequiredMixin, ListView):
-    redirect_field_name = 'login'
+    redirect_field_name = 'accounts:login'
     template_name = 'announcement/announcement.html'
     model = Announcement
     context_object_name = 'announcement'
@@ -29,7 +31,12 @@ class AnnouncementListView(LoginRequiredMixin, ListView):
 
     def get_context_data(self, **kwargs):
         context = super(AnnouncementListView,self).get_context_data(**kwargs)
+        meta = Meta(
+            title=get_site_title('Announcements')
+        )
         context['is_announcement_page'] = 'active'
+
+        context['meta'] = meta
         return context
 
     def get_queryset(self):
@@ -49,7 +56,7 @@ class AnnouncementListView(LoginRequiredMixin, ListView):
         return (a_g | a_s | a_c | a_d).order_by('-start_date')
 
 class AnnouncementDetailView(LoginRequiredMixin, DetailView):
-    redirect_field_name = 'login'
+    redirect_field_name = 'accounts:login'
     template_name = 'announcement/announcement_detail.html'
     model = Announcement
     context_object_name = 'announcement'
@@ -62,7 +69,12 @@ class AnnouncementDetailView(LoginRequiredMixin, DetailView):
 
     def get_context_data(self, **kwargs):
         context = super(AnnouncementDetailView,self).get_context_data(**kwargs)
+        meta = Meta(
+            title=get_site_title(f'{self.get_object().title}')
+        )
         context['is_announcement_page'] = 'active'
+
+        context['meta'] = meta
         return context
 
     def get_queryset(self):

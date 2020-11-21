@@ -18,6 +18,8 @@ from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
 from django.shortcuts import render, redirect
 from django.utils.translation import ugettext as _
+from meta.views import Meta
+from saiki.utils import get_site_title
 
 class HomePageView(View):
     template_name = 'home.html'
@@ -30,9 +32,9 @@ class HomePageView(View):
         # TODO: add validation for just student login
 
         if request.user.is_teacher:
-            return redirect('course')
+            return redirect('course:index')
         elif request.user.is_student:
-            return redirect('announcement')
+            return redirect('announcement:index')
         
         return HttpResponseForbidden()
 
@@ -49,11 +51,17 @@ class ChangePasswordView(View):
         student = get_current_student(request)
 
         form = PasswordChangeForm(request.user)
+        
+        meta = Meta(
+            title=get_site_title('Change password')
+        )
 
         context = {
             'is_account_page': 'active',
             'form': form,
+            'is_student': True,
             'student': student,
+            'meta': meta
         }
 
         return render(request, self.template_name, context)
@@ -64,23 +72,38 @@ class ChangePasswordView(View):
             user = form.save()
             update_session_auth_hash(request, user)
             messages.success(request, _('Your password was successfully updated!'))
-            return redirect('change_password')
+            return redirect('accounts:change_pwd')
         else:
             messages.error(request, _('Please correct the error below.'))
-            return redirect('change_password')
+            return redirect('accounts:change_pwd')
 
 class AccountView(TemplateView):
     template_name = 'accounts/profile.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        meta = Meta(
+            title=get_site_title('Profile')
+        )
+
         context['is_account_page'] = 'active'
-        context['student'] = get_current_student(self.request)
+        context['meta'] = meta
+
         context['cgpa'] = get_current_student(self.request).get_cgpa()
         return context
 
 class ForgetPasswordView(TemplateView):
     template_name = 'accounts/forget_password.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        meta = Meta(
+            title=get_site_title('Forget password')
+        )
+
+        context['is_account_page'] = 'active'
+        context['meta'] = meta
+        return context
 
 class AccountEditView(FormView):
     template_name = 'accounts/edit.html'
@@ -96,11 +119,17 @@ class AccountEditView(FormView):
             form = StudentForm(initial={'display_name': student.display_name, 'phone_number': student.phone_number, 'telephone': student.telephone, 'address_1': student.address_1, 'address_2': student.address_2})
         else:
             form = StudentForm()
+        
+        meta = Meta(
+            title=get_site_title('Edit profile')
+        )
 
         context = {
             'is_account_page': 'active',
             'form': form,
+            'is_student': True,
             'student': student,
+            'meta': meta
         }
 
         return render(request, self.template_name, context)
@@ -138,20 +167,28 @@ class LoginView(View):
                 return HttpResponseRedirect(reverse('index'))
             else:
                 messages.warning(request, 'Your account was inactive.')
-                return redirect('login')
+                return redirect('accounts:login')
         else:
             print("Someone tried to login and failed.")
             print("They used username: {} and password: {}".format(username,password))
             messages.error(request, 'Invalid login details given')
-            return redirect('login')
+            return redirect('accounts:login')
 
     def get(self, request):
         if request.user.is_authenticated:
             return HttpResponseRedirect(reverse('index'))
         else:
-            return render(request, self.template_name, {})
+            meta = Meta(
+                title=get_site_title('Login')
+            )
+
+            context = {
+                'meta': meta
+            }
+            
+            return render(request, self.template_name, context)
 
 class LogoutView(View):
     def get(self, request):
         logout(request)
-        return HttpResponseRedirect(reverse('login'))
+        return HttpResponseRedirect(reverse('accounts:login'))

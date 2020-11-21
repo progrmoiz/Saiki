@@ -1,8 +1,6 @@
 {% extends "../base_generic.html" %}
 {% load static %}
 
-{% block title%}Login - Saiki{% endblock %}
-
 {% block body__attributes %}class="bg-default"{% endblock %}
 {% block body %}
 {% include '../includes/navbar_landing.html' %}
@@ -67,7 +65,7 @@
         </div>
         <div class="row mt-3">
           <div class="col-6">
-            <a href="{% url 'forget_password' %}" class="text-light"><small>Forgot password?</small></a>
+            <a href="{% url 'accounts:forget' %}" class="text-light"><small>Forgot password?</small></a>
           </div>
         </div>
       </div>
