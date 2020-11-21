@@ -19,7 +19,7 @@
             <script>Toast.fire( 'Info', "{{ message }}", 'info' );</script>
         {% elif message.tags == 'alert-warning'%}
             <script>Toast.fire( 'Warning', "{{ message }}", 'warning' );</script>
-        {% elif message.tags == 'alert-error'%}
+        {% elif message.tags == 'alert-danger'%}
             <script>Toast.fire( 'Error', "{{ message }}", 'error' );</script>
         {% endif %}
     {% endfor %}

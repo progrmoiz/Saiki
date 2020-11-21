@@ -66,7 +66,7 @@ class CourseEnrollment(models.Model):
 
 def course_enrollment_save_handler(sender, instance, created, **kwargs):
     # users = accounts.models.User.objects.filter(student__courseenrollment__course_offered=instance.course_offering)
-    user = accounts.models.User.objects.filter(pk=1)[0] # action taken by (admin can only perform these actions)
+    user = accounts.models.User.objects.filter(pk=2)[0] # action taken by (admin can only perform these actions)
     href = reverse('course:detail', kwargs={'slug': instance.course_offered.slug})
 
     # give permission to student to view course
@@ -81,7 +81,7 @@ def course_enrollment_save_handler(sender, instance, created, **kwargs):
 
 
 def course_enrollment_delete_handler(sender, instance, *args, **kwargs):
-    user = accounts.models.User.objects.filter(pk=1)[0] # action taken by (admin can only perform these actions)
+    user = accounts.models.User.objects.filter(pk=2)[0] # action taken by (admin can only perform these actions)
     
     description = f'unenrolled you from { instance.course_offered.course.code }'
     notify.send(user, verb='unenrolled', recipient=instance.student.user, action_object=instance, target=instance.course_offered, description=description)

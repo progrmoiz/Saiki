@@ -159,7 +159,6 @@ class LoginView(View):
         username = request.POST.get('username')
         password = request.POST.get('password')
         user = authenticate(username=username, password=password)
-        # TODO: only if user is student can logged in right now
         if user:
             if user.is_active:
                 login(request,user)
