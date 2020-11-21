@@ -18,17 +18,18 @@ def jsonify(data):
 
 COLOR_LIST = [
     ('#A13D63', 'white'),
-    ('#9FC490', 'default'),
+    ('#34113F', 'white'),
+    ('#AD8A64', 'white'),
+    ('#FDFDFF', 'default'),
+    ('#86E7B8', 'default'),
+    ('#9E2A2B', 'white'),
+    ('#335C67', 'white'),
     ('#011936', 'white'),
+    ('#9FC490', 'default'),
     ('#B0413E', 'white'),
     ('#FBD87F', 'default'),
-    ('#34113F', 'white'),
-    ('#86E7B8', 'default'),
     ('#424651', 'white'),
-    ('#FDFDFF', 'default'),
-    ('#AD8A64', 'white'),
     ('#457B9D', 'white'),
-    ('#E63946', 'white'),
 ]
 
 @register.simple_tag

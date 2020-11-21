@@ -3,7 +3,6 @@
 <div class="col-lg-3">
 {% course_color course_off.course.code as color %}
 <div class="card" style="background: {{ color.0 }}">
-    {% comment %} <img class="card-img-top" src="https://dummyimage.com/600x400/4e4c57/ffffff&text={{course_off.course.code}}" alt="Image placeholder"> {% endcomment %}
     <div class="card-body">
         <h3 class="card-title text-{{color.1}} mb-3">{{ course_off.course.description }}</h3>
         <h5 class="card-text text-{{color.1}} mb-4">{{ course_off.course.code }} - {{ course_off.term }}</h5>
