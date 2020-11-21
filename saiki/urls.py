@@ -23,11 +23,11 @@ from accounts.views import HomePageView
 
 urlpatterns = [
     path('', HomePageView.as_view(), name='index'),
-    path('course/', include('course.urls', namespace='course')),
-    path('accounts/', include('accounts.urls', namespace='accounts')),
+    path('c/', include('course.urls', namespace='course')),
+    path('a/', include('accounts.urls', namespace='accounts')),
     path('announcement/', include('announcement.urls', namespace='announcement')),
-    path('result/', include('result.urls', namespace='result')),
-    path('assignment/', include('assignment.urls', namespace='assignment')),
+    path('r/', include('result.urls', namespace='result')),
+    path('w/', include('assignment.urls', namespace='assignment')),
     path('admin/', admin.site.urls),
     path('avatar/', include('avatar.urls')),
     url('^inbox/notifications/', include('notifications.urls', namespace='notifications')),

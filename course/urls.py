@@ -7,9 +7,9 @@ urlpatterns = [
     path('', CourseListView.as_view(), name='index'),
     path('<str:slug>/', include([
         path('', CourseDetailView.as_view(), name='detail'),
-        path('hide/<slug:pk>/', CourseHideFormView.as_view(), name='hide'),
+        path('h/<slug:pk>/', CourseHideFormView.as_view(), name='hide'),
         path('<int:username>', CourseStudentRecordView.as_view(), name='student'),
-        path('assignment/', include('assignment.urls', namespace='assignment')),
+        path('w/', include('assignment.urls', namespace='assignment')),
     ]))
 ]
 
