@@ -20,9 +20,16 @@ from django.urls import include, path
 from django.conf import settings
 from django.conf.urls.static import static
 from accounts.views import HomePageView
+from rest_framework import routers
+from course.views import CourseOfferingViewSet
+
+router = routers.DefaultRouter()
+router.register(r'courses', CourseOfferingViewSet)
 
 urlpatterns = [
     path('', HomePageView.as_view(), name='index'),
+    path('api/', include(router.urls)),
+    path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     path('c/', include('course.urls', namespace='course')),
     path('accounts/', include('accounts.urls', namespace='accounts')),
     path('announcement/', include('announcement.urls', namespace='announcement')),
