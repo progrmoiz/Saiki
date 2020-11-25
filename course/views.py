@@ -18,7 +18,18 @@ from notifications.signals import notify
 from django.views.generic.edit import UpdateView
 from meta.views import Meta
 from saiki.utils import get_site_title
+from rest_framework import viewsets
+from rest_framework import permissions
+from .serializers import CourseOfferingSerializer
 
+class CourseOfferingViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows users to be viewed or edited.
+    """
+    queryset = CourseOffering.objects.all()
+    serializer_class = CourseOfferingSerializer
+    lookup_field = 'slug'   
+    
 class CoursePeopleEditView(LoginRequiredMixin, FormMixin, DetailView):
     redirect_field_name = 'accounts:login'
     template_name = 'course/course_people_edit.html'
@@ -273,3 +284,5 @@ class CourseHideFormView(LoginRequiredMixin, UpdateView):
     
     def get_success_url(self):
         return reverse('course:index')
+
+

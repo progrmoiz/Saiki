@@ -8,8 +8,4 @@ class NotificationMiddleware:
         return response
 
     def process_template_response(self, request, response):
-        if 'api/' not in request.path:
-            if request.user.is_authenticated:
-                response.context_data['unread_notifications'] = request.user.notifications.unread()[:5]
-
         return response
