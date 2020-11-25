@@ -1,5 +1,5 @@
 {
-    "python.pythonPath": "/home/progrmoiz/Documents/Saiki/saikienv/bin/python3",
+    "python.pythonPath": "saikienv/bin/python",
     "cSpell.words": [
         "cgpa"
     ]

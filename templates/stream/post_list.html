@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+{% load static %}
+{% load comments %}
+{% load comments_xtd %}
+{% load avatar_tags %}
+
+{% block script_1 %}
+<script>
+$("#post-cancel").click(function(){
+  $("#new-discussion").hide();
+  $("#create-new-discussion").show()
+});
+
+$("#create-new-discussion").click(function(){
+  $("#new-discussion").show();
+  $("#create-new-discussion").hide()
+});
+</script>
+{% endblock %}
+{% block content %}
+{% include '../includes/header_course.html' %}
+
+<div class="container-fluid mt--6">
+    <div class="row">
+        <div class="col">
+            <div id="new-discussion" class="card col-lg-7 mx-auto px-0" style="display: none; background: #f7fafc">
+              <form action="{% url 'course:stream:create-post' course.slug %}" method="POST">
+                {% csrf_token %}  
+                <div class="card-body">
+                  <textarea required name="body" id="id_body" placeholder="Share with your class" maxlength="3000" rows="2" class="form-control form-control-sm text-sm" style="background: #f7fafc;margin-top: 0px;margin-bottom: 0px;height: 123px;border: 0;border-bottom: 2px solid #adb5bd;"></textarea>
+                <div class="mt-3 text-right">
+                <button type="cancel" id="post-cancel" class="btn btn-secondary btn-sm">Cancel</button>
+                <button type="submit" class="btn btn-primary btn-sm">Post</button>
+              </form>
+              </div>
+              </div>
+            </div>
+            <div id="create-new-discussion" class="card col-lg-7 mx-auto px-0">
+              <div class="card-body">
+              <div class="d-flex position-relative align-items-center">
+                      {% avatar user 36 class="avatar rounded-circle avatar-sm mr-3" %}
+                      <h3 class="card-title mb-0 h5 text-muted">Share something with your class...</h3>
+                </div>
+              </div>
+            </div>
+            {% for object in objects %}
+              <div class="card col-lg-7 mx-auto px-0">
+                {% include "./post_card.html" %}
+                {% get_comment_count for object as comment_count %}
+                {% if object.allow_comments %}
+                <div class="card-footer pb-1">
+                  <a href="{% url 'course:stream:post-detail' course.slug object.slug %}" class="btn btn-text btn-sm text-left font-weight-bold mb-3">
+                    {% if comment_count %}
+                      {{ comment_count }} comment{{ comment_count|pluralize }}
+                    {% else %}
+                      Add class comment
+                    {% endif %}
+                  </a>
+                  {% comment %} Only display the last comment {% endcomment %}
+                  {% get_comment_list for object as comment_list %}
+                  {% if comment_count %}
+                    <div class="media-list">
+                      <div class="media" id="c{{ comment_list.last.id }}">
+                          {% avatar comment_list.last.user 36 class="mr-3 avatar rounded-circle avatar-sm mr-3" %}
+                          <div class="comment">
+                            <a name="c{{ comment_list.last.id }}"></a>
+                            <h5 class="mb-0 text-xs">
+                                <div class="mr-auto">
+                                  <span>{{ comment_list.last.user.first_name }} {{ comment_list.last.user.last_name }}</span>
+                                  <span class="text-muted">&nbsp;-&nbsp;{{ comment_list.last.submit_date }}
+                                  {% if comment_list.last.user and comment_list.last.user|has_permission:"django_comments.can_moderate" %}
+                                    <span class="badge badge-secondary">instructor</span>
+                                  {% endif %}
+                                  <a class="permalink" title="comment permalink" href="{% get_comment_permalink comment_list.last %}">¶</a></div>
+                            </h5>
+                          {% if comment_list.last.is_removed %}
+                            <p class="text-muted text-xs">
+                              <em>"This comment has been removed."</em>
+                            </p>
+                          {% else %}
+                            <div class="text-muted text-xs">
+                              {% include "includes/django_comments_xtd/comment_content.html" with content=comment_list.last.comment %}
+                            </div>
+                            {% endif %}
+                          </div>
+                      </div>
+                    </div>
+                  {% endif %}
+                </div>
+                {% endif %}
+              </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}
