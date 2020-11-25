@@ -1,18 +1,29 @@
 {% extends "base.html" %}
-{% load result_extras %}
 {% load static %}
-{% load avatar_tags %}
-
-{% block title%}Announcement - Saiki{% endblock %}
 
 {% block content %}
-
 {% include '../includes/header_course.html' %}
 
 <div class="container-fluid mt--6">
     <div class="row">
-        <div class="col">
-            {% include './course_detail_s.html' %}
+        <div class="col-lg-7 mx-auto">
+            <div class="card">
+                <div class="card-body">
+                    <h2 class="h2">Welcome to {{ course.course.code }}</h3>
+                    <h4>Instructor:</h4>
+                    <p class="text-sm font-weight-normal">{{ course.teacher.user.first_name }} {{ course.teacher.user.last_name }}</p>
+                    <h4>Description:</h4>
+                    <p class="text-sm font-weight-normal">{{ course.course.description }}</p>
+                    <h4>Term:</h4>
+                    <p class="text-sm font-weight-normal">{{ course.term }}</p>
+                    <h4>Code:</h4>
+                    <p class="text-sm font-weight-normal">{{ course.course.code }}</p>
+                    <h4>Status:</h4>
+                    <p class="text-sm font-weight-normal">{{ course.archive|yesno:"Archived,Active" }}</p>
+                    <p class="text-xs font-weight-normal">good luck ;)</p>
+                </div>
+            </div>
         </div>
     </div>
+</div>
 {% endblock %}

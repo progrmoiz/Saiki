@@ -20,6 +20,7 @@ from django.urls import include, path
 from django.conf import settings
 from django.conf.urls.static import static
 from accounts.views import HomePageView
+from django.views.i18n import JavaScriptCatalog
 from rest_framework import routers
 from course.views import CourseOfferingViewSet
 
@@ -33,6 +34,8 @@ urlpatterns = [
     path('c/', include('course.urls', namespace='course')),
     path('accounts/', include('accounts.urls', namespace='accounts')),
     path('announcement/', include('announcement.urls', namespace='announcement')),
+    path(r'comments/', include('django_comments_xtd.urls')),
+    path(r'jsi18n/', JavaScriptCatalog.as_view(), name='javascript-catalog'),
     path('r/', include('result.urls', namespace='result')),
     path('w/', include('assignment.urls', namespace='assignment')),
     path('admin/', admin.site.urls),

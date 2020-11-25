@@ -1,19 +1,21 @@
-from django.db import models
-from django.utils.translation import ugettext as _
-from django.db.models.signals import post_delete, post_save, pre_save
-from django.dispatch import receiver
-from meta.models import ModelMeta
-from .utils import file_cleanup
 import datetime
-import uuid
 import os
-from notifications.signals import notify
-from django.urls import reverse
-from guardian.shortcuts import assign_perm
-from saiki.utils import get_site_title
+import uuid
 
 import accounts.models
 import course.models
+import stream.models
+from django.db import models
+from django.db.models.signals import post_delete, post_save, pre_save
+from django.dispatch import receiver
+from django.urls import reverse
+from django.utils.translation import ugettext as _
+from guardian.shortcuts import assign_perm
+from meta.models import ModelMeta
+from notifications.signals import notify
+from saiki.utils import get_site_title
+
+from .utils import file_cleanup
 
 """ Whenever ANY model is deleted, if it has a file field on it, delete the associated file too"""
 @receiver(post_delete)
@@ -86,7 +88,6 @@ def assignment_save_handler(sender, instance, created, **kwargs):
     users = accounts.models.User.objects.filter(student__courseenrollment__course_offered=instance.course_offering)
 
     # add permission to teacher, so only teacher can edit and view this assignment
-
     if created:
         assign_perm('add_assignment', instance.course_offering.teacher.user, instance)
         assign_perm('change_assignment', instance.course_offering.teacher.user, instance)
@@ -94,6 +95,14 @@ def assignment_save_handler(sender, instance, created, **kwargs):
         assign_perm('view_assignment', instance.course_offering.teacher.user, instance)
 
         assign_perm('view_assignment', users, instance)
+
+        post = stream.models.Post()
+        post.stream = instance.course_offering
+        post.user = instance.course_offering.teacher.user
+        post.body = f'Assignment: { instance.title }'
+        post.post_type = 'assignment'
+        post.assignment = instance
+        post.save()
 
         verb = 'assigned'
     else:

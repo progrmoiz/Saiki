@@ -1,0 +1,27 @@
+{% load result_extras %}
+{% if course and 'course' in appname %}
+    {% app_color 'course' text=course.course.code as appcolor %}
+{% elif appname == 'assignment' %}
+    {% app_color 'assignment' as appcolor %}
+{% elif appname == 'announcement' %}
+    {% app_color 'announcement' as appcolor %}
+{% elif appname == 'result' %}
+    {% app_color 'result' as appcolor %}
+{% endif %}
+{% if appcolor %}
+<style>
+#app .header, #app .navbar-top {
+    background: {{ appcolor.0 }} !important;
+}
+#app .mark-status .unread {
+    border-color: {{ appcolor.0 }} !important;
+}
+#app .btn-neutral {
+    background: {{ appcolor.2 }} !important;
+    color: {{ appcolor.0 }} !important;
+}
+#app .header-body h6, #app .user_displayname {
+    color: {{ appcolor.2 }} !important;
+}
+</style>
+{% endif %}

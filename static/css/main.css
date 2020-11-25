@@ -56,3 +56,12 @@
   bottom: -15px;
   height: 4px;
 }
+
+.comment p, .announcement p {
+  font-size: 0.75rem;
+  font-weight: 400;
+}
+
+.ql-editor strong {
+  font-weight: bold;
+}

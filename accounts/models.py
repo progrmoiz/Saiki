@@ -86,7 +86,7 @@ class Student(models.Model):
     guardian = models.ForeignKey(StudentGuardian, on_delete=models.CASCADE)
 
     program = models.ForeignKey('university.Program', on_delete=models.CASCADE)
-    semester = models.IntegerField(_('semester'), default=1)
+    semester = models.ForeignKey('university.Semester', on_delete=models.CASCADE)
 
     is_graduated = models.BooleanField('Graduated', default=False)
 

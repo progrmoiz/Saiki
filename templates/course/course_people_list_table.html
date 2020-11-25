@@ -1,0 +1,103 @@
+{% load avatar_tags %}
+
+<div class="card">
+  <div class="card-header border-0">
+    <div class="row">
+      <div class="col-6">
+        <h3 class="mb-0">Teachers</h3>
+      </div>
+    </div>
+  </div>
+  <div class="table-responsive">
+    <table class="table align-items-center table-flush table-striped">
+      <thead class="thead-light">
+        <tr>
+          <th class="w-auto">Name</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+            <td class="table-user">
+            {% avatar course.teacher.user 240 class="avatar rounded-circle mr-3" %}
+            <b>{{ course.teacher.user.first_name }} {{ course.teacher.user.last_name }}</b>
+            </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+{% if students.count > 1 or is_teacher %}
+<div class="card">
+  <div class="card-header border-0">
+    <div class="row">
+      <div class="col-6">
+        {% if is_student %}
+            <h3 class="mb-0">Classmates</h3>
+        {% else %}
+            <h3 class="mb-0">Students</h3>
+        {% endif %}
+      </div>
+      <div class="col-6 text-right">
+        {% if is_student %}
+          <p class="mb-0 text-sm font-weight-bold">{{ students.count }} classmate{{ students.count|pluralize }}</h3>
+        {% else %}
+            <p class="mb-0 text-sm font-weight-bold">{{ students.count }} student{{ students.count|pluralize }}</h3>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+  <div class="table-responsive">
+    <table class="table align-items-center table-flush table-striped">
+      <thead class="thead-light">
+        <tr>
+          <th class="w-auto">Name</th>
+          {% if is_teacher %}
+            <th class="w-10">ID</th>
+            <th class="w-10">Program</th>
+            <th class="w-10">Grade</th>
+            <th class="w-10"></th>
+          {% endif %}
+        </tr>
+      </thead>
+      <tbody>
+      {% for student in students %}
+        <tr>
+          <td class="table-user">
+            {% avatar student.user 240 class="avatar rounded-circle mr-3" %}
+            <b>{{ student.user.first_name }} {{ student.user.last_name }}</b>
+          </td>
+          {% if is_teacher %}
+          <td>
+            <span class="text-muted">{{ student.user.username }}</span>
+          </td>
+          <td>
+            <span class="text-muted">{{ student.program.code }}</span>
+          </td>
+          <td>
+            {% for ce in student.courseenrollment_set.all %}
+              {% for grade in ce.grade_set.all %}
+                {% if grade.course_enrollment.course_offered == course %}
+                    {% include '../result/letter_grade.html' %}
+                {% endif %}
+              {% endfor %}
+            {% endfor %}
+          </td>
+          <td class="table-actions">
+            <a href="{% url 'course:student' course.slug student.user.username %}" class="table-action" data-toggle="tooltip" data-original-title="Edit grade">
+              <i class="fas fa-user-edit"></i>
+            </a>
+            {% if student.user.email %}
+                <a href="mailto:{{student.user.email}}" class="table-action" data-toggle="tooltip" data-original-title="Email {{student.user.email}}">
+                <i class="fas fa-envelope"></i>
+                </a>
+            {% endif %}
+          </td>
+          {% endif %}
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endif %}

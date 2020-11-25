@@ -1,113 +1,40 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block title%}Assignments - Saiki{% endblock %}
-
 {% block script_1 %}
 <script src="{% static "/vendor/quill/dist/quill.min.js" %}"></script>
-<script>
-
-'use strict';
-
-var QuillEditor = (function() {
-
-  function debounce(callback, wait, immediate = false) {
-    let timeout = null 
-    
-    return function() {
-      const callNow = immediate && !timeout
-      const next = () => callback.apply(this, arguments)
-      
-      clearTimeout(timeout)
-      timeout = setTimeout(next, wait)
-
-      if (callNow) {
-        next()
-      }
-    }
-  }
-
-	// Variables
-
-	var $quill = $('[data-toggle="quill"]');
-  
-  var quill = new Quill($quill.get(0), {
-    modules: {
-      toolbar: [
-        ['bold', 'italic'],
-        ['link'],
-        [{
-          'list': 'ordered'
-        }, {
-          'list': 'bullet'
-        }]
-      ]
-    },
-    // placeholder: placeholder,
-    theme: 'snow'
-  });
-
-
-
-  window.addEventListener("beforeunload", function (e) {
-    if (window.unsavedChanges) {
-      e.returnValue = 'Unsaved Changes!';
-      return 'Unsaved Changes!';
-    };
-    return;
-  });
-
-  var syncHtml = debounce(function() {
-    var contents = $(".ql-editor").html();
-    $('#description').val(contents);
-    console.log(contents)
-    window.unsavedChanges = false;
-  }, 500);
-
-  quill.on('text-change', function() {
-    window.unsavedChanges = true;
-    syncHtml();
-  });
-
-})();
-
-</script>
 {% endblock %}
 
 {% block style %}
 <link type="text/css" href="{% static '/vendor/quill/dist/quill.core.css' %}" rel="stylesheet" >
-
 {% endblock %}
 
 {% block content %}
 
 
 <!-- Header -->
-{% include '../includes/header.html' with heading="Create assignment" %}
+{% include '../includes/header_course.html' %}
 
 <div class="container-fluid mt--6">
 <div class="row">
     <div class="col">
 <div class="card mb-4">
-        <!-- Card header -->
         <div class="card-header">
-          <h3 class="mb-0">{{course.course.code}} - {{course.term}}</h3>
+          <h3 class="mb-0">Create new assignment</h3>
         </div>
-        <!-- Card body -->
         <div class="card-body">
-          <!-- Form groups used in grid -->
           <div class="row">
             <div class="col-md-6">
               <form action="" method="POST">
                 {% csrf_token %}
                 <div class="row">
-                <div class="col-12">
-                  <div class="form-group">
-                    <label class="form-control-label">Title</label>
-                    <input type="text" class="form-control placeholder="One of three cols" name="title" required>
+                  <div class="col-12">
+                    <div class="form-group">
+                      <label class="form-control-label">Title</label>
+                      <input type="text" class="form-control placeholder="One of three cols" name="title" required>
+                    </div>
                   </div>
                 </div>
-              </div>
               <div class="row">
                 <div class="col-12">
                   <div class="form-group">
@@ -135,6 +62,7 @@ var QuillEditor = (function() {
                   <div class="form-group">
                     <label class="form-control-label" for="example4cols1Input">Instruction</label>
                     <input name="description" type="hidden" id="description">
+                    <div class="quill-initial-state d-none"></div>
                     <div data-toggle="quill" data-quill-placeholder="Quill WYSIWYG"></div>
                   </div>
                 </div>

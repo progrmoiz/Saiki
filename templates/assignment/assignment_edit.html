@@ -1,127 +1,12 @@
 {% extends "base.html" %}
 {% load static %}
+{% load result_extras %}
 
 {% block title%}Assignments - Saiki{% endblock %}
 
 {% block script_1 %}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/min/dropzone.min.js"></script>
 <script src="{% static "/vendor/quill/dist/quill.min.js" %}"></script>
-<script>
-
-'use strict';
-
-var Dropzones = (function() {
-
-	var $dropzone = $('[data-toggle="dropzone"]');
-	var $dropzonePreview = $('.dz-preview');
-
-	function init($this) {
-		var multiple = ($this.data('dropzone-multiple') !== undefined) ? true : false;
-		var preview = $this.find($dropzonePreview);
-		var currentFile = undefined;
-        var csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
-
-		// Init options
-		var options = {
-			url: '{% url 'assignment:edit_upload' assignment.slug %}',
-			thumbnailWidth: null,
-			thumbnailHeight: null,
-			previewsContainer: preview.get(0),
-			previewTemplate: preview.html(),
-			maxFiles: (!multiple) ? 1 : null,
-            // autoProcessQueue: false,
-            headers: {
-                'X-CSRFToken': csrftoken
-            },
-			acceptedFiles: (!multiple) ? 'image/*' : null,
-			init: function() {
-				this.on("addedfile", function(file) {
-					if (!multiple && currentFile) {
-						this.removeFile(currentFile);
-					}
-					currentFile = file;
-				})
-			}
-		}
-		preview.html('');
-
-		$this.dropzone(options)
-	}
-
-	function globalOptions() {
-		Dropzone.autoDiscover = false;
-	}
-
-	if ($dropzone.length) {
-		globalOptions();
-		$dropzone.each(function() {
-			init($(this));
-		});
-	}
-})();
-
-var QuillEditor = (function() {
-
-  function debounce(callback, wait, immediate = false) {
-    let timeout = null 
-    
-    return function() {
-      const callNow = immediate && !timeout
-      const next = () => callback.apply(this, arguments)
-      
-      clearTimeout(timeout)
-      timeout = setTimeout(next, wait)
-
-      if (callNow) {
-        next()
-      }
-    }
-  }
-
-	// Variables
-
-	var $quill = $('[data-toggle="quill"]');
-  
-  var quill = new Quill($quill.get(0), {
-    modules: {
-      toolbar: [
-        ['bold', 'italic'],
-        ['link'],
-        [{
-          'list': 'ordered'
-        }, {
-          'list': 'bullet'
-        }]
-      ]
-    },
-    theme: 'snow'
-  });
-  quill.root.innerHTML = "{{ assignment.description|safe }}"
-
-
-  window.addEventListener("beforeunload", function (e) {
-    if (window.unsavedChanges) {
-      e.returnValue = 'Unsaved Changes!';
-      return 'Unsaved Changes!';
-    };
-    return;
-  });
-
-  var syncHtml = debounce(function() {
-    var contents = $(".ql-editor").html();
-    $('#description').val(contents);
-    console.log(contents)
-    window.unsavedChanges = false;
-  }, 500);
-
-  quill.on('text-change', function() {
-    window.unsavedChanges = true;
-    syncHtml();
-  });
-
-})();
-
-</script>
 {% endblock %}
 
 {% block style %}
@@ -135,19 +20,17 @@ var QuillEditor = (function() {
 <!-- Header -->
 {% url 'assignment:detail' assignment.slug as assignment_detail_url %}
 {% url 'assignment:delete' assignment.slug as assignment_delete_url %}
-{% include '../includes/header.html' with heading="Edit assignment" btn1_url=assignment_detail_url btn1_title="View" btn2_url=assignment_delete_url btn2_title="Delete" %}
-
+{% with assignment.deadline|date:"F d, Y f A" as assignment_deadline %}
+{% include '../includes/header.html' with heading=assignment.title subheading="Due "|addstr:assignment_deadline btn1_url=assignment_detail_url btn1_title="View" btn2_url=assignment_delete_url btn2_title="Delete" %}
+{% endwith %}
 <div class="container-fluid mt--6">
 <div class="row">
     <div class="col">
 <div class="card mb-4">
-        <!-- Card header -->
         <div class="card-header">
-          <h3 class="mb-0">{{ assignment.title }} - {{ assignment.course_offering.course.code }} - {{ assignment.course_offering.term }}</h3>
+          <h3 class="mb-0">Edit Assignment</h3>
         </div>
-        <!-- Card body -->
         <div class="card-body">
-          <!-- Form groups used in grid -->
           <div class="row">
             <div class="col-md-6">
               <form action="" method="POST">
@@ -185,8 +68,9 @@ var QuillEditor = (function() {
               <div class="row">
                 <div class="col-12">
                   <div class="form-group">
-                    <label class="form-control-label" for="example4cols1Input">Instruction</label>
+                    <label class="form-control-label" for="description">Instruction</label>
                     <input name="description" type="hidden" id="description" value="{{ assignment.description }}">
+                    <div class="quill-initial-state d-none">{{ assignment.description|safe }}</div>
                     <div data-toggle="quill"></div>
                   </div>
                 </div>
@@ -203,14 +87,15 @@ var QuillEditor = (function() {
             <div class="col-md-6">
                 <div class="col-12">
                   <div class="form-group">
-                    <form method="POST" enctype="multipart/form-data" id="form" action="">
-                      {% csrf_token %}
+                    <form method="POST" enctype="multipart/form-data" id="form" action="{% url 'assignment:edit_upload' assignment.slug %}">
                       <label class="form-control-label">Work material</label>
 <div
             class="dropzone dropzone-multiple"
             data-toggle="dropzone"
             data-dropzone-multiple
+            data-dropzone-url="{% url 'assignment:edit_upload' assignment.slug %}"
           >
+            {% csrf_token %}
             <div class="fallback">
               <div class="custom-file">
                 <input
@@ -229,6 +114,10 @@ var QuillEditor = (function() {
                   <span class="fiv-sqo fiv-icon-blank"></span>
                   <span class="text-sm font-weight-bold text-dark" data-dz-name>...</span>
                 </a>
+                <div class="progress">
+                  <div class="progress-bar bg-default" role="progressbar" data-dz-uploadprogress>
+                  </div>
+                </div>
               </li>
             </ul>
           </div>
