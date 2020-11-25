@@ -22,14 +22,10 @@ from django.conf.urls.static import static
 from accounts.views import HomePageView
 from django.views.i18n import JavaScriptCatalog
 from rest_framework import routers
-from course.views import CourseOfferingViewSet
-
-router = routers.DefaultRouter()
-router.register(r'courses', CourseOfferingViewSet)
 
 urlpatterns = [
     path('', HomePageView.as_view(), name='index'),
-    path('api/', include(router.urls)),
+    path('api/', include('course.api.urls', namespace='api')),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     path('c/', include('course.urls', namespace='course')),
     path('accounts/', include('accounts.urls', namespace='accounts')),
