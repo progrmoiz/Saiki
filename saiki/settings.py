@@ -52,7 +52,6 @@ INSTALLED_APPS = [
     'crispy_forms',
     'avatar',
     'mathfilters',
-    'result.templatetags',
     'notifications',
     'guardian',
     'meta',
@@ -140,6 +139,9 @@ TEMPLATES = [
                 'announcement.contexts.notification',
                 'saiki.contexts.appname'
             ],
+            'libraries':{
+                'saiki_extras': 'saiki.templatetags.saiki_extras',
+            }
         },
     },
 ]
