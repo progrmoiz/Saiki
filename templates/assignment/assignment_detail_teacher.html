@@ -1,0 +1,84 @@
+
+{% load avatar_tags %}
+
+<div class="card">
+  <div class="card-header border-0">
+    <div class="row">
+      <div class="col-6">
+        <h3 class="mb-0">Submissions</h3>
+      </div>
+    </div>
+  </div>
+  <div class="table-responsive">
+    <table class="table align-items-center table-flush table-striped">
+      <thead class="thead-light">
+        <tr>
+          <th class="w-auto">Name</th>
+          <th class="w-10">ID</th>
+          <th class="w-10">Program</th>
+          <th class="w-10">Date</th>
+          {% if assignment.points != 0 %}
+            <th class="w-10">Points</th>
+          {% endif %}
+          <th class="w-10"></th>
+        </tr>
+      </thead>
+      <tbody>
+      {% for student in students %}
+        <tr>
+          <td class="table-user">
+            {% avatar student.user 36 class="avatar avatar-sm rounded-circle mr-3" id="user_avatar" %}
+            <b>{{ student.user.first_name }} {{ student.user.last_name }}</b>
+          </td>
+          <td>
+            <span class="text-muted">{{ student.user.username }}</span>
+          </td>
+          <td>
+            <span class="text-muted">{{ student.program.code }}</span>
+          </td>
+          <td>
+            <span class="text-muted">
+            {% for assignmentwork in student.assignmentwork_set.all %}
+              {% if assignmentwork.assignment == assignment %}
+                  {{ assignmentwork.submit_date|date:"F d, Y f A"  }}
+              {% endif %}
+            {% endfor %}
+            </span>
+          </td>
+          {% if assignment.points != 0 %}
+          <td>
+            <span class="text-muted">
+            {% for assignmentwork in student.assignmentwork_set.all %}
+              {% if assignmentwork.assignment == assignment %}
+                  {% if assignmentwork.points < 0 %} 
+                    -
+                  {% else %} 
+                    {{ assignmentwork.points }}/{{ assignmentwork.assignment.points }} 
+                  {% endif %}
+              {% endif %}
+            {% endfor %}
+            </span>
+          </td>
+          {% endif %}
+          <td class="table-actions">
+            <a href="{% url 'assignment:assign_student_point' assignment.slug student.user.username %}" class="table-action" data-toggle="tooltip" data-original-title="View submission">
+              <i class="fas fa-eye"></i>
+            </a>
+          </td>
+        </tr>
+      {% empty %}
+        <tr>
+          <td>No submissions yet.</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          {% if assignment.points != 0 %}
+            <td></td>
+          {% endif %}
+          <td></td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>

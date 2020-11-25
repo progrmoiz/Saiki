@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+
+<!-- Header -->
+{% include '../includes/header.html' with heading='Delete post' header_body_class="col-lg-7 mx-auto" %}
+
+<div class="container-fluid mt--6">
+<div class="row">
+<div class="col-md-7 mx-auto">
+<div class="card mb-4">
+        <div class="card-body">
+          <!-- Form groups used in grid -->
+          <div class="row">
+            <div class="col-md-12">
+            <form method="post">
+                {% csrf_token %} 
+                <p class="font-weight-bold">Are you sure you want to delete "{{ object }}"?</p> 
+                <input type="submit" value="Confirm" class="btn btn-primary btn-sm">
+                <a href="{% url 'course:stream:post-detail' course.slug object.slug %}" type="button" class="btn btn-secondary btn-sm">Cancel</a>
+            </form> 
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+
+
+</div>
+{% endblock %}
+
+
+
+
+
+
+
+
+
+

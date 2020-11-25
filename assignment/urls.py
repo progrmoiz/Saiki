@@ -1,5 +1,5 @@
 from django.urls import include, path
-from .views import AssignStudentPointView, AssignmentDeleteView, AssignmentEditUploadView, AssignmentListView, AssignmentDetailView, AssignmentCreateView, AssignmentEditView
+from .views import AssignmentAssignPointView, AssignmentDeleteView, AssignmentEditUploadView, AssignmentListView, AssignmentDetailView, AssignmentCreateView, AssignmentEditView
 
 app_name = 'assignment'
 urlpatterns = [
@@ -12,6 +12,6 @@ urlpatterns = [
             path('upload/', AssignmentEditUploadView.as_view(), name='edit_upload'),
         ])),
         path('delete/', AssignmentDeleteView.as_view(), name='delete'),
-        path('<int:username>', AssignStudentPointView.as_view(), name='assign_student_point'),
+        path('<int:username>', AssignmentAssignPointView.as_view(), name='assign_student_point'),
     ]))
 ]

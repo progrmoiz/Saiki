@@ -36,6 +36,7 @@ class CourseOffering(ModelMeta, models.Model):
         'description': 'get_meta_course_desc',
     }
 
+
     def get_meta_course_code(self):
         return get_site_title(self.course.code)
 

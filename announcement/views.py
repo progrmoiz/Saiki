@@ -15,18 +15,15 @@ from django.http import HttpResponse
 from notifications.signals import notify
 from meta.views import Meta
 from saiki.utils import get_site_title
+from guardian.shortcuts import get_objects_for_user
 
 # add mark as read
-class AnnouncementListView(LoginRequiredMixin, ListView):
-    redirect_field_name = 'accounts:login'
+class AnnouncementListView(ListView):
     template_name = 'announcement/announcement.html'
     model = Announcement
     context_object_name = 'announcement'
     
     def get(self, request, *args, **kwargs):
-        if not request.user.is_student:
-            return HttpResponseForbidden()
-
         return super().get(self, request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
@@ -40,29 +37,85 @@ class AnnouncementListView(LoginRequiredMixin, ListView):
         return context
 
     def get_queryset(self):
-        student = get_current_student(self.request)
         today = datetime.datetime.today()
 
-        student_courses = CourseEnrollment.objects.filter(student=student)
-        student_courses = CourseOffering.objects.filter(courseenrollment__in=student_courses)
+        # current_sem = student.semester
+        # enrolled_courses = CourseOffering.objects.filter(courseenrollment__student=student)
+        # program = student.program
 
+        # all active announcements
         a = Announcement.objects.filter(start_date__lte=today, end_date__gte=today, active=True)
+        a_global = a.filter(is_global=True)
+        a_v = get_objects_for_user(self.request.user, 'announcement.view_announcement', with_superuser=False)
 
-        a_g = a.filter(is_global=True)
-        a_d = a.filter(announcement_filters__program=student.program)
-        a_s = a_d.filter(Q(announcement_filters__semesters=[student.semester]))
-        a_c = a_d.filter(Q(announcement_filters__course__in=student_courses))
+        # course 
+        # program
+        # semester
+        # course + program
+        # course + semester
+        # program + semester
+        # course + program + semester
 
-        return (a_g | a_s | a_c | a_d).order_by('-start_date')
 
-class AnnouncementDetailView(LoginRequiredMixin, DetailView):
-    redirect_field_name = 'accounts:login'
+        # course_only = a.filter(
+        #     announcement_filters__course__in=enrolled_courses,
+        #     announcement_filters__semester=None,
+        #     announcement_filters__program=None
+        # )
+        # semester_only = a.filter(
+        #     announcement_filters__course=None,
+        #     announcement_filters__semester=current_sem,
+        #     announcement_filters__program=None
+        # )
+        # program_only = a.filter(
+        #     announcement_filters__course=None,
+        #     announcement_filters__semester=None,
+        #     announcement_filters__program=program
+        # )
+        # course_semester = a.filter(
+        #     announcement_filters__course__in=enrolled_courses,
+        #     announcement_filters__semester=current_sem,
+        #     announcement_filters__program=None
+        # )
+        # course_program = a.filter(
+        #     announcement_filters__course__in=enrolled_courses,
+        #     announcement_filters__semester=None,
+        #     announcement_filters__program=program
+        # )
+        # program_semester = a.filter(
+        #     announcement_filters__course=None,
+        #     announcement_filters__semester=current_sem,
+        #     announcement_filters__program=program
+        # )
+        # course_program_semester = a.filter(
+        #     announcement_filters__course__in=enrolled_courses,
+        #     announcement_filters__semester=current_sem,
+        #     announcement_filters__program=program
+        # )
+
+        # semester_only = a.filter(announcement_filters__semester=current_sem)
+        # program_related_only = a.filter(announcement_filters__program=program, announcement_filters__semester=None)
+
+        # program_related =  a.filter(announcement_filters__program=program)
+
+        # program_related_with_sem = a.filter(announcement_filters__program=program, announcement_filters__semesters__in=[current_sem])
+        
+        # student_courses = CourseEnrollment.objects.filter(student=student)
+        # student_courses = CourseOffering.objects.filter(courseenrollment__in=student_courses)
+        
+        # courses_related = a.filter(announcement_filters__course__in=enrolled_courses)
+
+        return (a_global | a_v).distinct()
+
+class AnnouncementDetailView(DetailView):
     template_name = 'announcement/announcement_detail.html'
     model = Announcement
     context_object_name = 'announcement'
+    slug_url_kwarg = 'slug'
 
     def get(self, request, *args, **kwargs):
-        if not request.user.is_student:
+        obj = self.get_object()
+        if not request.user.has_perm('view_announcement', obj) and not obj.is_global:
             return HttpResponseForbidden()
 
         return super().get(self, request, *args, **kwargs)
@@ -78,7 +131,4 @@ class AnnouncementDetailView(LoginRequiredMixin, DetailView):
         return context
 
     def get_queryset(self):
-        if self.request.user.is_authenticated:
-            return Announcement.objects.filter(active=True)
-        else:
-            return Announcement.objects.none()
+        return Announcement.objects.filter(active=True)

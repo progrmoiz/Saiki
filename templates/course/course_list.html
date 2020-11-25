@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+{% if is_student %}
+    {% include '../includes/header.html' with heading=courses_offering|yesno:"My courses, Hidden courses" %}
+{% endif %}
+
+{% if is_teacher %}
+    {% include '../includes/header.html' with heading=courses_offering|yesno:"My courses, Archived courses" %}
+{% endif %}
+
+{% if is_student %}
+    {% include './course_list_student.html' %}
+{% elif is_teacher %}
+    {% include './course_list_teacher.html' %}
+{% endif %}
+
+{% endblock %}

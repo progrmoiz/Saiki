@@ -24,9 +24,9 @@ from .models import Assignment, AssignmentFile, AssignmentWork, AssignmentWorkFi
 from accounts.utils import get_current_student, get_current_teacher, is_student
 import course.models
 
-class AssignStudentPointView(LoginRequiredMixin, FormMixin, DetailView):
+class AssignmentAssignPointView(LoginRequiredMixin, FormMixin, DetailView):
     redirect_field_name = 'accounts:login'
-    template_name = 'assignment/assign_student_point.html'
+    template_name = 'assignment/assignment_assign_point.html'
     model = Assignment
     context_object_name = 'assignment'
     form_class = AssignPointForm
@@ -49,7 +49,7 @@ class AssignStudentPointView(LoginRequiredMixin, FormMixin, DetailView):
         return super().get(self, request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
-        context = super(AssignStudentPointView,self).get_context_data(**kwargs)
+        context = super(AssignmentAssignPointView,self).get_context_data(**kwargs)
         student = get_current_student(self.request)
         teacher = get_current_teacher(self.request)
         slug = self.kwargs['slug']
@@ -110,7 +110,7 @@ class AssignStudentPointView(LoginRequiredMixin, FormMixin, DetailView):
         return super().form_valid(form)
 
     def get_queryset(self):
-        queryset = super(AssignStudentPointView, self).get_queryset()
+        queryset = super(AssignmentAssignPointView, self).get_queryset()
         queryset = queryset.filter()
 
         return queryset
@@ -119,7 +119,7 @@ class AssignmentListView(LoginRequiredMixin, ListView):
     redirect_field_name = 'accounts:login'
     model = Assignment
     context_object_name = 'assignments'
-    template_name = 'assignment/assignment.html'
+    template_name = 'assignment/assignment_list.html'
 
     def get(self, request, *args, **kwargs):
         if not (request.user.is_teacher or request.user.is_student):
@@ -132,7 +132,6 @@ class AssignmentListView(LoginRequiredMixin, ListView):
         student = get_current_student(self.request)
         teacher = get_current_teacher(self.request)
         course_slug = self.kwargs.get('slug')
-        
         
         context['is_assignment_page'] = 'active'
 

@@ -19,9 +19,9 @@ from django.views.generic.edit import UpdateView
 from meta.views import Meta
 from saiki.utils import get_site_title
 
-class CourseStudentRecordView(LoginRequiredMixin, FormMixin, DetailView):
+class CoursePeopleEditView(LoginRequiredMixin, FormMixin, DetailView):
     redirect_field_name = 'accounts:login'
-    template_name = 'course/course_student_record.html'
+    template_name = 'course/course_people_edit.html'
     model = CourseOffering
     context_object_name = 'course'
     form_class = GradeForm
@@ -92,11 +92,12 @@ class CourseStudentRecordView(LoginRequiredMixin, FormMixin, DetailView):
         return super().form_valid(form)
         
     def get_context_data(self, **kwargs):
-        context = super(CourseStudentRecordView,self).get_context_data(**kwargs)
+        context = super(CoursePeopleEditView,self).get_context_data(**kwargs)
         username = self.kwargs['username']
         student = Student.objects.filter(user__username=username)[0]
 
         context['is_course_page'] = 'active'
+        context['is_people_page'] = 'active'
         context['meta'] = self.get_object().as_meta(self.request)
         context['grade'] = Grade.objects.filter(course_enrollment__course_offered=self.object, course_enrollment__student=student)[0]
         context['student_'] = student
@@ -115,7 +116,7 @@ class CourseStudentRecordView(LoginRequiredMixin, FormMixin, DetailView):
 
 class CoursePeopleView(LoginRequiredMixin, DetailView):
     redirect_field_name = 'accounts:login'
-    template_name = 'course/course_people.html'
+    template_name = 'course/course_people_list.html'
     model = CourseOffering
     context_object_name = 'course'
 
@@ -184,14 +185,14 @@ class CourseDetailView(LoginRequiredMixin, DetailView):
             if not student.user.has_perm('view_courseoffering', obj):
                 return HttpResponseForbidden()
 
-            return super().get(self, request, *args, **kwargs)
+            return redirect('course:stream:index', slug=obj.slug)
         elif is_teacher:
             teacher = get_current_teacher(self.request)
 
             if not teacher.user.has_perm('view_courseoffering', obj):
                 return HttpResponseForbidden()
             
-            return super().get(self, request, *args, **kwargs)
+            return redirect('course:stream:index', slug=obj.slug)
         else:
             return HttpResponseForbidden()
 
@@ -217,7 +218,7 @@ class CourseListView(LoginRequiredMixin, ListView):
     redirect_field_name = 'accounts:login'
     model = CourseOffering
     context_object_name = 'courses_offering'
-    template_name = 'course/course.html'
+    template_name = 'course/course_list.html'
     course_offering = CourseOffering.objects.all()
 
     def get(self, request, *args, **kwargs):

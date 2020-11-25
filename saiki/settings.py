@@ -41,21 +41,65 @@ INSTALLED_APPS = [
     'university.apps.UniversityConfig',
     'course.apps.CourseConfig',
     'announcement.apps.AnnouncementConfig',
+    'stream.apps.StreamConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
     'crispy_forms',
     'avatar',
     'mathfilters',
     'result.templatetags',
     'notifications',
     'guardian',
-    'meta'
+    'meta',
+    'rest_framework',
+    'django_comments_xtd',
+    'django_comments',
+    'django_markdown2'
     # 'dbbackup'
 ]
+
+SITE_ID = 1
+COMMENTS_APP = 'django_comments_xtd'
+
+# Either enable sending mail messages to the console:
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+# Or set up the EMAIL_* settings so that Django can send emails:
+EMAIL_HOST = "smtp.mail.com"
+EMAIL_PORT = "587"
+EMAIL_HOST_USER = "alias@mail.com"
+EMAIL_HOST_PASSWORD = "yourpassword"
+EMAIL_USE_TLS = True
+DEFAULT_FROM_EMAIL = "Helpdesk <helpdesk@yourdomain>"
+
+#  To help obfuscating comments before they are sent for confirmation.
+COMMENTS_XTD_SALT = (b"Timendi causa est nescire. "
+                     b"Aequam memento rebus in arduis servare mentem.")
+
+# Source mail address used for notifications.
+COMMENTS_XTD_FROM_EMAIL = "noreply@example.com"
+COMMENTS_XTD_CONFIRM_EMAIL = False
+
+# Contact mail address to show in messages.
+COMMENTS_XTD_CONTACT_EMAIL = "helpdesk@example.com"
+COMMENTS_XTD_MAX_THREAD_LEVEL = 0
+
+COMMENTS_XTD_APP_MODEL_OPTIONS = {
+    'stream.post': {
+        'allow_flagging': False,
+        'allow_feedback': False,
+        'show_feedback': False,
+        'who_can_post': 'users'
+    }
+}
+
+COMMENTS_XTD_API_GET_USER_AVATAR = "stream.utils.get_avatar_url"
+
 
 # DBBACKUP_STORAGE = 'django.core.files.storage.FileSystemStorage'
 # print("ABBE PATH YE HAI", os.path.join(BASE_DIR, 'backup'))
@@ -68,8 +112,6 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'accounts.middleware.AccountMiddleware',
-    'announcement.middleware.NotificationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
@@ -94,6 +136,9 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'accounts.utils.account_context_processor',
+                'announcement.utils.notification_context_processor',
+                'saiki.contexts.appname'
             ],
         },
     },
@@ -104,27 +149,27 @@ WSGI_APPLICATION = 'saiki.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'ddku0c3uu5ecp1',
-        'USER': 'elyfbvnpanixes',
-        'PASSWORD': '02eded2ca7cb45c56859c33063ec3b50d3fe6d72ed146b1e18daf6aa16cf0af5',
-        'HOST': 'ec2-54-160-120-28.compute-1.amazonaws.com',
-        'PORT': '5432',
-    }
-}
-
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#         'NAME': 'SaikiDB_7',
-#         'USER': 'postgres',
-#         'PASSWORD': '123456',
-#         'HOST': 'localhost',
+#         'NAME': 'ddku0c3uu5ecp1',
+#         'USER': 'elyfbvnpanixes',
+#         'PASSWORD': '02eded2ca7cb45c56859c33063ec3b50d3fe6d72ed146b1e18daf6aa16cf0af5',
+#         'HOST': 'ec2-54-160-120-28.compute-1.amazonaws.com',
 #         'PORT': '5432',
 #     }
 # }
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'SaikiDB_8',
+        'USER': 'postgres',
+        'PASSWORD': '123456',
+        'HOST': 'localhost',
+        'PORT': '5432',
+    }
+}
 
 
 # Password validation
@@ -187,3 +232,9 @@ META_SITE_NAME='Saiki'
 META_USE_TITLE_TAG=True
 META_USE_SITES=True
 META_USE_OG_PROPERTIES=True
+
+
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 10
+}

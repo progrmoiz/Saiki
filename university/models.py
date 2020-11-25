@@ -28,6 +28,14 @@ class Program(models.Model):
     def __str__(self):
         return self.code
 
+class Semester(models.Model):
+    number = models.IntegerField(_('number'))
+    description = models.CharField(_('description'), max_length=128)
+    university = models.ForeignKey(University, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.description
+
 def year_choices():
     return [(r, r) for r in range(1984, datetime.date.today().year+1)]
 

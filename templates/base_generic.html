@@ -23,11 +23,11 @@
         <link type="text/css" href="{% static '/css/main.css' %}" rel="stylesheet" >
 
         {% block style %}{% endblock %}
-
+        {% include './includes/app_color.html' %}
         {% include 'meta/meta.html' %}
     </head>
 
-    <body {% block body__attributes %}{% endblock %}>
+    <body id="app" {% block body__attributes %}{% endblock %}>
         {% block body %}{% endblock %}
 
         <!-- Core -->

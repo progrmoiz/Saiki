@@ -6,72 +6,6 @@
 {% block title%}Announcement - Saiki{% endblock %}
 {% block script_1 %}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/min/dropzone.min.js"></script>
-<script>
-"use strict";
-var Dropzones = (function() {
-
-	var $dropzone = $('[data-toggle="dropzone"]');
-	var $dropzonePreview = $('.dz-preview');
-
-	function init($this) {
-		var multiple = ($this.data('dropzone-multiple') !== undefined) ? true : false;
-		var preview = $this.find($dropzonePreview);
-		var currentFile = undefined;
-        var csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
-
-		// Init options
-		var options = {
-			url: '{% url 'assignment:detail' assignment.slug %}',
-			thumbnailWidth: null,
-			thumbnailHeight: null,
-			previewsContainer: preview.get(0),
-			previewTemplate: preview.html(),
-			maxFiles: (!multiple) ? 1 : null,
-            // autoProcessQueue: false,
-            headers: {
-                'X-CSRFToken': csrftoken
-            },
-			acceptedFiles: (!multiple) ? 'image/*' : null,
-			init: function() {
-				this.on("addedfile", function(file) {
-					if (!multiple && currentFile) {
-						this.removeFile(currentFile);
-					}
-					currentFile = file;
-				})
-			},
-			uploadprogress: function(file, progress, bytesSent) {
-				if (file.previewElement) {
-						console.log(progress)
-						var progressElement = file.previewElement.querySelector("[data-dz-uploadprogress]");
-						progressElement.style.width = Math.trunc(progress) + "%";
-						// progressElement.querySelector(".progress-text").textContent = Math.trunc(progress) + "%";
-						if (progress == 100) {
-								$(file.previewElement.querySelector(".progress")).fadeOut(1000)
-						}
-				}
-			}
-		}
-		preview.html('');
-
-		$this.dropzone(options)
-	}
-
-	function globalOptions() {
-		Dropzone.autoDiscover = false;
-	}
-
-	if ($dropzone.length) {
-		globalOptions();
-		$dropzone.each(function() {
-			init($(this));
-		});
-	}
-
-	
-})();
-</script>
-
 {% endblock %}
 
 {% block style %}
@@ -79,13 +13,13 @@ var Dropzones = (function() {
 {% endblock %}
 
 {% block content %}
-
 {% if is_student %}
 	{% include '../includes/header_ad.html' %}
 {% elif is_teacher %}
 	{% url 'assignment:edit' assignment.slug as assignment_edit_url %}
+	{% url 'assignment:delete' assignment.slug as assignment_delete_url %}
 	{% with assignment.deadline|date:"F d, Y f A" as assignment_deadline %}
-	{% include '../includes/header.html' with heading=assignment.title subheading="Due "|addstr:assignment_deadline btn1_url=assignment_edit_url btn1_title="Edit" %}
+	{% include '../includes/header.html' with heading=assignment.title subheading="Due "|addstr:assignment_deadline btn1_url=assignment_edit_url btn1_title="Edit" btn2_url=assignment_delete_url btn2_title="Delete" %}
 	{% endwith %}
 {% endif %}
 		
@@ -93,12 +27,12 @@ var Dropzones = (function() {
 <div class="container-fluid mt--6">
    <div class="row">
         <div class="col">
-    {% if is_student %}
-        {% include './assignment_detail_s.html' %}
-    {% elif is_teacher %}
-        {% include './assignment_detail_t.html' %}
-    {% endif %}
-            </div>
+{% if is_student %}
+	{% include './assignment_detail_student.html' %}
+{% elif is_teacher %}
+	{% include './assignment_detail_teacher.html' %}
+{% endif %}
+		</div>
     </div>
 </div>
 {% endblock %}

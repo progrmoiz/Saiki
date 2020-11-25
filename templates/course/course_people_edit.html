@@ -1,0 +1,33 @@
+{% extends "base.html" %} 
+{% load static %} 
+{% block content %} 
+{% include '../includes/header_course.html' %}
+
+<div class="container-fluid mt--6">
+  <div class="row">
+    <div class="col-lg-7 mx-auto">
+      <div class="card">
+        <div class="card-header">
+          <h3 class="mb-0">
+            {{ student_.user.first_name }} {{ student_.user.last_name }} - {{ student_.user.username }}
+          </h3>
+        </div>
+        <div class="card-body">
+          <form class="needs-validation" action="" method="POST">
+            {% csrf_token %}
+            <div class="form-row">
+              <div class="col-md-4 mb-3">
+                <div class="form-group">
+                  <label class="form-control-label" for="{{ form.grade.id_for_label }}">Grade:</label>
+                  {{ form.grade }}
+                </div>
+              </div>
+            </div>
+            <button class="btn btn-primary" type="submit">Save changes</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endblock %}
+</div>

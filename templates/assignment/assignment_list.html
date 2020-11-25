@@ -1,26 +1,18 @@
 {% extends "base.html" %}
 
-{% block title%}Assignments - Saiki{% endblock %}
-
 {% block content %}
 
-<!-- Header -->
 {% if course %}
-
-
 {% include '../includes/header_course.html' %}
-
 {% else %}
-
 {% include '../includes/header.html' with heading="Assignments" %}
-
 {% endif %}
 
 <div class="container-fluid mt--6">
     {% if is_student %}
-    {% include './assignment_s.html' %}
+    {% include './assignment_list_table_student.html' %}
     {% elif is_teacher %}
-    {% include './assignment_t.html' %}
+    {% include './assignment_list_table_teacher.html' %}
     {% endif %}
 </div>
 {% endblock %}

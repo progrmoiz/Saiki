@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import University, Department, Term, Program
+from .models import University, Department, Term, Program, Semester
 from guardian.admin import GuardedModelAdmin
 
 # Register your models here.
@@ -16,8 +16,12 @@ class UniversityAdmin(GuardedModelAdmin):
 class TermAdmin(GuardedModelAdmin):
     pass
 
+class SemesterAdmin(GuardedModelAdmin):
+    pass
+
 
 admin.site.register(University, UniversityAdmin)
 admin.site.register(Department, DepartmentAdmin)
 admin.site.register(Program, ProgramAdmin)
 admin.site.register(Term, TermAdmin)
+admin.site.register(Semester, SemesterAdmin)
