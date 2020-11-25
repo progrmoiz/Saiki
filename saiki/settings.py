@@ -136,8 +136,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'accounts.utils.account_context_processor',
-                'announcement.utils.notification_context_processor',
+                'accounts.contexts.account',
+                'announcement.contexts.notification',
                 'saiki.contexts.appname'
             ],
         },

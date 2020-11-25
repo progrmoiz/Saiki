@@ -1,4 +1,4 @@
-def notification_context_processor(request):
+def notification(request):
     if not request.user.is_authenticated: return {}
 
     return {
