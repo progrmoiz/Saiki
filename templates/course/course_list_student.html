@@ -1,4 +1,4 @@
-{% comment %} <div class="container-fluid mt--6">
+<div class="container-fluid mt--6">
 {% if courses_offering %}
     <div class="row">
         {% for course_off in courses_offering %}
@@ -23,11 +23,11 @@
             {% include './course_card.html' %}
         {% endfor %}
     </div>
-</div> {% endcomment %}
+</div>
 
 
-{% comment %} <div class="container-fluid mt--6"> {% endcomment %}
-{% comment %} {% if courses_offering %}
+<div class="container-fluid mt--6">
+{% if courses_offering %}
 <div class="row">
     {% for course_off in courses_offering %}
         {% include './course_card.html' %}
@@ -52,7 +52,6 @@
         {% include './course_card.html' %}
     {% endfor %}
 </div>
-{% endif %} {% endcomment %}
+{% endif %}
 
-{% comment %} </div> {% endcomment %}
-<div id="course-app"></div>
+</div>

@@ -1,14 +1,14 @@
 {% load avatar_tags %}
 {% load saiki_extras %}
 
-{% post_color object.post_type text=course.course.code as color %}
+{% post_color object.post_type as color %}
 
 <div class="card-body position-relative" style="background: {{ color.0 }}">
 
     <div class="d-flex position-relative">
         {% avatar object.user 36 class="avatar rounded-circle avatar-sm mr-2" %}
         <div>
-            <h3 class="card-title mb-0 h5 text-{{color.1}}">{{ object.user.first_name }} {{ object.user.last_name }}</h3>
+            <h3 class="card-title mb-0 h5" style="color: {{color.2}}">{{ object.user.first_name }} {{ object.user.last_name }}</h3>
             <h6 style="color: {{color.3}}">{{ object.publish|date:"l, j F Y" }}</h6>
         </div>
         <a class="position-absolute right-0 p-1 text-sm text-{{color.1}}" href="#" role="button"  id="d-{{object.slug}}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

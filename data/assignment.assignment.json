@@ -1,1 +1,0 @@
-[{"model": "assignment.assignment", "pk": 1, "fields": {"title": ".dll files", "description": "<p>Write .dll file</p>", "deadline": "2020-11-28T12:25:00Z", "created": "2020-11-16T19:20:00.962Z", "modified": "2020-11-16T19:20:11.491Z", "course_offering": 3, "slug": "cdb2127d-437a-4a29-86ab-dbba79b98a03", "points": 5}}]

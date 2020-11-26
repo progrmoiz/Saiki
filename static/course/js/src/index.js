@@ -15,7 +15,6 @@ class CourseListApp extends React.Component {
         'Pragma': 'no-cache',
         'Expires': '0',
     }
-
     this.state = {
         courses: []
     };

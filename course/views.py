@@ -178,7 +178,6 @@ class CoursePeopleView(LoginRequiredMixin, DetailView):
         else:
             return CourseOffering.objects.none()
 
-# TODO: Cannot be authorized by unenrolled student
 class CourseDetailView(LoginRequiredMixin, DetailView):
     redirect_field_name = 'accounts:login'
     template_name = 'course/course_detail.html'
@@ -225,7 +224,6 @@ class CourseDetailView(LoginRequiredMixin, DetailView):
         else:
             return CourseOffering.objects.none()
 
-# # Create your views here.
 class CourseListView(LoginRequiredMixin, ListView):
     redirect_field_name = 'accounts:login'
     model = CourseOffering
@@ -278,13 +276,3 @@ class CourseListView(LoginRequiredMixin, ListView):
     #         return redirect('result:select_term')
     #     else:
     #         return super(ResultListView, self).dispatch(request, *args, **kwargs)
-
-class CourseHideFormView(LoginRequiredMixin, UpdateView):
-    model = CourseEnrollment
-    fields = ['is_hidden'] 
-    template_name = 'course_hide_form.html' 
-    
-    def get_success_url(self):
-        return reverse('course:index')
-
-

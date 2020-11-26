@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites',
+    'webpack_loader',
     'crispy_forms',
     'avatar',
     'mathfilters',
@@ -211,7 +212,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/assets/'
-STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
+STATIC_DIR = os.path.join(BASE_DIR, "static")
+STATICFILES_DIRS = [STATIC_DIR]
 STATIC_ROOT = os.path.join(BASE_DIR, "assets")
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
@@ -239,4 +241,15 @@ META_USE_OG_PROPERTIES=True
 REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 10
+}
+
+WEBPACK_LOADER = {
+    'COURSE': {
+        'CACHE': not DEBUG,
+        'POLL_INTERVAL': 0.1,
+        'TIMEOUT': None,
+        'BUNDLE_DIR_NAME': 'course/js/', # end with slash
+        'STATS_FILE': os.path.join(STATIC_DIR, 'course/js/webpack-stats.json'),
+        'LOADER_CLASS': 'webpack_loader.loader.WebpackLoader',
+    }
 }

@@ -1,1 +1,0 @@
-[{"model": "university.term", "pk": 1, "fields": {"half": 2, "year": 2020}}, {"model": "university.term", "pk": 2, "fields": {"half": 2, "year": 2019}}]

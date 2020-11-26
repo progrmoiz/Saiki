@@ -1,11 +1,9 @@
 import React, {useState} from 'react';
 import ReactDOM from 'react-dom';
-import $ from 'jquery';
 import { CourseCard } from './CourseCard';
 import Accordion from 'react-bootstrap/Accordion'
 import { useAccordionToggle } from 'react-bootstrap/AccordionToggle';
-import * as lib from './lib.js';
-import { Header } from './Header';
+import Header from 'components/Header';
 import axios from 'axios'
 
 function CustomToggle({ children, eventKey }) {

@@ -8,8 +8,6 @@
 <div class="container-fluid mt--6">
     <div class="row">
     <div class="col">
-      {% if announcement %}
-
       <div class="card">
         <div class="card-header border-0">
           <div class="row">
@@ -43,14 +41,17 @@
               <span class="text-muted">{{ a.start_date.date|date:"N d, Y" }}</span>
               </td>
               </tr>
+              {% empty %}
+              <tr>
+              <td colspan="3">
+              No announcements
+              </td>
+              </tr>
               {% endfor %}
             </tbody>
           </table>
         </div>
       </div>
-      {% else %}
-      <img src="https://lh3.googleusercontent.com/proxy/oEfbIZLWSiskG11PCwrAm_ucpHACV_eMgLx5ZahN7yBlpCUABw1X2Xjs85oCFsQnFjp0TacHekCXILsxylX_SE1QvACkd-Xs-WUFJ4ARTR6KSXF3f7tg8zYQ1r275D8iAYDxLtg9muUytqIty_uSUk2O0l_dN5yUc6s" />
-      {% endif %}
 
     </div>
     </div>
