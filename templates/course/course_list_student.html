@@ -26,8 +26,8 @@
 </div> {% endcomment %}
 
 
-<div class="container-fluid mt--6">
-{% if courses_offering %}
+{% comment %} <div class="container-fluid mt--6"> {% endcomment %}
+{% comment %} {% if courses_offering %}
 <div class="row">
     {% for course_off in courses_offering %}
         {% include './course_card.html' %}
@@ -52,5 +52,7 @@
         {% include './course_card.html' %}
     {% endfor %}
 </div>
-{% endif %}
-</div>
+{% endif %} {% endcomment %}
+
+{% comment %} </div> {% endcomment %}
+<div id="course-app"></div>

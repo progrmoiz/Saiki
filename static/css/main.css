@@ -65,3 +65,7 @@
 .ql-editor strong {
   font-weight: bold;
 }
+
+.course-card .dropdown-toggle::after {
+  display: none;
+}

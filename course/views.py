@@ -21,6 +21,7 @@ from saiki.utils import get_site_title
 from rest_framework import viewsets
 from rest_framework import permissions
 from .serializers import CourseOfferingSerializer
+from uuid import uuid4
 
 class CourseOfferingViewSet(viewsets.ModelViewSet):
     """
@@ -247,6 +248,7 @@ class CourseListView(LoginRequiredMixin, ListView):
             title=get_site_title('Courses')
         )
 
+        context['random'] = str(uuid4())[:8]
         context['is_course_page'] = 'active'
         context['meta'] = meta
         if student:

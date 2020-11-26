@@ -5,7 +5,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.reverse import reverse
 from collections import OrderedDict
-
+from saiki.utils import get_course_color
 from course.models import CourseOffering, CourseEnrollment
 from .serializers import CourseOfferingSerializer, CourseEnrollmentSerializer
 
@@ -16,6 +16,7 @@ class CourseOfferingList(APIView):
         data = []
 
         for course in queryset:
+            color = get_course_color(course.course.code)
             d = OrderedDict()
             d['id'] = course.pk
             d['slug'] = course.slug
@@ -25,7 +26,11 @@ class CourseOfferingList(APIView):
             d['code'] = course.course.code
             ce = course.courseenrollment_set.get(student_id=st_pk)
             d['course-enrollment-url'] = reverse('api:course_enrollment_detail', kwargs={'c_pk': course.pk, 'ce_pk': ce.pk})
-            d['hidden'] = ce.is_hidden
+            d['is_hidden'] = ce.is_hidden
+            d['href'] = reverse('course:detail', kwargs={'slug': course.slug})
+            d['color_bg'] = color[0]
+            d['color_fg'] = color[1]
+            
             data.append(d)
 
         return Response(data)

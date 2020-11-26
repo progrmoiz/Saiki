@@ -1,9 +1,10 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block content %}
 
 {% if is_student %}
-    {% include '../includes/header.html' with heading=courses_offering|yesno:"My courses, Hidden courses" %}
+    {% comment %} {% include '../includes/header.html' with heading=courses_offering|yesno:"My courses, Hidden courses" %} {% endcomment %}
 {% endif %}
 
 {% if is_teacher %}
@@ -16,4 +17,9 @@
     {% include './course_list_teacher.html' %}
 {% endif %}
 
+{% endblock %}
+
+
+{% block script_2 %}
+    <script src="{% static "/src/course/bundles/main.js" %}?random={{ random }}"></script>
 {% endblock %}
