@@ -1,19 +1,19 @@
 import hashlib
 
 COLOR_LIST = [
-    ('#A13D63', 'white', '#ffffff'),
-    ('#34113F', 'white', '#ffffff'),
-    ('#AD8A64', 'white', '#ffffff'),
-    ('#FDFDFF', 'default', '#000000'),
-    ('#86E7B8', 'default', '#000000'),
-    ('#9E2A2B', 'white', '#ffffff'),
-    ('#335C67', 'white', '#ffffff'),
-    ('#011936', 'white', '#ffffff'),
-    ('#9FC490', 'default', '#000000'),
-    ('#B0413E', 'white', '#ffffff'),
-    ('#FBD87F', 'default', '#000000'),
-    ('#424651', 'white', '#ffffff'),
-    ('#457B9D', 'white', '#ffffff'),
+    ('#A13D63', 'white', '#ffffff', '#ced4da'),
+    ('#34113F', 'white', '#ffffff', '#ced4da'),
+    ('#AD8A64', 'white', '#ffffff', '#ced4da'),
+    ('#FDFDFF', 'default', '#212529', '#50566c'),
+    ('#86E7B8', 'default', '#212529', '#50566c'),
+    ('#9E2A2B', 'white', '#ffffff', '#ced4da'),
+    ('#335C67', 'white', '#ffffff', '#ced4da'),
+    ('#011936', 'white', '#ffffff', '#ced4da'),
+    ('#9FC490', 'default', '#ffffff', '#e7efe9'),
+    ('#B0413E', 'white', '#ffffff', '#ced4da'),
+    ('#FBD87F', 'default', '#212529', '#50566c'),
+    ('#424651', 'white', '#ffffff', '#ced4da'),
+    ('#457B9D', 'white', '#ffffff', '#ced4da'),
 ]
 
 

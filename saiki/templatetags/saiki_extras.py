@@ -28,20 +28,20 @@ def course_color(text):
     return get_course_color(text)
 
 @register.simple_tag
-def post_color(t, **kwargs):
-    if t == 'assignment':
-        return ('#6BAA75', 'white', '#ffffff', '#dee2e6')
+def post_color(post_type, **kwargs):
+    if post_type == 'assignment':
+        return ('#6BAA75', 'white', '#ffffff', '#f8f9fe')
     else:
-        return ('#ffffff', 'default', '#000000', '#8898aa')
+        return ('#ffffff', 'default', '#172b4d', '#8898aa')
 
 @register.simple_tag
 def app_color(t, **kwargs):
     if t == 'assignment':
-        return ('#6BAA75', 'white', '#ffffff')
+        return ('#6BAA75', 'white', '#ffffff', '#f8f9fe')
     if t == 'announcement':
-        return ('#202C59', 'white', '#ffffff')
+        return ('#202C59', 'white', '#ffffff', '#ced4da')
     if t == 'result':
-        return ('#38AECC', 'white', '#ffffff')
+        return ('#38AECC', 'white', '#ffffff', '#ced4da')
     elif t == 'course':
         return course_color(kwargs['text'])
     else:
