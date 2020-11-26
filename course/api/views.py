@@ -24,7 +24,7 @@ class StudentCourseList(APIView):
             d['term'] = str(course.term)
             d['code'] = course.course.code
             ce = course.courseenrollment_set.get(student_id=st_pk)
-            d['request_url'] = reverse('api:course_enrollment_detail', kwargs={'c_pk': course.pk, 'ce_pk': ce.pk})
+            d['request_url'] = reverse('course_api:course_enrollment_detail', kwargs={'c_pk': course.pk, 'ce_pk': ce.pk})
             d['is_hidden'] = ce.is_hidden
             d['href'] = reverse('course:detail', kwargs={'slug': course.slug})
             d['color_bg'] = color[0]
@@ -48,7 +48,7 @@ class TeacherCourseList(APIView):
             d['description'] = course.course.description
             d['term'] = str(course.term)
             d['code'] = course.course.code
-            d['request_url'] = reverse('api:course_detail', kwargs={'c_pk': course.pk})
+            d['request_url'] = reverse('course_api:course_detail', kwargs={'c_pk': course.pk})
             d['is_hidden'] = course.archive
             d['href'] = reverse('course:detail', kwargs={'slug': course.slug})
             d['color_bg'] = color[0]

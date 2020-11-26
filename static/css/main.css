@@ -50,7 +50,7 @@
   position: relative;
 }
 
-.dropzone .progress {
+.dropzone .progress, .material .progress {
   position: absolute;
   width: 100%;
   bottom: -15px;

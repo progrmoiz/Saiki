@@ -30,9 +30,12 @@
   "dependencies": {
     "axios": "^0.21.0",
     "classnames": "^2.2.6",
+    "file-extension": "^4.0.5",
     "jquery": "^3.5.1",
+    "path-browserify": "^1.0.1",
     "react": "^17.0.1",
     "react-bootstrap": "^1.4.0",
-    "react-dom": "^17.0.1"
+    "react-dom": "^17.0.1",
+    "react-dropzone": "^11.2.4"
   }
 }

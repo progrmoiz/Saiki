@@ -244,12 +244,12 @@ REST_FRAMEWORK = {
 }
 
 WEBPACK_LOADER = {
-    'COURSE': {
+    'DEFAULT': {
         'CACHE': not DEBUG,
         'POLL_INTERVAL': 0.1,
         'TIMEOUT': None,
-        'BUNDLE_DIR_NAME': 'course/js/', # end with slash
-        'STATS_FILE': os.path.join(STATIC_DIR, 'course/js/webpack-stats.json'),
+        'BUNDLE_DIR_NAME': 'bundles/', # end with slash
+        'STATS_FILE': os.path.join(STATIC_DIR, 'bundles/webpack-stats.json'),
         'LOADER_CLASS': 'webpack_loader.loader.WebpackLoader',
     }
 }

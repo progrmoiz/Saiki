@@ -10,6 +10,21 @@ object-assign
   http://jedwatson.github.io/classnames
 */
 
+/*! *****************************************************************************
+Copyright (c) Microsoft Corporation.
+
+Permission to use, copy, modify, and/or distribute this software for any
+purpose with or without fee is hereby granted.
+
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
+REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
+AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
+INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
+LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
+OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
+PERFORMANCE OF THIS SOFTWARE.
+***************************************************************************** */
+
 /*! ../cancel/isCancel */
 
 /*! ../core/buildFullPath */
@@ -180,6 +195,10 @@ object-assign
 
 /*! ./factoryWithTypeCheckers */
 
+/*! ./file */
+
+/*! ./file-selector */
+
 /*! ./format.js */
 
 /*! ./getBasePlacement.js */
@@ -294,6 +313,8 @@ object-assign
 
 /*! ./utils/getBasePlacement.js */
 
+/*! ./utils/index */
+
 /*! ./utils/mergeByName.js */
 
 /*! ./utils/orderModifiers.js */
@@ -340,55 +361,7 @@ object-assign
 
 /*! @restart/hooks/useSafeState */
 
-/*! CommonJS bailout: module.exports is used directly at 102:0-14 */
-
-/*! CommonJS bailout: module.exports is used directly at 10:0-14 */
-
-/*! CommonJS bailout: module.exports is used directly at 12:0-14 */
-
-/*! CommonJS bailout: module.exports is used directly at 13:0-14 */
-
-/*! CommonJS bailout: module.exports is used directly at 14:2-16 */
-
-/*! CommonJS bailout: module.exports is used directly at 15:0-14 */
-
-/*! CommonJS bailout: module.exports is used directly at 19:0-14 */
-
-/*! CommonJS bailout: module.exports is used directly at 22:0-14 */
-
-/*! CommonJS bailout: module.exports is used directly at 23:0-14 */
-
-/*! CommonJS bailout: module.exports is used directly at 27:0-14 */
-
-/*! CommonJS bailout: module.exports is used directly at 328:0-14 */
-
-/*! CommonJS bailout: module.exports is used directly at 38:0-14 */
-
-/*! CommonJS bailout: module.exports is used directly at 3:0-14 */
-
-/*! CommonJS bailout: module.exports is used directly at 41:38-52 */
-
-/*! CommonJS bailout: module.exports is used directly at 43:2-16 */
-
-/*! CommonJS bailout: module.exports is used directly at 49:0-14 */
-
-/*! CommonJS bailout: module.exports is used directly at 50:0-14 */
-
-/*! CommonJS bailout: module.exports is used directly at 52:0-14 */
-
-/*! CommonJS bailout: module.exports is used directly at 57:0-14 */
-
-/*! CommonJS bailout: module.exports is used directly at 5:0-14 */
-
-/*! CommonJS bailout: module.exports is used directly at 62:0-14 */
-
-/*! CommonJS bailout: module.exports is used directly at 65:0-14 */
-
-/*! CommonJS bailout: module.exports is used directly at 95:0-14 */
-
-/*! CommonJS bailout: module.exports is used directly at 98:0-14 */
-
-/*! CommonJS bailout: module.exports is used directly at 9:0-14 */
+/*! attr-accept */
 
 /*! classnames */
 
@@ -418,6 +391,8 @@ object-assign
 
 /*! export AsyncMode [provided] [no usage info] [provision prevents renaming (no use info)] -> ./node_modules/react-is/cjs/react-is.development.js .AsyncMode */
 
+/*! export COMMON_MIME_TYPES [provided] [no usage info] [missing usage info prevents renaming] */
+
 /*! export ConcurrentMode [provided] [no usage info] [missing usage info prevents renaming] */
 
 /*! export ConcurrentMode [provided] [no usage info] [provision prevents renaming (no use info)] -> ./node_modules/react-is/cjs/react-is.development.js .ConcurrentMode */
@@ -441,6 +416,12 @@ object-assign
 /*! export Element [provided] [no usage info] [missing usage info prevents renaming] */
 
 /*! export Element [provided] [no usage info] [provision prevents renaming (no use info)] -> ./node_modules/react-is/cjs/react-is.development.js .Element */
+
+/*! export FILE_INVALID_TYPE [provided] [no usage info] [missing usage info prevents renaming] */
+
+/*! export FILE_TOO_LARGE [provided] [no usage info] [missing usage info prevents renaming] */
+
+/*! export FILE_TOO_SMALL [provided] [no usage info] [missing usage info prevents renaming] */
 
 /*! export ForwardRef [provided] [no usage info] [missing usage info prevents renaming] */
 
@@ -474,11 +455,63 @@ object-assign
 
 /*! export Suspense [provided] [no usage info] [provision prevents renaming (no use info)] -> ./node_modules/react-is/cjs/react-is.development.js .Suspense */
 
+/*! export TOO_MANY_FILES [provided] [no usage info] [missing usage info prevents renaming] */
+
+/*! export TOO_MANY_FILES_REJECTION [provided] [no usage info] [missing usage info prevents renaming] */
+
 /*! export ThemeConsumer [provided] [no usage info] [missing usage info prevents renaming] */
 
 /*! export UNMOUNTED [provided] [no usage info] [missing usage info prevents renaming] */
 
+/*! export __assign [provided] [no usage info] [missing usage info prevents renaming] */
+
+/*! export __asyncDelegator [provided] [no usage info] [missing usage info prevents renaming] */
+
+/*! export __asyncGenerator [provided] [no usage info] [missing usage info prevents renaming] */
+
+/*! export __asyncValues [provided] [no usage info] [missing usage info prevents renaming] */
+
+/*! export __await [provided] [no usage info] [missing usage info prevents renaming] */
+
+/*! export __awaiter [provided] [no usage info] [missing usage info prevents renaming] */
+
+/*! export __classPrivateFieldGet [provided] [no usage info] [missing usage info prevents renaming] */
+
+/*! export __classPrivateFieldSet [provided] [no usage info] [missing usage info prevents renaming] */
+
+/*! export __createBinding [provided] [no usage info] [missing usage info prevents renaming] */
+
+/*! export __decorate [provided] [no usage info] [missing usage info prevents renaming] */
+
 /*! export __esModule [maybe provided (runtime-defined)] [no usage info] [provision prevents renaming (no use info)] -> ./node_modules/axios/lib/axios.js .__esModule */
+
+/*! export __esModule [provided] [no usage info] [missing usage info prevents renaming] */
+
+/*! export __exportStar [provided] [no usage info] [missing usage info prevents renaming] */
+
+/*! export __extends [provided] [no usage info] [missing usage info prevents renaming] */
+
+/*! export __generator [provided] [no usage info] [missing usage info prevents renaming] */
+
+/*! export __importDefault [provided] [no usage info] [missing usage info prevents renaming] */
+
+/*! export __importStar [provided] [no usage info] [missing usage info prevents renaming] */
+
+/*! export __makeTemplateObject [provided] [no usage info] [missing usage info prevents renaming] */
+
+/*! export __metadata [provided] [no usage info] [missing usage info prevents renaming] */
+
+/*! export __param [provided] [no usage info] [missing usage info prevents renaming] */
+
+/*! export __read [provided] [no usage info] [missing usage info prevents renaming] */
+
+/*! export __rest [provided] [no usage info] [missing usage info prevents renaming] */
+
+/*! export __spread [provided] [no usage info] [missing usage info prevents renaming] */
+
+/*! export __spreadArrays [provided] [no usage info] [missing usage info prevents renaming] */
+
+/*! export __values [provided] [no usage info] [missing usage info prevents renaming] */
 
 /*! export afterMain [provided] [no usage info] [missing usage info prevents renaming] */
 
@@ -487,6 +520,8 @@ object-assign
 /*! export afterWrite [provided] [no usage info] [missing usage info prevents renaming] */
 
 /*! export alignPropType [provided] [no usage info] [missing usage info prevents renaming] */
+
+/*! export allFilesAccepted [provided] [no usage info] [missing usage info prevents renaming] */
 
 /*! export auto [provided] [no usage info] [missing usage info prevents renaming] */
 
@@ -506,6 +541,8 @@ object-assign
 
 /*! export clippingParents [provided] [no usage info] [missing usage info prevents renaming] */
 
+/*! export composeEventHandlers [provided] [no usage info] [missing usage info prevents renaming] */
+
 /*! export createBootstrapComponent [provided] [no usage info] [missing usage info prevents renaming] */
 
 /*! export createPopper [provided] [no usage info] [missing usage info prevents renaming] */
@@ -519,6 +556,20 @@ object-assign
 /*! export distanceAndSkiddingToXY [provided] [no usage info] [missing usage info prevents renaming] */
 
 /*! export end [provided] [no usage info] [missing usage info prevents renaming] */
+
+/*! export fileAccepted [provided] [no usage info] [missing usage info prevents renaming] */
+
+/*! export fileMatchSize [provided] [no usage info] [missing usage info prevents renaming] */
+
+/*! export fromEvent [provided] [no usage info] [missing usage info prevents renaming] */
+
+/*! export fromEvent [provided] [no usage info] [missing usage info prevents renaming] -> ./node_modules/file-selector/dist/es5/file-selector.js .fromEvent */
+
+/*! export getInvalidTypeRejectionErr [provided] [no usage info] [missing usage info prevents renaming] */
+
+/*! export getTooLargeRejectionErr [provided] [no usage info] [missing usage info prevents renaming] */
+
+/*! export getTooSmallRejectionErr [provided] [no usage info] [missing usage info prevents renaming] */
 
 /*! export isAsyncMode [provided] [no usage info] [missing usage info prevents renaming] */
 
@@ -540,6 +591,8 @@ object-assign
 
 /*! export isElement [provided] [no usage info] [provision prevents renaming (no use info)] -> ./node_modules/react-is/cjs/react-is.development.js .isElement */
 
+/*! export isEvtWithFiles [provided] [no usage info] [missing usage info prevents renaming] */
+
 /*! export isForwardRef [provided] [no usage info] [missing usage info prevents renaming] */
 
 /*! export isForwardRef [provided] [no usage info] [provision prevents renaming (no use info)] -> ./node_modules/react-is/cjs/react-is.development.js .isForwardRef */
@@ -549,6 +602,10 @@ object-assign
 /*! export isFragment [provided] [no usage info] [provision prevents renaming (no use info)] -> ./node_modules/react-is/cjs/react-is.development.js .isFragment */
 
 /*! export isHTMLElement [provided] [no usage info] [missing usage info prevents renaming] */
+
+/*! export isIeOrEdge [provided] [no usage info] [missing usage info prevents renaming] */
+
+/*! export isKindFile [provided] [no usage info] [missing usage info prevents renaming] */
 
 /*! export isLazy [provided] [no usage info] [missing usage info prevents renaming] */
 
@@ -567,6 +624,8 @@ object-assign
 /*! export isProfiler [provided] [no usage info] [provision prevents renaming (no use info)] -> ./node_modules/react-is/cjs/react-is.development.js .isProfiler */
 
 /*! export isProp [provided] [no usage info] [missing usage info prevents renaming] */
+
+/*! export isPropagationStopped [provided] [no usage info] [missing usage info prevents renaming] */
 
 /*! export isShadowRoot [provided] [no usage info] [missing usage info prevents renaming] */
 
@@ -594,6 +653,8 @@ object-assign
 
 /*! export modifierPhases [provided] [no usage info] [missing usage info prevents renaming] */
 
+/*! export onDocumentDragOver [provided] [no usage info] [missing usage info prevents renaming] */
+
 /*! export onceSupported [provided] [no usage info] [missing usage info prevents renaming] */
 
 /*! export optionsSupported [provided] [no usage info] [missing usage info prevents renaming] */
@@ -618,6 +679,8 @@ object-assign
 
 /*! export timeoutsShape [provided] [no usage info] [missing usage info prevents renaming] */
 
+/*! export toFileWithPath [provided] [no usage info] [missing usage info prevents renaming] */
+
 /*! export toModifierArray [provided] [no usage info] [missing usage info prevents renaming] */
 
 /*! export toModifierMap [provided] [no usage info] [missing usage info prevents renaming] */
@@ -640,6 +703,8 @@ object-assign
 
 /*! export useDropdownToggle [provided] [no usage info] [missing usage info prevents renaming] */
 
+/*! export useDropzone [provided] [no usage info] [missing usage info prevents renaming] */
+
 /*! export useUncontrolled [provided] [no usage info] [missing usage info prevents renaming] -> ./node_modules/uncontrollable/esm/hook.js .default */
 
 /*! export useUncontrolledProp [provided] [no usage info] [missing usage info prevents renaming] */
@@ -651,6 +716,12 @@ object-assign
 /*! export viewport [provided] [no usage info] [missing usage info prevents renaming] */
 
 /*! export write [provided] [no usage info] [missing usage info prevents renaming] */
+
+/*! file-extension v4.0.5 | (c) silverwind | BSD license */
+
+/*! file-selector */
+
+/*! flagged exports */
 
 /*! invariant */
 
@@ -705,6 +776,8 @@ object-assign
 /*! runtime requirements: module, __webpack_exports__ */
 
 /*! runtime requirements: module, __webpack_require__ */
+
+/*! tslib */
 
 /*! uncontrollable */
 
@@ -764,6 +837,10 @@ object-assign
   !*** ./node_modules/axios/lib/core/settle.js ***!
   \***********************************************/
 
+/*!***********************************************!*\
+  !*** ./node_modules/path-browserify/index.js ***!
+  \***********************************************/
+
 /*!************************************************!*\
   !*** ./node_modules/axios/lib/adapters/xhr.js ***!
   \************************************************/
@@ -815,6 +892,10 @@ object-assign
 /*!**************************************************!*\
   !*** ./node_modules/uncontrollable/esm/utils.js ***!
   \**************************************************/
+
+/*!***************************************************!*\
+  !*** ./node_modules/attr-accept/dist/es/index.js ***!
+  \***************************************************/
 
 /*!***************************************************!*\
   !*** ./node_modules/axios/lib/cancel/isCancel.js ***!
@@ -869,6 +950,10 @@ object-assign
   \*****************************************************/
 
 /*!*****************************************************!*\
+  !*** ./node_modules/file-selector/dist/es5/file.js ***!
+  \*****************************************************/
+
+/*!*****************************************************!*\
   !*** ./node_modules/react-overlays/esm/Dropdown.js ***!
   \*****************************************************/
 
@@ -885,11 +970,19 @@ object-assign
   \******************************************************/
 
 /*!******************************************************!*\
+  !*** ./node_modules/file-selector/dist/es5/index.js ***!
+  \******************************************************/
+
+/*!******************************************************!*\
   !*** ./node_modules/react-bootstrap/esm/Collapse.js ***!
   \******************************************************/
 
 /*!******************************************************!*\
   !*** ./node_modules/react-bootstrap/esm/Dropdown.js ***!
+  \******************************************************/
+
+/*!******************************************************!*\
+  !*** ./node_modules/react-dropzone/dist/es/index.js ***!
   \******************************************************/
 
 /*!******************************************************!*\
@@ -910,6 +1003,10 @@ object-assign
 
 /*!*******************************************************!*\
   !*** ./node_modules/dom-helpers/esm/transitionEnd.js ***!
+  \*******************************************************/
+
+/*!*******************************************************!*\
+  !*** ./node_modules/file-extension/file-extension.js ***!
   \*******************************************************/
 
 /*!*******************************************************!*\
@@ -1073,6 +1170,10 @@ object-assign
   \************************************************************/
 
 /*!************************************************************!*\
+  !*** ./node_modules/react-dropzone/dist/es/utils/index.js ***!
+  \************************************************************/
+
+/*!************************************************************!*\
   !*** ./node_modules/react-overlays/esm/DropdownContext.js ***!
   \************************************************************/
 
@@ -1106,6 +1207,10 @@ object-assign
 
 /*!**************************************************************!*\
   !*** ./node_modules/@popperjs/core/lib/utils/mergeByName.js ***!
+  \**************************************************************/
+
+/*!**************************************************************!*\
+  !*** ./node_modules/file-selector/dist/es5/file-selector.js ***!
   \**************************************************************/
 
 /*!**************************************************************!*\
@@ -1214,6 +1319,10 @@ object-assign
 
 /*!********************************************************************!*\
   !*** ./node_modules/@popperjs/core/lib/utils/validateModifiers.js ***!
+  \********************************************************************/
+
+/*!********************************************************************!*\
+  !*** ./node_modules/file-selector/node_modules/tslib/tslib.es6.js ***!
   \********************************************************************/
 
 /*!********************************************************************!*\

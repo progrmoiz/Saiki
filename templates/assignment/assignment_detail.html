@@ -1,13 +1,14 @@
 {% extends "base.html" %}
+{% load render_bundle from webpack_loader %}
 {% load static %}
 {% load avatar_tags %}
 {% load saiki_extras %}
 
 {% block title%}Announcement - Saiki{% endblock %}
-{% block script_1 %}
+{% comment %} {% block script_1 %}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/min/dropzone.min.js"></script>
 {% endblock %}
-
+ {% endcomment %}
 {% block style %}
 <link type="text/css" href="{% static '/css/file-icon-square-o.min.css' %}" rel="stylesheet" >
 {% endblock %}
@@ -35,4 +36,28 @@
 		</div>
     </div>
 </div>
+{% endblock %}
+
+{% block script_1 %}
+	{% if is_student %}
+		<script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
+		<script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
+
+		<script>
+		window.material_list_app_props = {
+			request_url: "{% url 'assignment_api:assignment_work_file_list' work.pk %}",
+		{% if work.points < 0 %}
+			graded: false,
+		{% else %}
+			graded: true,
+		{% endif %}
+			turned: {{ turned|yesno:'true, false' }},
+  			page: 'assignment_work',
+			page_id: {{ work.pk }}
+		};
+		</script>
+		{% render_bundle 'assignment' 'js' %}
+		{% render_bundle 'vendors' 'js' %}
+
+	{% endif %}
 {% endblock %}

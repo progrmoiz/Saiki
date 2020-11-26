@@ -4,18 +4,20 @@ var BundleTracker = require('webpack-bundle-tracker');
 
 
 const COMPONENT_DIR = path.resolve(__dirname, 'static', 'components')
-const STATIC_DIR = path.resolve(__dirname, 'static', 'course', 'js');
-const SOURCE_DIR = path.resolve(STATIC_DIR, 'src');
+const STATIC_DIR = path.resolve(__dirname, 'static');
+const COURSE_SOURCE_DIR = path.resolve(STATIC_DIR, 'course', 'js', 'src');
+const ASSIGNMENT_SOURCE_DIR = path.resolve(STATIC_DIR, 'assignment', 'js', 'src');
 
 module.exports = {
   mode: "production",
   devtool: 'source-map',
   entry: {
-    plugin: path.resolve(SOURCE_DIR, 'index.js')
+    course: path.resolve(COURSE_SOURCE_DIR, 'index.js'),
+    assignment: path.resolve(ASSIGNMENT_SOURCE_DIR, 'index.js'),
   },
   output: {
-    filename: `[name]-[hash].js`,
-    path: STATIC_DIR,
+    filename: `[name]-1.0.0.js`,
+    path: path.resolve(STATIC_DIR, 'bundles'),
     publicPath: ''
   },
   optimization: {
@@ -34,7 +36,7 @@ module.exports = {
   },
   plugins: [
     new BundleTracker({
-			path: STATIC_DIR,
+			path: path.resolve(STATIC_DIR, 'bundles'),
 			filename: "./webpack-stats.json"
 		})
   ],
