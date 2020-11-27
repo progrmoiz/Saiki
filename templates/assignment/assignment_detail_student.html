@@ -34,8 +34,7 @@
           {% if work.points < 0 %} 
           {{ assignment.points }} point{{ assignment.points|pluralize }} possible 
           {% else %} 
-          {{ work.points }}/{{ work.assignment.points }}point
-          {{ work.assignment.points|pluralize }} 
+          {{ work.points }}/{{ work.assignment.points }} point{{ work.assignment.points|pluralize }} 
           {% endif %}
         </p>
       </div>
