@@ -38,26 +38,28 @@
 </div>
 {% endblock %}
 
-{% block script_1 %}
-	{% if is_student %}
-		<script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
-		<script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
+{% block script_2 %}
+{% if is_student %}
+<script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
+<script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
 
-		<script>
-		window.material_list_app_props = {
-			request_url: "{% url 'assignment_api:assignment_work_file_list' work.pk %}",
-		{% if work.points < 0 %}
-			graded: false,
-		{% else %}
-			graded: true,
-		{% endif %}
-			turned: {{ turned|yesno:'true, false' }},
-  			page: 'assignment_work',
-			page_id: {{ work.pk }}
-		};
-		</script>
-		{% render_bundle 'assignment' 'js' %}
-		{% render_bundle 'vendors' 'js' %}
+<script>
+window.material_list_app_props = {
+	request_url: "{% url 'assignment_api:assignment_work_file_list' work.pk %}",
+{% if work.points < 0 %}
+	graded: false,
+{% else %}
+	graded: true,
+{% endif %}
+	turned: {{ turned|yesno:'true, false' }},
+	page: 'assignment_work',
+	page_id: {{ work.pk }}
+};
+Object.freeze(window.material_list_app_props);
+</script>
 
-	{% endif %}
+{% render_bundle 'assignment' 'js' %}
+{% render_bundle 'vendors' 'js' %}
+
+{% endif %}
 {% endblock %}

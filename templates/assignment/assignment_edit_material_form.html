@@ -1,0 +1,72 @@
+<div class="form-group">
+  <form
+    method="POST"
+    enctype="multipart/form-data"
+    id="form"
+    action="{% url 'assignment:edit_upload' assignment.slug %}"
+  >
+    <label class="form-control-label">Work material</label>
+    <div
+      class="dropzone dropzone-multiple"
+      data-toggle="dropzone"
+      data-dropzone-multiple
+      data-dropzone-url="{% url 'assignment:edit_upload' assignment.slug %}"
+    >
+      {% csrf_token %}
+      <div class="fallback">
+        <div class="custom-file">
+          <input
+            type="file"
+            class="custom-file-input"
+            name="file"
+            id="file"
+            multiple
+          />
+          <label class="custom-file-label" for="dropzoneMultipleUpload"
+            >Choose file</label
+          >
+        </div>
+      </div>
+      <ul class="mt-2 material dz-preview dz-preview-multiple">
+        <li class="mb-2">
+          <a href="#" class="position-relative">
+            <span class="fiv-sqo fiv-icon-blank"></span>
+            <span class="text-sm font-weight-bold text-dark" data-dz-name
+              >...</span
+            >
+          </a>
+          <div class="progress">
+            <div
+              class="progress-bar bg-default"
+              role="progressbar"
+              data-dz-uploadprogress
+            ></div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </form>
+  <div class="dropzone">
+    <ul class="material">
+      {% for assignment_file in assignment_files %}
+
+      <li class="mb-2">
+        <a
+          href="{{ assignment_file.file.url }}"
+          target="_blank"
+          class="position-relative"
+        >
+          <span class="fiv-sqo fiv-icon-{{ assignment_file.extension }}"></span>
+          <span class="text-sm font-weight-bold text-dark" data-dz-name
+            >{{ assignment_file.filename }}</span
+          >
+          <span class="px-2 position-absolute right-0"
+            ><i class="ni ni-fat-remove"></i
+          ></span>
+        </a>
+      </li>
+
+      {% endfor %}
+    </ul>
+  </div>
+</div>

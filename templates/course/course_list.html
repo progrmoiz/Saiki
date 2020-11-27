@@ -4,6 +4,7 @@
 
 {% block content %}
 {% comment %} 
+// replace with react app
 {% if is_student %}
     {% include '../includes/header.html' with heading=courses_offering|yesno:"My courses, Hidden courses" %}
 {% endif %}
@@ -23,6 +24,9 @@
 {% endblock %}
 
 {% block script_2 %}
+<script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
+<script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
+
 <script>
 window.course_list_app_props = {
     {% if is_student %}
@@ -32,9 +36,8 @@ window.course_list_app_props = {
     {% endif %}
     is_student: {{ is_student|yesno:"true,false" }}
 };
+Object.freeze(window.course_list_app_props);
 </script>
-<script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
-<script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
 
 {% render_bundle 'course' 'js' %}
 {% render_bundle 'vendors' 'js' %}

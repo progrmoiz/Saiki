@@ -2,10 +2,7 @@
 {% load mathfilters %}
 {% load saiki_extras %}
 
-{% block title%}Result - Saiki{% endblock %}
-
 {% block content %}
-<!-- Header -->
 {% url 'result:select_term' as my_grades_url %}
 {% include '../includes/header.html' with heading=grades.first.course_enrollment.course_offered.term|addstr:" | "|addstr:student.program.university.name btn1_url=my_grades_url btn1_title='Select term' %}
 

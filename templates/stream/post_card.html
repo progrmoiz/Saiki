@@ -25,35 +25,10 @@
             {% endif %}
         </div>
    </div>
-    
+
     {% if object.post_type == 'assignment' %}
         {% include "./post_card_assignment.html" %}
     {% else %}
         <p class="card-text mt-2 text-sm font-weight-normal">{{ object.body }}</p>
     {% endif %}
 </div>
-{% comment %} <div class="card-body">
-    <div class="d-flex position-relative">
-        {% avatar object.user 36 class="avatar rounded-circle avatar-sm mr-2" %}
-         <div>
-            <h3 class="card-title mb-0 h5">{{ object.user.first_name }} {{ object.user.last_name }}</h3>
-            <h6 class="text-muted">{{ object.publish|date:"l, j F Y" }}</h6>
-        </div>
-        <a class="position-absolute right-0 p-1 text-sm text-default" href="#" role="button"  id="d-{{object.slug}}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <i class="fas fa-ellipsis-h"></i>
-        </a>
-        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="d-{{object.slug}}">
-            <a class="dropdown-item text-xs" href="{% url 'course:stream:post-detail' course.slug object.slug %}">Open post</a>
-            {% if is_student %}
-                {% if object.user == user %}
-                    <a class="dropdown-item text-xs" href="{% url 'course:stream:delete-post' course.slug object.slug %}">Delete post</a>
-                {% endif %}
-            {% elif is_teacher %}
-                <a class="dropdown-item text-xs" href="{% url 'course:stream:delete-post' course.slug object.slug %}">Delete post</a>
-            {% endif %}
-        </div>
-   </div>
-    <p class="card-text mt-2 text-sm font-weight-normal">{{ object.body }}</p>
-</div>
-
- {% endcomment %}

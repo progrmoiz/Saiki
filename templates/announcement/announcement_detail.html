@@ -3,6 +3,7 @@
 {% load saiki_extras %}
 
 {% block content %}
+
 {% url 'announcement:index' as announcement_url %}
 {% with announcement.start_date.date|date:"N d, Y" as announcement_date %}
 {% include '../includes/header.html' with heading=announcement.title subheading="on "|addstr:announcement_date|addstr:", by "|addstr:announcement.created_by.first_name|addstr:" "|addstr:announcement.created_by.last_name btn1_url=announcement_url btn1_title="All" %}

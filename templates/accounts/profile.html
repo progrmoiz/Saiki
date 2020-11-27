@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block content %}
-<!-- Header -->
+
 {% url 'accounts:edit' as accounts_edit_url %}
 {% url 'accounts:change_pwd' as accounts_change_pwd_url %}
 {% include '../includes/header.html' with heading="Profile" btn1_url=accounts_edit_url btn1_title="Edit profile" btn2_url=accounts_change_pwd_url btn2_title="Change password" %}

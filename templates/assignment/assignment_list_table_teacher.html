@@ -1,9 +1,12 @@
 {% load saiki_extras %}
 
 {% if course %}
-    {% include './assignment_list_table_teacher_.html' with heading='Assignment' %}
+    {% comment %} /w {% endcomment %}
+    {% include './assignment_list_table_teacher_.html' with heading='Assignments' %}
 {% else %}
+    {% comment %} /c/<course_slug>/w {% endcomment %}
 {% for course in courses %}
     {% include './assignment_list_table_teacher_.html' with heading=course.course.description|addstr:" - "|addstr:course.course.code %}
 {% endfor %}
+
 {% endif %}

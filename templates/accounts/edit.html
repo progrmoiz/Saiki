@@ -1,10 +1,8 @@
 {% extends "../base.html" %}
 {% load crispy_forms_tags %}
-{% load avatar_tags %}
 {% load static %}
 
 {% block content %}
-
 
 {% url 'accounts:profile' as accounts_profile_url %}
 {% url 'accounts:change_pwd' as accounts_change_pwd_url %}
@@ -25,7 +23,7 @@
                             <div class="col-6">
                                 {{ form.last_name|as_crispy_field }}
                             </div>
-                        </div>        
+                        </div>
                         {{ form.email|as_crispy_field }}
                         {% if is_student %}
                         <div class="row">

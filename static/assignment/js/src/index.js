@@ -56,7 +56,6 @@ class MaterialApp extends React.Component {
       headers: { 'content-type': 'multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW' },
       onUploadProgress: (evt) => {
         const percentages = +((evt.loaded / evt.total) * 100).toFixed(2);
-        console.log(percentages)
         window.unsavedChanges = true;
         debounce(() => {
           this.setState({
