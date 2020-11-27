@@ -121,10 +121,21 @@ export class CourseList extends React.Component {
 
     render() {
         return (<>
-            <Header heading={this.state.courses_count ? 'My courses' : 'Hidden courses'} />
+            <Header heading={
+                !this.state.courses.length ? 'No enrolled courses' : this.state.courses_count ? 'My courses' : 'Hidden courses'
+            } />
             <div className="container-fluid mt--6">
                 <div className="row">
-                    { this.renderCoursesList(false) }
+                    { !this.state.courses.length ? 
+                        <CourseCard 
+                            description='You are not enrolled in any course'
+                            color_bg='#fff'
+                            code='CODE'
+                            term='404'
+                            course_url=''
+                            color_fg='default'
+                        /> : 
+                        this.renderCoursesList(false)}
                 </div>
                 { this.renderHiddenSection() }
             </div>

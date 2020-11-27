@@ -361,60 +361,6 @@ PERFORMANCE OF THIS SOFTWARE.
 
 /*! @restart/hooks/useSafeState */
 
-/*! CommonJS bailout: module.exports is used directly at 102:0-14 */
-
-/*! CommonJS bailout: module.exports is used directly at 10:0-14 */
-
-/*! CommonJS bailout: module.exports is used directly at 12:0-14 */
-
-/*! CommonJS bailout: module.exports is used directly at 13:0-14 */
-
-/*! CommonJS bailout: module.exports is used directly at 14:2-16 */
-
-/*! CommonJS bailout: module.exports is used directly at 15:0-14 */
-
-/*! CommonJS bailout: module.exports is used directly at 19:0-14 */
-
-/*! CommonJS bailout: module.exports is used directly at 22:0-14 */
-
-/*! CommonJS bailout: module.exports is used directly at 23:0-14 */
-
-/*! CommonJS bailout: module.exports is used directly at 27:0-14 */
-
-/*! CommonJS bailout: module.exports is used directly at 328:0-14 */
-
-/*! CommonJS bailout: module.exports is used directly at 38:0-14 */
-
-/*! CommonJS bailout: module.exports is used directly at 3:0-14 */
-
-/*! CommonJS bailout: module.exports is used directly at 41:38-52 */
-
-/*! CommonJS bailout: module.exports is used directly at 43:2-16 */
-
-/*! CommonJS bailout: module.exports is used directly at 49:0-14 */
-
-/*! CommonJS bailout: module.exports is used directly at 50:0-14 */
-
-/*! CommonJS bailout: module.exports is used directly at 529:0-14 */
-
-/*! CommonJS bailout: module.exports is used directly at 52:0-14 */
-
-/*! CommonJS bailout: module.exports is used directly at 57:0-14 */
-
-/*! CommonJS bailout: module.exports is used directly at 5:0-14 */
-
-/*! CommonJS bailout: module.exports is used directly at 62:0-14 */
-
-/*! CommonJS bailout: module.exports is used directly at 65:0-14 */
-
-/*! CommonJS bailout: module.exports is used directly at 6:4-18 */
-
-/*! CommonJS bailout: module.exports is used directly at 95:0-14 */
-
-/*! CommonJS bailout: module.exports is used directly at 98:0-14 */
-
-/*! CommonJS bailout: module.exports is used directly at 9:0-14 */
-
 /*! attr-accept */
 
 /*! classnames */
