@@ -4,7 +4,6 @@
 {% load comments_xtd %}
 {% load avatar_tags %}
 
-
 {% block content %}
 
 {% include '../includes/header_course.html' %}
@@ -27,6 +26,7 @@
 {% block script_1 %}
 <script crossorigin src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
 <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
+
 <script>
  window.comments_props = {% get_commentbox_props for object %};
  window.comments_props.avatar_url = '{% avatar_url user 36 %}'
@@ -39,7 +39,9 @@
      polling_interval: 5000  // In milliseconds.
  };
 </script>
+
 <script type="text/javascript" src="{% url 'javascript-catalog' %}"></script>
+
 <script src="{% static 'js/django_comments_xtd/vendor~plugin-2.8.1.js' %}"></script>
 <script src="{% static 'js/django_comments_xtd/plugin-2.8.1.js' %}"></script>
 {% endblock %}

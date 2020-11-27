@@ -93,6 +93,8 @@ var Dropzones = (function() {
 var QuillEditor = (function() {
 
 	var $quill = $('[data-toggle="quill"]');
+	if (!$('[data-toggle="quill"]').length) return
+
 	var quill = new Quill($quill.get(0), {
 	  modules: {
 		toolbar: [

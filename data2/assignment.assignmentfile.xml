@@ -1,2 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<django-objects version="1.0"><object model="assignment.assignmentfile" pk="1"><field name="file" type="FileField">assignment/cdb2127d-437a-4a29-86ab-dbba79b98a03/ISYS365_Week07A.ppt</field><field name="assignment" rel="ManyToOneRel" to="assignment.assignment">1</field></object></django-objects>

@@ -21,13 +21,21 @@ class CustomUserChangeForm(UserChangeForm):
         fields = UserChangeForm.Meta.fields
 
 class StudentForm(forms.Form):
+    first_name = forms.CharField(label='First Name', max_length=128)
+    last_name = forms.CharField(label='Last Name', max_length=128)
     display_name = forms.CharField(label='Display Name', max_length=128)
+    email = forms.EmailField(label='Email', max_length=128)
     phone_number = forms.CharField(label='Phone Number', max_length=128)
     telephone = forms.CharField(label='Telephone', max_length=128, required=False)
     address_1 = forms.CharField(label='Address', max_length=128)
     address_2 = forms.CharField(label='Address Cont\'d', max_length=128, required=False)
 
-""" TODO: change this later when course is created """
+class TeacherForm(forms.Form):
+    first_name = forms.CharField(label='First Name', max_length=128)
+    last_name = forms.CharField(label='Last Name', max_length=128)
+    display_name = forms.CharField(label='Display Name', max_length=128)
+    email = forms.EmailField(label='Email', max_length=128)
+
 class EnrollmentActionForm(ActionForm):
     try:
         try:

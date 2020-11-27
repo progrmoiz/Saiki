@@ -1,7 +1,10 @@
 {% extends "base.html" %}
+{% load static %}
+{% load render_bundle from webpack_loader %}
 
 {% block content %}
-
+{% comment %} 
+// replace with react app
 {% if is_student %}
     {% include '../includes/header.html' with heading=courses_offering|yesno:"My courses, Hidden courses" %}
 {% endif %}
@@ -15,5 +18,28 @@
 {% elif is_teacher %}
     {% include './course_list_teacher.html' %}
 {% endif %}
+ {% endcomment %}
+
+<div id="course-app"></div>
+{% endblock %}
+
+{% block script_2 %}
+<script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
+<script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
+
+<script>
+window.course_list_app_props = {
+    {% if is_student %}
+    request_url: '{% url 'course_api:student_course_list' student.pk %}',
+    {% elif is_teacher %}
+    request_url: '{% url 'course_api:teacher_course_list' teacher.pk %}',
+    {% endif %}
+    is_student: {{ is_student|yesno:"true,false" }}
+};
+Object.freeze(window.course_list_app_props);
+</script>
+
+{% render_bundle 'course' 'js' %}
+{% render_bundle 'vendors' 'js' %}
 
 {% endblock %}

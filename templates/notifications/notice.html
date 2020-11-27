@@ -1,5 +1,5 @@
 {% load avatar_tags %}
-{% load result_extras %}
+{% load saiki_extras %}
 
 <tr>
   <td class="text-default">
@@ -17,7 +17,6 @@
     {% avatar notice.actor class="avatar rounded-circle mr-3 avatar-sm " %}
     <b>{{ notice.actor.first_name }} {{ notice.actor.last_name }}</b>
     {{ notice.description|safe }}
-   
     {% endif %}
   </td>
   <td>

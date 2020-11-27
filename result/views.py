@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.http.response import HttpResponseForbidden
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views import View
 from django.views.generic.list import ListView
@@ -12,7 +13,7 @@ class ResultListView(LoginRequiredMixin, ListView):
     redirect_field_name = 'accounts:login'
     model = Grade
     context_object_name = 'grades'
-    template_name = 'result/result.html'
+    template_name = 'result/result_detail.html'
     semester_grade = SemesterGrade.objects.all()
     cgpa = 0
 
@@ -65,7 +66,7 @@ class ResultListView(LoginRequiredMixin, ListView):
 class ViewMyGrades(LoginRequiredMixin, ListView):
     redirect_field_name = 'accounts:login'
     model = SemesterGrade
-    template_name='result/my_grades.html'
+    template_name='result/result_list.html'
     semester_grades = None
     term = None
 
@@ -108,7 +109,7 @@ class SelectedTerm(LoginRequiredMixin, ListView):
     redirect_field_name = 'accounts:login'
     model = Grade
     context_object_name = 'grades'
-    template_name = 'result/result.html'
+    template_name = 'result/result_detail.html'
     semester_grade = SemesterGrade.objects.all()
     cgpa = 0
 

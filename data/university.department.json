@@ -1,1 +1,0 @@
-[{"model": "university.department", "pk": "FCS IBA", "fields": {"description": "Faculty of Computer Science", "university": 1}}, {"model": "university.department", "pk": "FMKT", "fields": {"description": "Faculty of Marketing", "university": 1}}]

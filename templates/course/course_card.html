@@ -1,20 +1,20 @@
-{% load result_extras %}
+{% load saiki_extras %}
 
 <div class="col-lg-3">
 {% course_color course_off.course.code as color %}
-<div class="card" style="background: {{ color.0 }}">
-    <div class="card-body">
-        <h3 class="card-title text-{{color.1}} mb-3">{{ course_off.course.description }}</h3>
-        <h5 class="card-text text-{{color.1}} mb-4">{{ course_off.course.code }} - {{ course_off.term }}</h5>
-        <div class="position-relative">
-        <a href="{% url 'course:detail' course_off.slug %}" class="btn btn-sm btn-{% if color.1 == "default" %}default{% else %}secondary{% endif %}">View Course </a>
-        <a class="position-absolute right-0 p-1 text-sm text-{{ color.1 }}" href="#" id="dropdown-{{ course_off.course.code }}" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <i class="fas fa-ellipsis-h"></i>
-        </a>
-        <div class="dropdown-menu dropdown-menu-left" aria-labelledby="dropdown-{{ course_off.slug }}">
-            {% include './course_hide_form.html' %}
-        </div>
+    <div class="card" style="background: {{ color.0 }}">
+        <div class="card-body">
+            <h3 class="card-title text-{{color.1}} mb-3">{{ course_off.course.description }}</h3>
+            <h5 class="card-text text-{{color.1}} mb-4">{{ course_off.course.code }} - {{ course_off.term }}</h5>
+            <div class="position-relative">
+            <a href="{% url 'course:detail' course_off.slug %}" class="btn btn-sm btn-{% if color.1 == "default" %}default{% else %}secondary{% endif %}">View Course </a>
+            <a class="position-absolute right-0 p-1 text-sm text-{{ color.1 }}" href="#" id="dropdown-{{ course_off.course.code }}" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="fas fa-ellipsis-h"></i>
+            </a>
+            <div class="dropdown-menu dropdown-menu-left" aria-labelledby="dropdown-{{ course_off.slug }}">
+                {% include './course_hide_form.html' %}
+            </div>
+            </div>
         </div>
     </div>
-</div>
 </div>

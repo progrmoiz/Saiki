@@ -19,7 +19,7 @@ from guardian.shortcuts import get_objects_for_user
 
 # add mark as read
 class AnnouncementListView(ListView):
-    template_name = 'announcement/announcement.html'
+    template_name = 'announcement/announcement_list.html'
     model = Announcement
     context_object_name = 'announcement'
     

@@ -1,0 +1,69 @@
+/*! ./CourseCard */
+
+/*! ./CourseList */
+
+/*! axios */
+
+/*! classnames */
+
+/*! components/Header */
+
+/*! dynamic exports */
+
+/*! export CourseCard [provided] [no usage info] [missing usage info prevents renaming] */
+
+/*! export CourseList [provided] [no usage info] [missing usage info prevents renaming] */
+
+/*! export __esModule [maybe provided (runtime-defined)] [no usage info] [provision prevents renaming (no use info)] */
+
+/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
+
+/*! exports [not provided] [no usage info] */
+
+/*! namespace exports */
+
+/*! other exports [maybe provided (runtime-defined)] [no usage info] */
+
+/*! other exports [not provided] [no usage info] */
+
+/*! react */
+
+/*! react-bootstrap/Accordion */
+
+/*! react-bootstrap/AccordionToggle */
+
+/*! react-bootstrap/Dropdown */
+
+/*! react-dom */
+
+/*! runtime requirements: __webpack_require__, __webpack_require__.n, __webpack_exports__, __webpack_require__.r, __webpack_require__.d, __webpack_require__.* */
+
+/*! runtime requirements: __webpack_require__, __webpack_require__.n, __webpack_require__.r, __webpack_exports__, __webpack_require__.* */
+
+/*! runtime requirements: __webpack_require__, __webpack_require__.n, __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
+
+/*! runtime requirements: module */
+
+/*!************************!*\
+  !*** external "React" ***!
+  \************************/
+
+/*!***************************!*\
+  !*** external "ReactDOM" ***!
+  \***************************/
+
+/*!*************************************!*\
+  !*** ./static/components/Header.js ***!
+  \*************************************/
+
+/*!***************************************!*\
+  !*** ./static/course/js/src/index.js ***!
+  \***************************************/
+
+/*!********************************************!*\
+  !*** ./static/course/js/src/CourseCard.js ***!
+  \********************************************/
+
+/*!********************************************!*\
+  !*** ./static/course/js/src/CourseList.js ***!
+  \********************************************/

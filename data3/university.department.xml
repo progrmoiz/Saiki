@@ -1,2 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<django-objects version="1.0"><object model="university.department" pk="FCS IBA"><field name="description" type="CharField">Faculty of Computer Science</field><field name="university" rel="ManyToOneRel" to="university.university">1</field></object><object model="university.department" pk="FMKT"><field name="description" type="CharField">Faculty of Marketing</field><field name="university" rel="ManyToOneRel" to="university.university">1</field></object></django-objects>

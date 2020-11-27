@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% load avatar_tags %}
+{% load static %}
+
+{% block content %}
+{% include '../includes/header.html' with heading='Announcements' %}
+
+<div class="container-fluid mt--6">
+    <div class="row">
+    <div class="col">
+      <div class="card">
+        <div class="card-header border-0">
+          <div class="row">
+            <div class="col-6">
+              <h3 class="mb-0">Announcements</h3>
+            </div>
+          </div>
+        </div>
+        <div class="table-responsive">
+          <table class="table align-items-center table-flush table-hover">
+            <thead class="thead-light">
+              <tr>
+                <th class="w-10">Author</th>
+                <th class="w-auto">Title</th>
+                <th class="w-10">Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for a in announcement %}
+              <tr>
+              <td class="table-user">
+              {% avatar a.created_by 32 class="avatar avatar-xs rounded-circle mr-2" %}
+              <b>{{ a.created_by }}</b>
+              </td>
+              <td>
+              <a href={% url 'announcement:detail' a.slug %} class="font-weight-bold">
+              {{ a.title }}
+              </a>
+              </td>
+              <td>
+              <span class="text-muted">{{ a.start_date.date|date:"N d, Y" }}</span>
+              </td>
+              </tr>
+              {% empty %}
+              <tr>
+              <td colspan="3">
+              No announcements
+              </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+    </div>
+</div>
+{% endblock %}

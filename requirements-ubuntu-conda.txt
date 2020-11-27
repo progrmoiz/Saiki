@@ -1,2 +1,0 @@
-conda install pillow
-conda install psycopg2

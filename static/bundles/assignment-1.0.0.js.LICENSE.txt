@@ -1,0 +1,63 @@
+/*! ./Dropzone */
+
+/*! ./Material */
+
+/*! ./MaterialList */
+
+/*! axios */
+
+/*! classnames */
+
+/*! dynamic exports */
+
+/*! export __esModule [maybe provided (runtime-defined)] [no usage info] [provision prevents renaming (no use info)] */
+
+/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
+
+/*! exports [not provided] [no usage info] */
+
+/*! file-extension */
+
+/*! namespace exports */
+
+/*! other exports [maybe provided (runtime-defined)] [no usage info] */
+
+/*! other exports [not provided] [no usage info] */
+
+/*! path-browserify */
+
+/*! react */
+
+/*! react-dom */
+
+/*! react-dropzone */
+
+/*! runtime requirements: __webpack_require__, __webpack_require__.n, __webpack_require__.r, __webpack_exports__, __webpack_require__.* */
+
+/*! runtime requirements: __webpack_require__, __webpack_require__.n, __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
+
+/*! runtime requirements: module */
+
+/*!************************!*\
+  !*** external "React" ***!
+  \************************/
+
+/*!***************************!*\
+  !*** external "ReactDOM" ***!
+  \***************************/
+
+/*!*******************************************!*\
+  !*** ./static/assignment/js/src/index.js ***!
+  \*******************************************/
+
+/*!**********************************************!*\
+  !*** ./static/assignment/js/src/Dropzone.js ***!
+  \**********************************************/
+
+/*!**********************************************!*\
+  !*** ./static/assignment/js/src/Material.js ***!
+  \**********************************************/
+
+/*!**************************************************!*\
+  !*** ./static/assignment/js/src/MaterialList.js ***!
+  \**************************************************/
