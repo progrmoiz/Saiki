@@ -79,6 +79,9 @@ class Assignment(ModelMeta, models.Model):
     def __str__(self):
         return '{} - {}'.format(self.course_offering, self.title)
 
+    def get_absolute_url(self):
+        return reverse('assignment:detail', kwargs={ 'slug': self.slug })
+
     @property
     def is_not_in_deadline(self):
         return self.deadline < datetime.datetime.now(self.deadline.tzinfo)
@@ -154,6 +157,15 @@ class AssignmentWork(models.Model):
         return '{} - {}'.format(self.assignment, self.student)
 
 
+def assignmentwork_save_handler(sender, instance, created, **kwargs):
+    if created:
+        assign_perm('change_assignmentwork', instance.assignment.course_offering.teacher.user, instance)
+        assign_perm('view_assignmentwork', instance.assignment.course_offering.teacher.user, instance)
+        
+        assign_perm('change_assignmentwork', instance.student.user, instance)
+        assign_perm('view_assignmentwork', instance.student.user, instance)
+
+post_save.connect(assignmentwork_save_handler, sender=AssignmentWork)
 
 def upload_work_path(instance, filename):
     return os.path.join('assignment' , str(instance.assignment_work.assignment.slug), 'work', str(instance.assignment_work.student.user.username), filename)
@@ -171,5 +183,3 @@ class AssignmentWorkFile(models.Model):
 
     def __str__(self):
         return '{} - {}'.format(self.assignment_work, self.file.name)
-
-# post_delete.connect(file_cleanup, sender=AssignmentWorkFile, dispatch_uid="assignment.work.file_cleanup")

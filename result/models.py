@@ -2,6 +2,7 @@ from result.utils import SemesterGradeHelper
 from django.db import models
 from django.db.models.signals import post_save
 from django.utils.translation import ugettext as _
+from guardian.shortcuts import assign_perm
 
 import university.models
 import accounts.models
@@ -27,12 +28,18 @@ class Grade(models.Model):
     def __str__(self):
         return '{} - {}'.format(self.course_enrollment.student.user, self.course_enrollment.course_offered.course.code)
 
-def grade_handler(sender, instance, created, **kwargs):
-    s, created = SemesterGrade.objects.get_or_create(student=instance.course_enrollment.student, term=instance.course_enrollment.course_offered.term)
+def grade_save_handler(sender, instance, created, **kwargs):
+    if created:
+        assign_perm('view_grade', instance.course_enrollment.student.user, instance)
+        
+        assign_perm('view_grade', instance.course_enrollment.course_offered.teacher.user, instance)
+        assign_perm('change_grade', instance.course_enrollment.course_offered.teacher.user, instance)
+    
+    s, _created = SemesterGrade.objects.get_or_create(student=instance.course_enrollment.student, term=instance.course_enrollment.course_offered.term)
     s.semester_gpa = SemesterGradeHelper.get_sgpa(s)
     s.save(force_update=True)
 
-post_save.connect(grade_handler, sender=Grade)
+post_save.connect(grade_save_handler, sender=Grade)
 
 class SemesterGrade(models.Model):
 
@@ -42,3 +49,9 @@ class SemesterGrade(models.Model):
 
     def __str__(self):
         return '{}'.format(self.term)   
+
+def semestergrade_save_handler(sender, instance, created, **kwargs):
+    if created:
+        assign_perm('view_semestergrade', instance.student.user, instance)
+
+post_save.connect(semestergrade_save_handler, sender=SemesterGrade)

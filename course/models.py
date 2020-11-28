@@ -43,6 +43,9 @@ class CourseOffering(ModelMeta, models.Model):
     def get_meta_course_desc(self):
         return self.course.description
 
+    def get_absolute_url(self):
+        return reverse('course:detail', kwargs={ 'slug': self.slug })
+
     class Meta:
         ordering = ['-term__year', '-term__half', 'course__code']
 
@@ -54,6 +57,7 @@ def courseoffering_save_handler(sender, instance, created, **kwargs):
     # add permission to teacher, so only teacher can edit and view this assignment
     if created:
         assign_perm('view_courseoffering', instance.teacher.user, instance)
+        assign_perm('change_courseoffering', instance.teacher.user, instance)
 
 post_save.connect(courseoffering_save_handler, sender=CourseOffering)
 
@@ -74,7 +78,10 @@ def course_enrollment_save_handler(sender, instance, created, **kwargs):
 
     if created:
         assign_perm('view_courseoffering', instance.student.user, instance.course_offered)
-        
+
+        assign_perm('change_courseenrollment', instance.student.user, instance)
+        assign_perm('view_courseenrollment', instance.student.user, instance)
+
         result.models.Grade(course_enrollment=instance).save()
 
         description = f'enrolled you in { instance.course_offered.course.code }'
