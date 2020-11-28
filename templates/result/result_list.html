@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block content %}
+<!-- Header -->
+{% url 'result:index' as result_url %}
+{% include '../includes/header.html' with heading='My grades' btn1_url=result_url btn1_title='Current results' %}
+
+<div class="container-fluid mt--6">
+    <div class="row">
+        <div class="col">
+            <div class="card bg-default">
+                <div class="card-header bg-transparent border-0">
+                    <h3 class="text-white mb-0">
+                        Select a Term
+                    </h3>
+                </div>
+                <div class="table-responsive">
+                    <table class="table align-items-center table-dark table-flush">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th class="w-auto">Term</th>
+                                <th class="w-10">SGPA</th>
+                            </tr>
+                        </thead>
+                        <tbody class="list">
+                            {% for semester_grade in semester_grades %}
+                                <tr>
+                                    <td>
+                                        <a href={% url 'result:by_term' semester_grade.term.pk %} class="name mb-0 text-sm text-white">{{semester_grade.term}}</a>
+                                    </td>
+                                    <td>{{semester_grade.semester_gpa}}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

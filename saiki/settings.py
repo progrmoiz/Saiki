@@ -28,31 +28,86 @@ SECRET_KEY = '150qlyc$@^@+4-(6*2j=8b16j$0(nh01a!@2&0fw)i03#ghyw4'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS =  ['localhost', '127.0.0.1', '[::1]', '.herokuapp.com']
 
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
 
 # Application definition
 
 INSTALLED_APPS = [
+    'assignment.apps.AssignmentConfig',
     'result.apps.ResultConfig',
     'accounts.apps.AccountsConfig',
     'university.apps.UniversityConfig',
     'course.apps.CourseConfig',
     'announcement.apps.AnnouncementConfig',
+    'stream.apps.StreamConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
+    'webpack_loader',
     'crispy_forms',
     'avatar',
     'mathfilters',
-    'result.templatetags'
+    'notifications',
+    'guardian',
+    'meta',
+    'rest_framework',
+    'django_comments_xtd',
+    'django_comments',
+    'django_markdown2'
+    # 'dbbackup'
 ]
+
+SITE_ID = 1
+COMMENTS_APP = 'django_comments_xtd'
+
+# Either enable sending mail messages to the console:
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+# Or set up the EMAIL_* settings so that Django can send emails:
+EMAIL_HOST = "smtp.mail.com"
+EMAIL_PORT = "587"
+EMAIL_HOST_USER = "alias@mail.com"
+EMAIL_HOST_PASSWORD = "yourpassword"
+EMAIL_USE_TLS = True
+DEFAULT_FROM_EMAIL = "Helpdesk <helpdesk@yourdomain>"
+
+#  To help obfuscating comments before they are sent for confirmation.
+COMMENTS_XTD_SALT = (b"Timendi causa est nescire. "
+                     b"Aequam memento rebus in arduis servare mentem.")
+
+# Source mail address used for notifications.
+COMMENTS_XTD_FROM_EMAIL = "noreply@example.com"
+COMMENTS_XTD_CONFIRM_EMAIL = False
+
+# Contact mail address to show in messages.
+COMMENTS_XTD_CONTACT_EMAIL = "helpdesk@example.com"
+COMMENTS_XTD_MAX_THREAD_LEVEL = 0
+
+COMMENTS_XTD_APP_MODEL_OPTIONS = {
+    'stream.post': {
+        'allow_flagging': False,
+        'allow_feedback': False,
+        'show_feedback': False,
+        'who_can_post': 'users'
+    }
+}
+
+COMMENTS_XTD_API_GET_USER_AVATAR = "stream.utils.get_avatar_url"
+
+
+# DBBACKUP_STORAGE = 'django.core.files.storage.FileSystemStorage'
+# print("ABBE PATH YE HAI", os.path.join(BASE_DIR, 'backup'))
+# DBBACKUP_STORAGE_OPTIONS = {'location': os.path.join(BASE_DIR, 'backup')}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -60,6 +115,13 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend', # this is default
+    'guardian.backends.ObjectPermissionBackend',
+)
+
+GUARDIAN_MONKEY_PATCH = False
 
 ROOT_URLCONF = 'saiki.urls'
 
@@ -74,21 +136,37 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'accounts.contexts.account',
+                'announcement.contexts.notification',
+                'saiki.contexts.appname'
             ],
+            'libraries':{
+                'saiki_extras': 'saiki.templatetags.saiki_extras',
+            }
         },
     },
 ]
 
 WSGI_APPLICATION = 'saiki.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': 'ddku0c3uu5ecp1',
+#         'USER': 'elyfbvnpanixes',
+#         'PASSWORD': '02eded2ca7cb45c56859c33063ec3b50d3fe6d72ed146b1e18daf6aa16cf0af5',
+#         'HOST': 'ec2-54-160-120-28.compute-1.amazonaws.com',
+#         'PORT': '5432',
+#     }
+# }
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'SaikiDB_4',
+        'NAME': 'SaikiDB_8',
         'USER': 'postgres',
         'PASSWORD': '123456',
         'HOST': 'localhost',
@@ -134,7 +212,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/assets/'
-STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
+STATIC_DIR = os.path.join(BASE_DIR, "static")
+STATICFILES_DIRS = [STATIC_DIR]
 STATIC_ROOT = os.path.join(BASE_DIR, "assets")
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
@@ -149,3 +228,28 @@ MESSAGE_TAGS = {
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+DJANGO_NOTIFICATIONS_CONFIG = { 'USE_JSONFIELD': True }
+
+AVATAR_AUTO_GENERATE_SIZES = (36, 240)
+
+META_SITE_NAME='Saiki'
+META_USE_TITLE_TAG=True
+META_USE_SITES=True
+META_USE_OG_PROPERTIES=True
+
+
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 10
+}
+
+WEBPACK_LOADER = {
+    'DEFAULT': {
+        'CACHE': not DEBUG,
+        'POLL_INTERVAL': 0.1,
+        'TIMEOUT': None,
+        'BUNDLE_DIR_NAME': 'bundles/', # end with slash
+        'STATS_FILE': os.path.join(STATIC_DIR, 'bundles/webpack-stats.json'),
+        'LOADER_CLASS': 'webpack_loader.loader.WebpackLoader',
+    }
+}

@@ -1,0 +1,48 @@
+{% load avatar_tags %}
+
+<div class="container-fluid mt--6">
+    <div class="row">
+        <div class="col">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-3">
+                            {% avatar user 240 class="img-thumbnail img-fluid" id="user_avatar" %}
+                        </div>
+                        <div class="col-7">
+                            <table class="table table-bordered table-hover table-sm">
+                                <tbody>
+                                    <tr>
+                                        <th class="w-25" scope="row">Username</th>
+                                        <td class="w-75">{{ user.username }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th class="w-25" scope="row">Full name</th>
+                                        <td class="w-75">{{ user.first_name }} {{ user.last_name }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th class="w-25" scope="row">Email</th>
+                                        {% if user.email %}
+                                        <td class="w-75">{{ user.email }}</td>
+                                        {% else %}
+                                        <td class="w-75">-</td>
+                                        {% endif %}
+                                    </tr>
+                                    <tr>
+                                        <th class="w-25" scope="row">Depmartmet</th>
+                                        <td class="w-75">{{ teacher.department.description }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th class="w-25" scope="row">Last login</th>
+                                        <td class="w-75">{{ user.last_login }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

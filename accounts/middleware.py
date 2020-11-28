@@ -1,6 +1,7 @@
-from .utils import get_current_student
+from .utils import get_current_student, get_current_teacher, is_student, is_teacher
 
-class StudentMiddleware:
+# TODO: REMOVE MIDDLE WARE https://stackoverflow.com/questions/24352789/how-to-get-absolute-url-with-domain-in-django-template
+class AccountMiddleware:
     def __init__(self, get_response):
         self.get_response = get_response
 
@@ -9,6 +10,4 @@ class StudentMiddleware:
         return response
 
     def process_template_response(self, request, response):
-        student = get_current_student(request)
-        response.context_data['student'] = student
         return response

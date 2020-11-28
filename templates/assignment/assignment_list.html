@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+{% if course %}
+{% include '../includes/header_course.html' %}
+{% else %}
+{% include '../includes/header.html' with heading="Assignments" %}
+{% endif %}
+
+<div class="container-fluid mt--6">
+    {% if is_student %}
+    {% include './assignment_list_table_student.html' %}
+    {% elif is_teacher %}
+    {% include './assignment_list_table_teacher.html' %}
+    {% endif %}
+</div>
+
+{% endblock %}

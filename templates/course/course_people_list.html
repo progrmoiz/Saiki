@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+{% include '../includes/header_course.html' %}
+<div class="container-fluid mt--6">
+    <div class="row">
+        <div class="col-lg-7 mx-auto">
+            {% include './course_people_list_table.html' %}
+        </div>
+    </div>
+</div>
+{% endblock %}

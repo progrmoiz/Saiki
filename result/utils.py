@@ -5,15 +5,16 @@ class SemesterGradeHelper:
 
     @staticmethod
     def get_grades(obj):
-        return result.models.Grade.objects.filter(student=obj.student, course_offering__term=obj.term)
+        return result.models.Grade.objects.filter(course_enrollment__student=obj.student, course_enrollment__course_offered__term=obj.term)
 
     @staticmethod
     def cal_gp_earned(obj):
         gp_earned = []
         grades = SemesterGradeHelper.get_grades(obj);
         for i, grade in enumerate(grades):
-            unit = grade.course_offering.course.units
-            gp_earned.append((grade.course_offering, unit, grade.letter_grade * unit))
+            unit = grade.course_enrollment.course_offered.course.units
+            if grade.letter_grade != None:
+                gp_earned.append((grade.course_enrollment.course_offered, unit, grade.letter_grade * unit))
         return gp_earned;
 
     # grade weight average as per selected term

@@ -3,9 +3,8 @@ from django.urls import include, path
 
 from .views import AnnouncementListView, AnnouncementDetailView
 
+app_name = 'announcement'
 urlpatterns = [
-    path('announcement/', include([
-        path('', AnnouncementListView.as_view(), name='announcement'),
-        path('<int:pk>/', AnnouncementDetailView.as_view(), name='announcement_detail'),
-    ]))
+    path('', AnnouncementListView.as_view(), name='index'),
+    path('<slug:slug>/', AnnouncementDetailView.as_view(), name='detail'),
 ]

@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% load mathfilters %}
+{% load saiki_extras %}
+
+{% block content %}
+{% url 'result:select_term' as my_grades_url %}
+{% include '../includes/header.html' with heading=grades.first.course_enrollment.course_offered.term|addstr:" | "|addstr:student.program.university.name btn1_url=my_grades_url btn1_title='Select term' %}
+
+<div class="container-fluid mt--6">
+    <div class="row">
+        <div class="col">
+            <div class="card bg-default">
+                <div class="card-header bg-transparent border-0">
+                    <h3 class="text-white mb-0">
+                        Grades - {{grades.first.course_enrollment.course_offered.term}}
+                    </h3>
+                </div>
+                <div class="table-responsive">
+                    <table class="table align-items-center table-dark table-flush">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th class="w-10">Code</th>
+                                <th class="w-auto">Course Description</th>
+                                <th class="w-10">Unit</th>
+                                <th class="w-10">Grade</th>
+                                <th class="w-10">Grade Point</th>
+                            </tr>
+                        </thead>
+                        <tbody class="list">
+                            {% for grade in grades %}
+                                <tr>
+                                    <td>{{ grade.course_enrollment.course_offered.course.code }}</td>
+                                    <td>{{ grade.course_enrollment.course_offered.course.description }}</td>
+                                    <td>{{ grade.course_enrollment.course_offered.course.units }}</td>
+                                    <td>{% include './letter_grade.html' %}</td>
+
+                                    {% if grade.letter_grade != None %}
+                                        <td>{{ grade.letter_grade|mul:grade.course_enrollment.course_offered.course.units }}</td>
+                                    {% else %}
+                                        <td>-</td>
+                                    {% endif %}
+
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                        <tfoot class="thead-light">
+                            <tr>
+                                {% if semester_grades %}
+                                    {% for s_grade in semester_grades %}
+                                        <th colspan="3"></th>
+                                        <th scope="row" colspan="1">SGPA</th>
+                                        <th colspan="1">{{ s_grade.semester_gpa }}</th>
+                                    {% endfor %}
+                                {% elif semester_grade %}
+                                    <th colspan="3"></th>
+                                    <th scope="row" colspan="1">SGPA</th>
+                                    <th colspan="1">{{ semester_grade.semester_gpa }}</th>
+                                {% else %}
+                                    <th colspan="3"></th>
+                                    <th scope="row" colspan="1">SGPA</th>
+                                    <th colspan="1">-</th>
+                                {% endif %}
+                            </tr>
+                            <tr>
+                                <th colspan="3"></th>
+                                <th scope="row" colspan="1">CGPA</th>
+                                <th colspan="1">{{ cgpa }}</th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

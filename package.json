@@ -1,0 +1,41 @@
+{
+  "name": "saiki",
+  "version": "1.0.0",
+  "description": "modern lms",
+  "main": "index.js",
+  "scripts": {
+    "build": "webpack --config webpack.config.js --progress --colors --mode development",
+    "watch": "webpack --config webpack.config.js --watch --mode development"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/progrmoiz/Saiki.git"
+  },
+  "author": "Moiz",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/progrmoiz/Saiki/issues"
+  },
+  "homepage": "https://github.com/progrmoiz/Saiki#readme",
+  "devDependencies": {
+    "@babel/core": "^7.12.9",
+    "@babel/plugin-proposal-class-properties": "^7.12.1",
+    "@babel/preset-env": "^7.12.7",
+    "@babel/preset-react": "^7.12.7",
+    "babel-loader": "^8.2.1",
+    "webpack": "^5.6.0",
+    "webpack-bundle-tracker": "^0.4.3",
+    "webpack-cli": "^4.2.0"
+  },
+  "dependencies": {
+    "axios": "^0.21.0",
+    "classnames": "^2.2.6",
+    "file-extension": "^4.0.5",
+    "jquery": "^3.5.1",
+    "path-browserify": "^1.0.1",
+    "react": "^17.0.1",
+    "react-bootstrap": "^1.4.0",
+    "react-dom": "^17.0.1",
+    "react-dropzone": "^11.2.4"
+  }
+}

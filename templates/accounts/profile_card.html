@@ -1,0 +1,38 @@
+{% load static %}
+{% load avatar_tags %}
+
+<div class="card card-profile">
+    <img src="{% static '/img/theme/img-1-1000x600.jpg' %}" class="card-img-top">
+    <div class="row justify-content-center">
+        <div class="col-lg-3 order-lg-2">
+            <div class="card-profile-image">
+                <a href="#">
+                    {% avatar user 134 class="rounded-circle" id="user_avatar" %}
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="card-body mt-6">
+        <div class="text-center">
+
+        {% if is_teacher %}
+            <h5 class="h3">
+                {{ teacher.display_name }}
+            </h5>
+            <div>
+                {{ teacher.department.description }}
+            </div>
+        {% elif is_student %}
+            <h5 class="h3">
+                {{ student.display_name }}
+            </h5>
+            <div class="h5 mt-4">
+                {{ student.semester }}
+            </div>
+            <div>
+                {{ student.program.description }}
+            </div>
+        {% endif %}
+        </div>
+    </div>
+</div>

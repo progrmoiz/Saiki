@@ -1,10 +1,27 @@
 <div class="header bg-primary pb-6">
     <div class="container-fluid">
-    <div class="header-body">
+    <div class="header-body {{ header_body_class }}">
         <div class="row align-items-center py-4">
-            <div class="col-lg-6 col-7">
-                <h6 class="h2 text-white d-inline-block mb-0">{{ heading }}</h6>
+            <div class="col-lg-6">
+                <h3 class="h2 text-white d-inline-block mb-0">{{ heading }}</h3>
+                {% if subheading %}
+                    <h5 class="text-light">{{ subheading }}</h5>
+                {% endif %}
+
             </div>
+            {% if btn1_url or btn2_url or btn3_url %}
+            <div class="col-lg-6 text-right">
+            {% if btn1_url %}
+                <a href="{{ btn1_url }}" class="btn btn-sm {{ btn1_class|default:"btn-neutral" }}">{{ btn1_title }}</a>
+            {% endif %}
+            {% if btn2_url %}
+                <a href="{{ btn2_url }}" class="btn btn-sm {{ btn2_class|default:"btn-neutral" }}">{{ btn2_title }}</a>
+            {% endif %}
+            {% if btn3_url %}
+                <a href="{{ btn3_url }}" class="btn btn-sm {{ btn3_class|default:"btn-neutral" }}">{{ btn3_title }}</a>
+            {% endif %}
+            </div>
+            {% endif %}
         </div>
     </div>
     </div>

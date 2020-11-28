@@ -25,41 +25,56 @@
         <!-- Nav items -->
         <ul class="navbar-nav">
         <li class="nav-item">
-            <a class="nav-link {{ is_announcement_page }}" href="{% url 'announcement' %}" role="button" aria-controls="navbar-dashboards">
+            <a class="nav-link {{ is_announcement_page }}" href="{% url 'announcement:index' %}" role="button" aria-controls="navbar-dashboards">
             <i class="ni ni-notification-70 text-default"></i>
-            <span class="nav-link-text">Announcement</span>
+            <span class="nav-link-text">Announcements</span>
             </a>
         </li>
+        {% if is_student %}
         <li class="nav-item">
-            <a class="nav-link {{ is_course_page }}" href="#" role="button" aria-controls="navbar-courses">
+            <a class="nav-link {{ is_course_page }}" href="{% url 'course:index' %}" role="button" aria-controls="navbar-courses">
             <i class="ni ni-collection text-primary"></i>
             <span class="nav-link-text">Courses</span>
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link {{ is_timetable_page }}" href="#" role="button" aria-controls="navbar-timetable">
-            <i class="ni ni-calendar-grid-58 text-orange"></i>
-            <span class="nav-link-text">Timetable</span>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link {{ is_attendance_page }}" href="#" role="button" aria-controls="navbar-attendance">
+            <a class="nav-link {{ is_assignment_page }}" href="{% url 'assignment:index' %}" role="button" aria-controls="navbar-assignment">
             <i class="ni ni-sound-wave text-green"></i>
-            <span class="nav-link-text">Attendance</span>
+            <span class="nav-link-text">Assignments</span>
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link {{ is_result_page }}" href="{% url 'result' %}" role="button" aria-controls="navbar-result">
+            <a class="nav-link {{ is_result_page }}" href="{% url 'result:index' %}" role="button" aria-controls="navbar-result">
             <i class="ni ni-trophy text-info"></i>
-            <span class="nav-link-text">Result</span>
+            <span class="nav-link-text">Results</span>
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="{% url 'logout' %}" role="button" aria-controls="navbar-logout">
+            <a class="nav-link" href="{% url 'accounts:logout' %}" role="button" aria-controls="navbar-logout">
             <i class="ni ni-user-run text-red"></i>
             <span class="nav-link-text">Logout</span>
             </a>
         </li>
+        {% elif teacher %}
+        <li class="nav-item">
+            <a class="nav-link {{ is_course_page }}" href="{% url 'course:index' %}" role="button" aria-controls="navbar-courses">
+            <i class="ni ni-collection text-primary"></i>
+            <span class="nav-link-text">Courses</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link {{ is_assignment_page }}" href="{% url 'assignment:index' %}" role="button" aria-controls="navbar-assignment">
+            <i class="ni ni-sound-wave text-green"></i>
+            <span class="nav-link-text">Assignments</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'accounts:logout' %}" role="button" aria-controls="navbar-logout">
+            <i class="ni ni-user-run text-red"></i>
+            <span class="nav-link-text">Logout</span>
+            </a>
+        </li>
+        {% endif %}
         </ul>
         <!-- Divider -->
         <hr class="my-3">

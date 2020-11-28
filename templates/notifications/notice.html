@@ -1,0 +1,39 @@
+{% load avatar_tags %}
+{% load saiki_extras %}
+
+<tr>
+  <td class="text-default">
+    {% if notice.data %}
+
+    {% with notice.data|jsonify as data %}
+      <a href="{{ data.href }}" class="text-default">
+        {% avatar notice.actor class="avatar rounded-circle mr-3 avatar-sm " %}
+        <b>{{ notice.actor.first_name }} {{ notice.actor.last_name }}</b>
+        {{ notice.description|safe }}
+      </a>
+    {% endwith %}
+
+    {% else %}
+    {% avatar notice.actor class="avatar rounded-circle mr-3 avatar-sm " %}
+    <b>{{ notice.actor.first_name }} {{ notice.actor.last_name }}</b>
+    {{ notice.description|safe }}
+    {% endif %}
+  </td>
+  <td>
+    <span class="text-muted">{{ notice.timesince }} ago</span>
+  </td>
+  <td class="table-actions">
+    {% if notice.unread %}
+      <a class="table-action" href="{% url 'notifications:mark_as_read' notice.slug %}" data-toggle="tooltip" data-original-title="Mark as read">
+        <i class="fas fa-check"></i>
+      </a>
+    {% else %}
+      <a class="table-action" href="{% url 'notifications:mark_as_unread' notice.slug %}" data-toggle="tooltip" data-original-title="Mark as unread">
+        <i class="fas fa-times"></i>
+      </a>
+    {% endif %}
+    <a href="{% url 'notifications:delete' notice.slug %}" class="table-action table-action-delete" data-toggle="tooltip" data-original-title="Delete">
+      <i class="fas fa-trash"></i>
+    </a>
+  </td>
+</tr>

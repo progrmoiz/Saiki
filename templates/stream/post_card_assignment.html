@@ -1,0 +1,39 @@
+{% load saiki_extras %}
+
+<div class="mt-4 d-flex position-relative">
+<div>
+<span class="d-block text-xs text-{{color.1}} mb-0">
+{% if is_student %}
+{% get_assignment_work object.assignment student as aw %}
+
+{% if aw %}
+    {% if aw.points < 0 %} {{ object.assignment.points }} point{{ object.assignment.points|pluralize }} possible {% else %} {{ aw.points }}/{{ object.assignment.points }} point{{ object.assignment.points|pluralize }} {% endif %}
+{% else %}
+    {{ object.assignment.points }} point{{ object.assignment.points|pluralize }} possible
+{% endif %}
+
+{% elif is_teacher %}
+{{ object.assignment.points }} point{{ object.assignment.points|pluralize }} possible
+{% endif %}
+</span>
+<h3 class="font-weight-bold text-{{color.1}} mb-0">{{ object.assignment.title }}</h4>
+<h5 class="text-xs mb-0" style="color: {{color.3}}">{{ object.assignment.deadline|date:"F d, Y f A" }}</h5>
+</div>
+<div class="position-absolute right-1 top-3 text-right">
+<a href="{% url 'assignment:detail' object.assignment.slug %}" class="btn btn-sm btn-{{color.1}}">
+{% if is_student %}
+    {% if aw.points < 0 or not aw %}
+        {% if aw.submitted %}
+        {% if object.assignment.is_not_in_deadline %}Undo turn in late{% else %}Undo turn in{% endif %}
+        {% else %}
+        {% if object.assignment.is_not_in_deadline %}Turn in late{% else %}Turn in{% endif %}
+        {% endif %}
+    {% else %}
+        Returned
+    {% endif %}
+{% elif is_teacher %}
+    View submissions
+{% endif %}
+</a>
+</div>
+</div>

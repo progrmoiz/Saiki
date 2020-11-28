@@ -1,9 +1,12 @@
+from result.utils import SemesterGradeHelper
 from django.db import models
+from django.db.models.signals import post_save
 from django.utils.translation import ugettext as _
-from university.models import Term
-from course.models import CourseOffering
-from accounts.models import Student
+from guardian.shortcuts import assign_perm
 
+import university.models
+import accounts.models
+import course.models
 
 class Grade(models.Model):
 
@@ -20,18 +23,35 @@ class Grade(models.Model):
     )
 
     letter_grade = models.FloatField(_('grade'), choices=GRADE_POINT_EQUIVALENT, blank=True, null=True)
-    course_offering = models.ForeignKey(CourseOffering, on_delete=models.CASCADE)
-    student = models.ForeignKey(Student, on_delete=models.CASCADE)
+    course_enrollment = models.ForeignKey('course.CourseEnrollment', on_delete=models.CASCADE, null=True)
 
     def __str__(self):
-        return '{} - {}'.format(self.student.user, self.course_offering.course.code)
+        return '{} - {}'.format(self.course_enrollment.student.user, self.course_enrollment.course_offered.course.code)
 
+def grade_save_handler(sender, instance, created, **kwargs):
+    if created:
+        assign_perm('view_grade', instance.course_enrollment.student.user, instance)
+        
+        assign_perm('view_grade', instance.course_enrollment.course_offered.teacher.user, instance)
+        assign_perm('change_grade', instance.course_enrollment.course_offered.teacher.user, instance)
+    
+    s, _created = SemesterGrade.objects.get_or_create(student=instance.course_enrollment.student, term=instance.course_enrollment.course_offered.term)
+    s.semester_gpa = SemesterGradeHelper.get_sgpa(s)
+    s.save(force_update=True)
+
+post_save.connect(grade_save_handler, sender=Grade)
 
 class SemesterGrade(models.Model):
 
     semester_gpa = models.FloatField(_("semester gpa"), blank=True, null=True)
-    term = models.ForeignKey(Term, on_delete=models.CASCADE)
-    student = models.ForeignKey(Student, on_delete=models.CASCADE)
+    term = models.ForeignKey('university.Term', on_delete=models.CASCADE)
+    student = models.ForeignKey('accounts.Student', on_delete=models.CASCADE)
 
     def __str__(self):
-        return '{}'.format(self.term)
+        return '{}'.format(self.term)   
+
+def semestergrade_save_handler(sender, instance, created, **kwargs):
+    if created:
+        assign_perm('view_semestergrade', instance.student.user, instance)
+
+post_save.connect(semestergrade_save_handler, sender=SemesterGrade)
