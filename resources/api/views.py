@@ -49,7 +49,7 @@ class ResourceFileList(APIView):
             d_file['user'] = f.user.pk
             d_file['url'] = f.file.url
             d_file['size'] = f.file.size
-            d_file['isHidden'] = False # intentionally set all the false
+            d_file['isHidden'] = f.name[0] == '.' # intentionally set all the false
             d_file['isDir'] = False
             d_file['parentId'] = root_slug
             d_file['modDate'] = f.modified
