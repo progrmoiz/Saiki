@@ -11,7 +11,6 @@ urlpatterns = [
         path('<int:username>', CoursePeopleEditView.as_view(), name='student'),
         path('w/', include('assignment.urls', namespace='assignment')),
         path('s/', include('stream.urls', namespace='stream')),
-        path('r/', include('resources.urls', namespace='resources')),
     ]))
 ]
 
