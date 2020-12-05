@@ -12,6 +12,7 @@ from saiki.utils import get_site_title
 import accounts.models
 import university.models
 import result.models 
+import resources.models 
 
 # Create your models here.
 class Course(models.Model):
@@ -53,11 +54,14 @@ class CourseOffering(ModelMeta, models.Model):
         return '{} - {}'.format(self.course.code, self.term)
 
 
+# TODO: when course is created create a root folder
 def courseoffering_save_handler(sender, instance, created, **kwargs):
     # add permission to teacher, so only teacher can edit and view this assignment
     if created:
         assign_perm('view_courseoffering', instance.teacher.user, instance)
         assign_perm('change_courseoffering', instance.teacher.user, instance)
+
+        resources.models.ResourceFolder(course_offering=instance, name=str(instance)).save()
 
 post_save.connect(courseoffering_save_handler, sender=CourseOffering)
 

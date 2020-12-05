@@ -3,4 +3,5 @@
 {% url 'course:people' course.slug as people_url %}
 {% url 'course:assignment:index' course.slug as assignment_url %}
 {% url 'course:stream:index' course.slug as stream_url %}
-{% include '../includes/header.html' with heading=course.course.description subheading=course.course.code|addstr:" | "|addstr:course.term btn1_url=stream_url btn1_title="Stream" btn1_class=is_stream_page|yesno:"btn-primary," btn2_url=people_url btn2_title="People" btn2_class=is_people_page|yesno:"btn-primary," btn3_url=assignment_url btn3_title="Assignment" btn3_class=is_assignment_page|yesno:"btn-primary," %}
+{% url 'course:resources:index' course.slug as resources_url %}
+{% include '../includes/header.html' with heading=course.course.description subheading=course.course.code|addstr:" | "|addstr:course.term btn4_url=resources_url btn4_title="Resources" btn4_class=is_resource_page|yesno:"btn-primary," btn1_url=stream_url btn1_title="Stream" btn1_class=is_stream_page|yesno:"btn-primary," btn2_url=people_url btn2_title="People" btn2_class=is_people_page|yesno:"btn-primary," btn3_url=assignment_url btn3_title="Assignment" btn3_class=is_assignment_page|yesno:"btn-primary," %}

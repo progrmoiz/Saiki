@@ -1,0 +1,41 @@
+/*! axios */
+
+/*! chonky */
+
+/*! chonky-icon-fontawesome */
+
+/*! classnames */
+
+/*! dynamic exports */
+
+/*! export __esModule [maybe provided (runtime-defined)] [no usage info] [provision prevents renaming (no use info)] */
+
+/*! export unstable_batchedUpdates [maybe provided (runtime-defined)] [no usage info] [provision prevents renaming (no use info)] */
+
+/*! exports [not provided] [no usage info] */
+
+/*! namespace exports */
+
+/*! other exports [maybe provided (runtime-defined)] [no usage info] */
+
+/*! react */
+
+/*! react-dom */
+
+/*! react-dropzone */
+
+/*! runtime requirements: __webpack_require__, __webpack_require__.n, __webpack_require__.r, __webpack_exports__, __webpack_require__.* */
+
+/*! runtime requirements: module */
+
+/*!************************!*\
+  !*** external "React" ***!
+  \************************/
+
+/*!***************************!*\
+  !*** external "ReactDOM" ***!
+  \***************************/
+
+/*!******************************************!*\
+  !*** ./static/resources/js/src/index.js ***!
+  \******************************************/
