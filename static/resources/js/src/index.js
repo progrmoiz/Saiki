@@ -121,6 +121,8 @@ class ResourcesApp extends React.Component {
   })
 
   moveFiles = (files, source, destination) => Promise.all(files.map(file => {
+    if (!this.props.is_teacher && file.user !== this.props.user) return window.alert('You are not authorized to move this item.')
+    
     const formData = new FormData();
 
     if (FileHelper.isDirectory(file)) {
@@ -145,6 +147,7 @@ class ResourcesApp extends React.Component {
     if (!window.confirm('Are you sure you wish to delete this item?')) return
 
     files.map(file => {
+      if (!this.props.is_teacher && file.user !== this.props.user) return window.alert('You are not authorized to delete this item.')
       delete newFileMap[file.id]
 
       if (file.parentId) {
