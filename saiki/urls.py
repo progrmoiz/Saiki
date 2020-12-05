@@ -26,7 +26,6 @@ from rest_framework import routers
 api_urlpatterns = [
    url(r'^', include('course.api.urls', namespace='course_api')),
    url(r'^', include('assignment.api.urls', namespace='assignment_api')),
-   url(r'^', include('resources.api.urls', namespace='resources_api')),
 ]
 
 urlpatterns = [
