@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% load render_bundle from webpack_loader %}
+{% load static %}
+
+{% block content %}
+
+{% include '../includes/header_course.html' %}
+
+<div class="container-fluid mt--6">
+    <div class="row">
+        <div class="col">
+            <div id="resources-app"></div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block script_1 %}
+<script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
+<script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
+
+<script>
+window.resources_list_app_props = {
+	user: {{ user.pk }},
+    is_student: {{ is_student|yesno:"true,false" }},
+    is_teacher: {{ is_teacher|yesno:"true,false" }},
+	course_offering: {{ course.pk }},
+	folder_create_url: "{% url 'resources_api:folder_create' %}",
+	file_create_url: "{% url 'resources_api:file_create' %}",
+	request_url: "{% url 'resources_api:folder_list' object.slug %}",
+};
+Object.freeze(window.resources_list_app_props);
+</script>
+
+{% render_bundle 'resources' 'js' %}
+{% render_bundle 'vendors' 'js' %}
+
+{% endblock %}
