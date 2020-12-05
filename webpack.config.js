@@ -7,6 +7,7 @@ const COMPONENT_DIR = path.resolve(__dirname, 'static', 'components')
 const STATIC_DIR = path.resolve(__dirname, 'static');
 const COURSE_SOURCE_DIR = path.resolve(STATIC_DIR, 'course', 'js', 'src');
 const ASSIGNMENT_SOURCE_DIR = path.resolve(STATIC_DIR, 'assignment', 'js', 'src');
+const RESOURCES_SOURCE_DIR = path.resolve(STATIC_DIR, 'resources', 'js', 'src');
 
 module.exports = {
   mode: "production",
@@ -14,6 +15,7 @@ module.exports = {
   entry: {
     course: path.resolve(COURSE_SOURCE_DIR, 'index.js'),
     assignment: path.resolve(ASSIGNMENT_SOURCE_DIR, 'index.js'),
+    resources: path.resolve(RESOURCES_SOURCE_DIR, 'index.js'),
   },
   output: {
     filename: `[name]-1.0.0.js`,
@@ -55,7 +57,8 @@ module.exports = {
     alias: {
       components: COMPONENT_DIR,
     },
-    extensions: ['*', '.js', '.jsx']
+    extensions: ['*', '.js', '.jsx'],
+    fallback: { "path": require.resolve("path-browserify") }
   },
   externals: {
     react: 'React',

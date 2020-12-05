@@ -12,6 +12,7 @@ from saiki.utils import get_site_title
 import accounts.models
 import university.models
 import result.models 
+import resources.models 
 
 # Create your models here.
 class Course(models.Model):
@@ -58,6 +59,8 @@ def courseoffering_save_handler(sender, instance, created, **kwargs):
     if created:
         assign_perm('view_courseoffering', instance.teacher.user, instance)
         assign_perm('change_courseoffering', instance.teacher.user, instance)
+
+        resources.models.ResourceFolder(course_offering=instance, name=str(instance), user=instance.teacher.user).save()
 
 post_save.connect(courseoffering_save_handler, sender=CourseOffering)
 

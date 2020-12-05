@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'course.apps.CourseConfig',
     'announcement.apps.AnnouncementConfig',
     'stream.apps.StreamConfig',
+    'resources.apps.ResourcesConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

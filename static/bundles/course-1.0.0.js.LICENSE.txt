@@ -18,6 +18,8 @@
 
 /*! export default [provided] [no usage info] [missing usage info prevents renaming] */
 
+/*! export unstable_batchedUpdates [maybe provided (runtime-defined)] [no usage info] [provision prevents renaming (no use info)] */
+
 /*! exports [not provided] [no usage info] */
 
 /*! namespace exports */

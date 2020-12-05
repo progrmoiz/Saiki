@@ -29,6 +29,8 @@
   },
   "dependencies": {
     "axios": "^0.21.0",
+    "chonky": "^2.0.5",
+    "chonky-icon-fontawesome": "^2.0.5",
     "classnames": "^2.2.6",
     "file-extension": "^4.0.5",
     "jquery": "^3.5.1",
