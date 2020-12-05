@@ -25,13 +25,13 @@ function MyDropZone(props) {
     <>
       <div className="dropzone dropzone-multiple mb-2" {...getRootProps()}>
         <input {...getInputProps()} />
+        <div className="dz-default dz-message">
         {
           isDragActive ?
-            <p>Drop the files here ...</p> :
-            <div className="dz-default dz-message">
-              <span>Drag 'n' drop some files here, or click to select files</span>
-            </div>
+            <span>Drop the files here ...</span> :
+            <span>Drag 'n' drop some files here, or click to select files</span>
         }
+        </div>
       </div>
     </>
   )
@@ -55,6 +55,7 @@ class ResourcesApp extends React.Component {
     const formData = new FormData();
     formData.append('file', f);
     formData.append('folder', currentFolder.pk);
+    formData.append('user', this.props.user);
 
     return axios.post(this.props.file_create_url, formData, {
       headers: { 'content-type': 'multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW' },
@@ -126,8 +127,10 @@ class ResourcesApp extends React.Component {
       formData.append('name', file.name)
       formData.append('course_offering', this.props.course_offering)
       formData.append('parent', destination.pk)
+      formData.append('user', file.user)
     } else {
       formData.append('folder', destination.pk)
+      formData.append('user', file.user)
     }
 
     return axios.put(file.request_url, formData, {
@@ -177,6 +180,7 @@ class ResourcesApp extends React.Component {
     formData.append('course_offering', this.props.course_offering); // 
     formData.append('name', folderName);
     formData.append('parent', currentFolder.pk)
+    formData.append('user', this.props.user)
 
     // maybe a bit bad because we are refreshing the whole state
     return axios.post(this.props.folder_create_url, formData, {

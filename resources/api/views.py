@@ -21,6 +21,7 @@ class ResourceFileList(APIView):
         d['pk'] = root.pk
         d['id'] = root_slug
         d['name'] = root.name
+        d['user'] = root.user.pk
         d['isDir'] = True
         d['modDate'] = root.modified
         d['childrenIds'] = []
@@ -42,7 +43,8 @@ class ResourceFileList(APIView):
         for f in files:
             d_file = OrderedDict()
             d_file['id'] = f.slug
-            d_file['name'] = os.path.basename(f.file.name)
+            d_file['name'] = f.name
+            d_file['user'] = f.user.pk
             d_file['url'] = f.file.url
             d_file['size'] = f.file.size
             d_file['isHidden'] = False # intentionally set all the false

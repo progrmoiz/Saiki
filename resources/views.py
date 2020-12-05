@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from .models import ResourceFolder
-from accounts.utils import get_current_student, get_current_teacher, is_teacher
+from accounts.utils import get_current_student, get_current_teacher
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http.response import HttpResponse, HttpResponseForbidden
 from meta.views import Meta
@@ -16,28 +16,29 @@ class ResourceDetailView(LoginRequiredMixin, DetailView):
     slug_url_kwarg = 'slug'
     slug_field = 'course_offering__slug'
 
-    # def get(self, request, *args, **kwargs):
-    #     is_teacher = request.user.is_teacher
-    #     is_student = request.user.is_student
+    def get(self, request, *args, **kwargs):
+        is_teacher = request.user.is_teacher
+        is_student = request.user.is_student
 
-    #     obj = self.get_object()
+        obj = self.get_object()
 
-    #     if is_student:
-    #         student = get_current_student(self.request)
+        if is_student:
+            student = get_current_student(self.request)
 
-    #         if not student.user.has_perm('view_post', obj):
-    #             return HttpResponseForbidden()
+            print(student.user.has_perm('view_resourcefolder', obj))
+            if not student.user.has_perm('view_resourcefolder', obj):
+                return HttpResponseForbidden()
 
-    #         return super().get(self, request, *args, **kwargs)
-    #     elif is_teacher:
-    #         teacher = get_current_teacher(self.request)
+            return super().get(self, request, *args, **kwargs)
+        elif is_teacher:
+            teacher = get_current_teacher(self.request)
 
-    #         if not teacher.user.has_perm('view_post', obj):
-    #             return HttpResponseForbidden()
+            if not teacher.user.has_perm('view_resourcefolder', obj):
+                return HttpResponseForbidden()
 
-    #         return super().get(self, request, *args, **kwargs)
-    #     else:
-    #         return HttpResponseForbidden()
+            return super().get(self, request, *args, **kwargs)
+        else:
+            return HttpResponseForbidden()
 
     def get_context_data(self, **kwargs):
         context = super(ResourceDetailView,self).get_context_data(**kwargs)

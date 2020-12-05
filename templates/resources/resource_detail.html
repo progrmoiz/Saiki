@@ -21,10 +21,13 @@
 
 <script>
 window.resources_list_app_props = {
+	user: {{ user.pk }},
+    is_student: {{ is_student|yesno:"true,false" }},
+    is_teacher: {{ is_teacher|yesno:"true,false" }},
 	course_offering: {{ course.pk }},
 	folder_create_url: "{% url 'resources_api:folder_create' %}",
 	file_create_url: "{% url 'resources_api:file_create' %}",
-	request_url: "{% url 'resources_api:folder_list' object.slug %}"
+	request_url: "{% url 'resources_api:folder_list' object.slug %}",
 };
 Object.freeze(window.resources_list_app_props);
 </script>

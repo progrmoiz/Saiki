@@ -54,14 +54,13 @@ class CourseOffering(ModelMeta, models.Model):
         return '{} - {}'.format(self.course.code, self.term)
 
 
-# TODO: when course is created create a root folder
 def courseoffering_save_handler(sender, instance, created, **kwargs):
     # add permission to teacher, so only teacher can edit and view this assignment
     if created:
         assign_perm('view_courseoffering', instance.teacher.user, instance)
         assign_perm('change_courseoffering', instance.teacher.user, instance)
 
-        resources.models.ResourceFolder(course_offering=instance, name=str(instance)).save()
+        resources.models.ResourceFolder(course_offering=instance, name=str(instance), user=instance.teacher.user).save()
 
 post_save.connect(courseoffering_save_handler, sender=CourseOffering)
 
