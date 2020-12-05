@@ -153,27 +153,27 @@ WSGI_APPLICATION = 'saiki.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#         'NAME': 'ddku0c3uu5ecp1',
-#         'USER': 'elyfbvnpanixes',
-#         'PASSWORD': '02eded2ca7cb45c56859c33063ec3b50d3fe6d72ed146b1e18daf6aa16cf0af5',
-#         'HOST': 'ec2-54-160-120-28.compute-1.amazonaws.com',
-#         'PORT': '5432',
-#     }
-# }
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'SaikiDB_8',
-        'USER': 'postgres',
-        'PASSWORD': '123456',
-        'HOST': 'localhost',
+        'NAME': 'ddku0c3uu5ecp1',
+        'USER': 'elyfbvnpanixes',
+        'PASSWORD': '02eded2ca7cb45c56859c33063ec3b50d3fe6d72ed146b1e18daf6aa16cf0af5',
+        'HOST': 'ec2-54-160-120-28.compute-1.amazonaws.com',
         'PORT': '5432',
     }
 }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': 'SaikiDB_8',
+#         'USER': 'postgres',
+#         'PASSWORD': '123456',
+#         'HOST': 'localhost',
+#         'PORT': '5432',
+#     }
+# }
 
 
 # Password validation
