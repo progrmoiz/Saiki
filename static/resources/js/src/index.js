@@ -20,6 +20,7 @@ setChonkyDefaults({ iconComponent: ChonkyIconFA });
 function MyDropZone(props) {
   const onDrop = useCallback(props.onDrop, [])
   const { acceptedFiles, getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop })
+  props.forwardRef(() => getRootProps().onClick(new CustomEvent("drop")));
 
   return (
     <>
@@ -53,6 +54,10 @@ class ResourcesApp extends React.Component {
     axios.defaults.xsrfHeaderName = "X-CSRFTOKEN"
 
     this.state = {}
+  }
+
+  onClickChild = (text) => {
+    this.childRef(text);
   }
 
   handleOnDrop = acceptedFiles => Promise.all(acceptedFiles.map((f, id) => {
@@ -119,7 +124,7 @@ class ResourcesApp extends React.Component {
     })
   }
 
-  fileActions = [ChonkyActions.CreateFolder, ChonkyActions.DeleteFiles]
+  fileActions = [ChonkyActions.CreateFolder, ChonkyActions.DeleteFiles, ChonkyActions.UploadFiles]
 
   openInNewTab = (url) => {
     const newWindow = window.open(url, '_blank', 'noopener,noreferrer')
@@ -231,6 +236,8 @@ class ResourcesApp extends React.Component {
     } else if (data.id === ChonkyActions.CreateFolder.id) {
       const folderName = prompt('Provide the name for your new folder:');
       if (folderName) this.createFolder(folderName);
+    } else if (data.id === ChonkyActions.UploadFiles.id) {
+      this.childRef()
     }
   }
 
@@ -246,7 +253,7 @@ class ResourcesApp extends React.Component {
         >
           <FileNavbar />
           <FileToolbar />
-          <MyDropZone onDrop={this.handleOnDrop}>
+          <MyDropZone onDrop={this.handleOnDrop} forwardRef={c => { this.childRef = c }} >
             <FileList />
           </MyDropZone>
           <FileContextMenu />
