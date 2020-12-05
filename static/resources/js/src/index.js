@@ -47,7 +47,7 @@ class ResourcesApp extends React.Component {
     this.state = {}
   }
 
-  handleOnDrop = acceptedFiles => acceptedFiles.forEach((f, id) => {
+  handleOnDrop = acceptedFiles => Promise.all(acceptedFiles.map((f, id) => {
     const fileMap = this.state.fileMap;
     const currentFolderId = this.state.currentFolderId;
     const currentFolder = fileMap[currentFolderId];
@@ -57,11 +57,17 @@ class ResourcesApp extends React.Component {
     formData.append('folder', currentFolder.pk);
     formData.append('user', this.props.user);
 
+    this.setState({
+      files: [
+        ...this.state.files,
+        null
+      ]
+    })
+
     return axios.post(this.props.file_create_url, formData, {
       headers: { 'content-type': 'multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW' },
     })
-    .then(this.refreshStates) // bad choice
-  })
+  })).then(this.refreshStates) // bad choice
 
   fetchCourses = (fn, error_fn) => axios.get(this.props.request_url).then(fn).catch(error_fn)
 

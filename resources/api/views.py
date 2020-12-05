@@ -8,6 +8,8 @@ from rest_framework.response import Response
 from rest_framework.reverse import reverse
 from rest_framework.views import APIView
 from .serializers import ResourceFolderSerializer, ResourceFileSerializer
+import mimetypes
+mimetypes.init()
 
 class ResourceFileList(APIView):
     
@@ -51,7 +53,12 @@ class ResourceFileList(APIView):
             d_file['isDir'] = False
             d_file['parentId'] = root_slug
             d_file['modDate'] = f.modified
-            d_file['thumbnailUrl'] = f.file.url
+            mimestart = mimetypes.guess_type(f.name)[0]
+            if mimestart != None:
+                mimestart = mimestart.split('/')[0]
+
+                if mimestart == 'image':
+                    d_file['thumbnailUrl'] = f.file.url
             d_file['request_url'] = reverse('resources_api:file_detail', kwargs={'pk': f.pk })
 
             # add this id to the parent children
