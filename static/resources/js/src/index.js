@@ -20,18 +20,27 @@ setChonkyDefaults({ iconComponent: ChonkyIconFA });
 function MyDropZone(props) {
   const onDrop = useCallback(props.onDrop, [])
   const { acceptedFiles, getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop })
+  props.forwardRef(() => getRootProps().onClick(new CustomEvent("drop")));
 
   return (
     <>
-      <div className="dropzone dropzone-multiple mb-2" {...getRootProps()}>
+      <div className="dropzone dropzone-multiple mb-2 h-100" {...getRootProps({
+          onClick: event => event.stopPropagation()
+        })}>
         <input {...getInputProps()} />
-        <div className="dz-default dz-message">
-        {
+        {/* <div className="dz-default dz-message">
           isDragActive ?
             <span>Drop the files here ...</span> :
             <span>Drag 'n' drop some files here, or click to select files</span>
         }
-        </div>
+        </div> */}
+        { isDragActive ? 
+          <div className="drag-overlay position-relative h-100">
+            { props.children }
+            <div className="drag-overlay-box position-absolute w-100 h-100 top-0 left-0 bg-translucent-dark pt-6 text-center"><span className="font-weight-bold text-white">Drop the files here ...</span></div>
+          </div> :
+          props.children
+        }
       </div>
     </>
   )
@@ -45,6 +54,10 @@ class ResourcesApp extends React.Component {
     axios.defaults.xsrfHeaderName = "X-CSRFTOKEN"
 
     this.state = {}
+  }
+
+  onClickChild = (text) => {
+    this.childRef(text);
   }
 
   handleOnDrop = acceptedFiles => Promise.all(acceptedFiles.map((f, id) => {
@@ -111,7 +124,7 @@ class ResourcesApp extends React.Component {
     })
   }
 
-  fileActions = [ChonkyActions.CreateFolder, ChonkyActions.DeleteFiles]
+  fileActions = [ChonkyActions.CreateFolder, ChonkyActions.DeleteFiles, ChonkyActions.UploadFiles]
 
   openInNewTab = (url) => {
     const newWindow = window.open(url, '_blank', 'noopener,noreferrer')
@@ -223,12 +236,13 @@ class ResourcesApp extends React.Component {
     } else if (data.id === ChonkyActions.CreateFolder.id) {
       const folderName = prompt('Provide the name for your new folder:');
       if (folderName) this.createFolder(folderName);
+    } else if (data.id === ChonkyActions.UploadFiles.id) {
+      this.childRef()
     }
   }
 
   render() {
     return <>
-      <MyDropZone onDrop={this.handleOnDrop} />
       <div style={{ height: 400 }}>
         <FileBrowser
           files={this.state.files}
@@ -239,7 +253,9 @@ class ResourcesApp extends React.Component {
         >
           <FileNavbar />
           <FileToolbar />
-          <FileList />
+          <MyDropZone onDrop={this.handleOnDrop} forwardRef={c => { this.childRef = c }} >
+            <FileList />
+          </MyDropZone>
           <FileContextMenu />
         </FileBrowser>
       </div>
