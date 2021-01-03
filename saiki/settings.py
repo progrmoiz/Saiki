@@ -28,7 +28,7 @@ SECRET_KEY = '150qlyc$@^@+4-(6*2j=8b16j$0(nh01a!@2&0fw)i03#ghyw4'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS =  ['localhost', '127.0.0.1', '[::1]', '.herokuapp.com']
+ALLOWED_HOSTS =  ['localhost', '127.0.0.1', '[::1]', '.herokuapp.com', '.ngrok.io']
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
 
@@ -60,12 +60,34 @@ INSTALLED_APPS = [
     'rest_framework',
     'django_comments_xtd',
     'django_comments',
-    'django_markdown2'
+    'django_markdown2',
+
+    "sslserver",
+
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+
+    'allauth.socialaccount.providers.zoom',
     # 'dbbackup'
 ]
 
 SITE_ID = 1
 COMMENTS_APP = 'django_comments_xtd'
+
+# Provider specific settings
+SOCIALACCOUNT_PROVIDERS = {
+    'zoom': {
+        # For each OAuth based provider, either add a ``SocialApp``
+        # (``socialaccount`` app) containing the required client
+        # credentials, or list them here:
+        'APP': {
+            'client_id': 'eP1N9U5HTxyMpOn4cyW9Xw',
+            'secret': 'wndruv21UdIR8F1t15N1O4O7hxnwahzG',
+            'key': ''
+        }
+    }
+}
 
 # Either enable sending mail messages to the console:
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
@@ -119,6 +141,10 @@ MIDDLEWARE = [
 
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend', # this is default
+    
+    # `allauth` specific authentication methods, such as login by e-mail
+    'allauth.account.auth_backends.AuthenticationBackend',
+
     'guardian.backends.ObjectPermissionBackend',
 )
 
@@ -139,7 +165,7 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 'accounts.contexts.account',
                 'announcement.contexts.notification',
-                'saiki.contexts.appname'
+                'saiki.contexts.appname',
             ],
             'libraries':{
                 'saiki_extras': 'saiki.templatetags.saiki_extras',
@@ -153,27 +179,27 @@ WSGI_APPLICATION = 'saiki.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'ddku0c3uu5ecp1',
-        'USER': 'elyfbvnpanixes',
-        'PASSWORD': '02eded2ca7cb45c56859c33063ec3b50d3fe6d72ed146b1e18daf6aa16cf0af5',
-        'HOST': 'ec2-54-160-120-28.compute-1.amazonaws.com',
-        'PORT': '5432',
-    }
-}
-
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#         'NAME': 'SaikiDB_8',
-#         'USER': 'postgres',
-#         'PASSWORD': '123456',
-#         'HOST': 'localhost',
+#         'NAME': 'ddku0c3uu5ecp1',
+#         'USER': 'elyfbvnpanixes',
+#         'PASSWORD': '02eded2ca7cb45c56859c33063ec3b50d3fe6d72ed146b1e18daf6aa16cf0af5',
+#         'HOST': 'ec2-54-160-120-28.compute-1.amazonaws.com',
 #         'PORT': '5432',
 #     }
 # }
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'SaikiDB_8',
+        'USER': 'postgres',
+        'PASSWORD': '123456',
+        'HOST': 'localhost',
+        'PORT': '5432',
+    }
+}
 
 
 # Password validation
