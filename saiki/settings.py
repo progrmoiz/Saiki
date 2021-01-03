@@ -62,7 +62,7 @@ INSTALLED_APPS = [
     'django_comments',
     'django_markdown2',
 
-    "sslserver",
+    # "sslserver",
 
     'allauth',
     'allauth.account',
