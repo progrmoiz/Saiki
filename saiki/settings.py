@@ -82,8 +82,8 @@ SOCIALACCOUNT_PROVIDERS = {
         # (``socialaccount`` app) containing the required client
         # credentials, or list them here:
         'APP': {
-            'client_id': 'eP1N9U5HTxyMpOn4cyW9Xw',
-            'secret': 'wndruv21UdIR8F1t15N1O4O7hxnwahzG',
+            'client_id': 'vCV08c2qQ1ytadFLzMdbeg',
+            'secret': '44EIqezfjpwUbzfHNMBI7kzlxRqq58yX',
             'key': ''
         }
     }
