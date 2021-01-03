@@ -35,6 +35,7 @@ urlpatterns = [
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     path('c/', include('course.urls', namespace='course')),
     path('accounts/', include('accounts.urls', namespace='accounts')),
+    path('accounts1/', include('allauth.urls')),
     path('announcement/', include('announcement.urls', namespace='announcement')),
     path(r'comments/', include('django_comments_xtd.urls')),
     path(r'jsi18n/', JavaScriptCatalog.as_view(), name='javascript-catalog'),
