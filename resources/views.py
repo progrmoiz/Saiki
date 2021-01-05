@@ -26,15 +26,15 @@ class ResourceDetailView(LoginRequiredMixin, DetailView):
             student = get_current_student(self.request)
 
             print(student.user.has_perm('view_resourcefolder', obj))
-            if not student.user.has_perm('view_resourcefolder', obj):
-                return HttpResponseForbidden()
+#             if not student.user.has_perm('view_resourcefolder', obj):
+#                 return HttpResponseForbidden()
 
             return super().get(self, request, *args, **kwargs)
         elif is_teacher:
             teacher = get_current_teacher(self.request)
 
-            if not teacher.user.has_perm('view_resourcefolder', obj):
-                return HttpResponseForbidden()
+#             if not teacher.user.has_perm('view_resourcefolder', obj):
+#                 return HttpResponseForbidden()
 
             return super().get(self, request, *args, **kwargs)
         else:
