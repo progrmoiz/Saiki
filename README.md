@@ -1,3 +1,4 @@
+
 <p align="center" width="100%">
     <img width="33%" src="https://raw.githubusercontent.com/progrmoiz/Saiki/master/static/img/brand/dark/default.png?token=AIDH6MVN3B2NKTTT6EYC3GLAABUDK" id="saiki"> 
     <br>
@@ -12,7 +13,7 @@
 - [Modules and Features](#modules-and-features)
 - [Installation](#installation)
 - [Requirements](#requirements)
-- [Build & Run](#build---run)
+- [Build and Run](#build-and-run)
 - [Design of the Project](#design-of-the-project)
   * [ERD](#erd)
   * [UML Diagrams](#uml-diagrams)
@@ -24,6 +25,7 @@
     + [Deployment Diagram](#deployment-diagram)
 - [Some Screenshots of Saiki](#some-screenshots-of-saiki)
 - [Contributing](#contributing)
+- [Contributors ✨](#contributors--)
 - [License](#license)
 
 ## Modules and Features
@@ -43,12 +45,12 @@
  4. Add your db config in `settings.py`
  5. Install [requirements](#requirements) by running `pip install -r requirements.txt`
  6. Create superuser `python manage.py createsuperuser`
- 7. [Run the project](#build--run) by using  `python manage.py runserver`
+ 7. [Run the project](#build-and-run) by using  `python manage.py runserver`
 
 ## Requirements
 To install all required modules use the following command in project dir: `pip install -r requirements.txt`
 
-## Build & Run
+## Build and Run
 To run the project use the following command in project dir: `python manage.py runserver`
 
 ## Design of the Project
@@ -104,6 +106,22 @@ To run the project use the following command in project dir: `python manage.py r
 
 ## Contributing
 Please check the [CONTRIBUTING.md](CONTRIBUTING.md) file for contribution instructions and naming guidelines.
+
+## Contributors ✨
+
+Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
+
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+
+<!-- markdownlint-restore -->
+<!-- prettier-ignore-end -->
+
+<!-- ALL-CONTRIBUTORS-LIST:END -->
+
+This project follows the [all-contributors](https://allcontributors.org) specification.
+Contributions of any kind are welcome!
 
 ## License
 Copyright © 2020, [Moiz Farooq](https://github.com/progrmoiz). Released under the [GNU GPLv3](LICENSE).
