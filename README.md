@@ -14,7 +14,7 @@
  4. Add your db config in `settings.py`
  5. Install [requirements](#requirements) by running `pip install -r requirements.txt`
  6. Create superuser `python manage.py createsuperuser`
- 7. [Run the project](build--run) by using  `python manage.py runserver`
+ 7. [Run the project](#build--run) by using  `python manage.py runserver`
 
 ## Requirements
 To install all required modules use the following command in project dir: `pip install -r requirements.txt`
