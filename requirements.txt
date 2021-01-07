@@ -38,7 +38,7 @@ markdown2==2.3.10
 olefile==0.46
 packaging==20.4
 phonenumbers==8.11.5
-Pillow==5.3.0
+Pillow==7.1.0
 pinax-notifications==6.0.0
 pipwin==0.5.0
 psycopg2==2.8.4
