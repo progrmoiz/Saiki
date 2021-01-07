@@ -13,7 +13,6 @@
 [![made-with-python](https://img.shields.io/badge/Made%20with-Python-1f425f.svg)](https://www.python.org/)
 
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section --><!-- ALL-CONTRIBUTORS-BADGE:END --> 
-[![Maintenance](https://img.shields.io/badge/Maintained%3F-no-red.svg)](https://bitbucket.org/lbesson/ansi-colors)
 
 ## Table of contents
 - [Table of contents](#table-of-contents)
