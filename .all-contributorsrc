@@ -1,0 +1,25 @@
+{
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": false,
+  "contributors": [
+    {
+      "login": "progrmoiz",
+      "name": "Abdul Moiz",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/33980210?v=4",
+      "profile": "https://abdulmoiz.me",
+      "contributions": [
+        "code",
+        "ideas"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7,
+  "projectName": "Saiki",
+  "projectOwner": "progrmoiz",
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "skipCi": true
+}
