@@ -1,4 +1,3 @@
-
 <p align="center" width="100%">
     <img width="33%" src="https://raw.githubusercontent.com/progrmoiz/Saiki/master/static/img/brand/dark/default.png?token=AIDH6MVN3B2NKTTT6EYC3GLAABUDK"> 
 </p>
@@ -6,6 +5,10 @@
 <p align="center">Saiki is modern LMS for universities that focus on improving teachers and students experience.</p>
 
 ---
+## Table of contents
+- [Installation](#installation)
+- [Requirements](#requirements)
+- [Build & Run](#build---run)
 
 ## Installation
  1. Clone the repo https://github.com/progrmoiz/Saiki
