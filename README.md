@@ -1,5 +1,5 @@
 <p align="center" width="100%">
-    <img width="33%" src="https://raw.githubusercontent.com/progrmoiz/Saiki/master/static/img/brand/dark/default.png?token=AIDH6MVN3B2NKTTT6EYC3GLAABUDK"> 
+    <img width="33%" src="https://raw.githubusercontent.com/progrmoiz/Saiki/master/static/img/brand/dark/default.png?token=AIDH6MVN3B2NKTTT6EYC3GLAABUDK" id="saiki"> 
     <br>
 </p>
 
@@ -23,6 +23,8 @@
     + [Component Diagram](#component-diagram)
     + [Deployment Diagram](#deployment-diagram)
 - [Some Screenshots of Saiki](#some-screenshots-of-saiki)
+- [Contributing](#contributing)
+- [License](#license)
 
 ## Modules and Features
 - Course
@@ -99,3 +101,11 @@ To run the project use the following command in project dir: `python manage.py r
 |Assignment submission (teacher)|Edit assignment (teacher)|Edit grade (teacher)| 
 |--|--|--|
 |![Assignment submissions screen teacher](https://lh3.googleusercontent.com/RdLq1jJtE8Xy4sbF0Uahs6s8nB1AHqVyqEuxmHpdFXq8YhWmzAsvaLXudgfmTFeYOyswflswUJX8BUyJDmbBudUbsgwe53tFqPwIezpTijpot3yT0PVQh9TSHGdYHXOYPHSRy4ndsAfx2_O-Ng2CLKXUp6gpFa4o8tYEdOTrU3p0uyRJTTjLsAIR2aKX7NLnnmhtFmlysZeCF6dw-weUphOSRYNyIyfdIU7YUbr8xYcHXs5St3E_jLM-BeamyL_2sm8Wszb_-CDQQQySRrGD1RMT7bsGFlC8uTDjBNcG-q31_8qUCfQ6J8nhxtSZZz3szGf5kxw2WiKlRxcd3P04vvl_0ZTjN3ZIZ01Ycrhlj9dWR4wqiK-GakQtCV7zaBrbKJ1UEMdyL9-e-fHeFL_H8NoSsP0oS6E-xP4wzzAPpiHpjNE32CPHmuk4KERxY0XOK_FJ5BaTFsBWRop__83r5Qg246z4qlP2MJUy5lME6A6o0Gk_NQiMD3KLlnSuQlV7-Nf_OyNJJtHDTkoMYyqUKUErDfj3G-GYVMuFfRKsqQIyOJ3Q5pCWCrWOoXlB_aGsOHLPeGRScaUswJTATUMr9LwDQNcYbDQQQug6U8jr6R9FcjWn8ntdljC5NB8B9yxyNg1iyUYnvmDCVhWGd8Eb3TLKAMwRbO6wo6ywcKEnjuD4QE0gdYoW3KHgHyNotg=w1263-h834-no?authuser=0)|![Edit assignment screen teacher](https://lh3.googleusercontent.com/pr9gizhkBmAR_TDuzt1_c9UjIM5RHFEjAZvsCfQnnsXXqiGQX_0JOwRFIn6BF6MO4nzyfYdE0WrcmVMbc8sUJezL4-3u-5jGomYRRZ5KxcSWhezkg7kuLltEzY8p1gPnMcNoNYCfY_aZLy5Us5pQW4snsxOpef_NbsJKJLfhy11SCDOe2j4EdxsvbiXL1FaGdHsqnG3DixARnwhytXdCKFz1hP15Lj1t28GYY-bHfhV0jxuvT4SueCc6-Ul4jBL94S_y8DIjn_qA2P1CVF64x4iIS-_0IHS2ZKFFifkwT9qYs_8nszp8yYeJDANuVWQ0riP4OCrlOryXtYb48NiggdhMnmEtPxCSpTakPg-q3BuKf-JOP3rTEgGORe5-8Un2eRo5avifs7NSj_QMY44FNjkOpQN7pbGmhKYUbISeM59gCfA22PmPtAOcWSYio5HYX9Ad4nS9weROgmxvayDEMoWRe6S0DIY6ppG7H5VigKF-3HarzT6R1XxNn4gyIg8hAEhMkFwm4sh9XNxP9vTGK_uNTjnlwAHfN_irGXLJkd9fCSxWIYrCcKZ9NI5kf-APaPRPUsKcMqyONNqLYlBRogwruAhNrk0L5kpxm-_d192zc4_eMVLBj23v5Libv8qfBV2W3XKOWugeY44scbsBMrmexM7QwkGx_6jG6nozxx8vKsRc2Tzealaq9TKx8A=w1263-h834-no?authuser=0)|![Edit grade screen teacher](https://lh3.googleusercontent.com/znHciu1j1WCMG_KvdjyZ4gecrUcNiJ8veY1-NhVPn925u3hikZL3OmVYw5XNZxfx6RgKVmFa6QNdg3T9ounuPWbMvzgqCz021lA1z8eMVfufyOLL50R8cGez_TkErLHB-2IJkQgJQe9XWqOFQQCYgTclpn-Ks1MYMqi5S1m1VDc1Yp-hS8afDBDgfrQ_XwMlVilM_mjpgQgNxsreZ_RdNGCz28q4-9Y-tULc9gNU_V42WecgkLpRC-CJ-zqXUwjHnwfwFyRPPW1WhMTXC_qU4HnSTlStuiv_oSOhjPHrwsbN8GsF-eugselgAfPG2ZPQllftCcGBNus-VZA7cD6dy-WxrWs8w04zOMG-Qi2dFqVJ_J4zGGmp0-mgT0V14vUIP-FjUIuF8B4fJd_oAwKtCKTmSnXvAmT8MkJ0bzvzYPId2z9_C1-P8D6Gsdfq4fPdsQRYj2YlC6V0txhRgjcxeVLhI0T494BdGZeaHxJcQMo2USTGtYCWDkeJ8qZKfAFeNHcsRLKIggfR3AnS9D0-n2WDl3-jhudCpMVCt0I2xpMhSLGP8srU9aPQkKS1TDgK1krakvyQ6ZDKGTzna0RyNiXQUBRS0rb0D7jPgCF-lpCv8StXq63tTGnu4AHk3RFQPKitE2vpwyG935RXis9XvEsVnI0D1e30obIDoLK0t9YvjSmHtSA5ll3CBV36vw=w1263-h834-no?authuser=0)|
+
+## Contributing
+Please check the [CONTRIBUTING.md](CONTRIBUTING.md) file for contribution instructions and naming guidelines.
+
+## License
+Copyright © 2020, [Moiz Farooq](https://github.com/progrmoiz). Released under the [GNU GPLv3](LICENSE).
+
+[:arrow_up: __Back To Top__](#saiki)
