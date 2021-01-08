@@ -49,9 +49,18 @@
  2. Go to the Saiki directory
  3. Create a new database on postgres e.g.: “SAIKI_DB”
  4. Add your db config in `settings.py`
- 5. Install [requirements](#requirements) by running `pip install -r requirements.txt`
- 6. Create superuser `python manage.py createsuperuser`
- 7. [Run the project](#build-and-run) by using  `python manage.py runserver`
+ 5. Assuming you have Python setup, run the following commands (if you're on Windows you may use py or py -3 instead of python3 to start Python):
+ ```
+ pip3 install -r requirements.txt
+ python3 manage.py makemigrations
+ python3 manage.py migrate
+ python3 manage.py collectstatic
+ python3 manage.py test # Run the standard tests. These should all pass.
+ python3 manage.py createsuperuser # Create a superuser
+ python3 manage.py runserver
+ ```
+ 6. Open a browser to http://127.0.0.1:8000/admin/ to open the admin site
+ 7. Open tab to http://127.0.0.1:8000 to see the main site.
 
 ## Requirements
 To install all required modules use the following command in project dir: `pip install -r requirements.txt`
