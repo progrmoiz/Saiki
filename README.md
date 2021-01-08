@@ -45,6 +45,7 @@
 - Resources
 
 ## Installation
+To get this project up and running locally on your computer:
  1. Clone the repo https://github.com/progrmoiz/Saiki
  2. Go to the Saiki directory
  3. Create a new database on postgres e.g.: “SAIKI_DB”
