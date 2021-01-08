@@ -52,6 +52,8 @@ To get this project up and running locally on your computer:
  4. Add your db config in `settings.py`
  5. Assuming you have Python setup, run the following commands (if you're on Windows you may use `py` or `py -3` instead of `python3` to start Python):
  ```
+ pip3 install psycopg2-binary
+ python3 -m pip install Pillow
  pip3 install -r requirements.txt
  python3 manage.py makemigrations
  python3 manage.py migrate
