@@ -126,6 +126,8 @@ To run the project use the following command in project dir: `python manage.py r
 - [ ] Add support for live meeting within the application using Skype.
 - [ ] Create a mini social network within the orgnaziation (so student & teacher under same organization can talk to each other).
 - [ ] Add calendar integration & scheduling system.
+- [ ] Create scripts to automate installation.
+- [ ] Create scripts to dump lots of dummy data.
 - [ ] Create Oauth provider so other app can connect with this application.
 - [ ] Create a marketplace for third-party application.
 - [ ] have more ideas add it here...
