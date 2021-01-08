@@ -6,10 +6,10 @@
 <p align="center">Saiki is modern LMS for universities that focus on improving teachers and students experience.</p>
 
 ---
-[![stars](https://img.shields.io/github/stars/progrmoiz/Saiki)](https://github.com/progrmoiz/Saiki/stargazers)
-[![license](https://img.shields.io/github/license/progrmoiz/Saiki)](/license.txt)
-[![GitHub contributors](https://img.shields.io/github/all-contributors/progrmoiz/Saiki)](https://github.com/progrmoiz/Saiki/graphs/contributors/)
-[![made-with-python](https://img.shields.io/badge/Made%20with-Python-1f425f.svg)](https://www.python.org/)
+[![stars](https://img.shields.io/github/stars/progrmoiz/Saiki?style=for-the-badge)](https://github.com/progrmoiz/Saiki/stargazers)
+[![license](https://img.shields.io/github/license/progrmoiz/Saiki?style=for-the-badge)](/license.txt)
+[![GitHub contributors](https://img.shields.io/github/all-contributors/progrmoiz/Saiki?style=for-the-badge)](https://github.com/progrmoiz/Saiki/graphs/contributors/)
+[![made-with-python](https://img.shields.io/badge/Made%20with-Python-1f425f.svg?style=for-the-badge)](https://www.python.org/)
 
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section --><!-- ALL-CONTRIBUTORS-BADGE:END --> 
 
