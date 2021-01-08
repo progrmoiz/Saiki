@@ -49,7 +49,7 @@
  2. Go to the Saiki directory
  3. Create a new database on postgres e.g.: “SAIKI_DB”
  4. Add your db config in `settings.py`
- 5. Assuming you have Python setup, run the following commands (if you're on Windows you may use py or py -3 instead of python3 to start Python):
+ 5. Assuming you have Python setup, run the following commands (if you're on Windows you may use `py` or `py -3` instead of `python3` to start Python):
  ```
  pip3 install -r requirements.txt
  python3 manage.py makemigrations
