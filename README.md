@@ -113,7 +113,7 @@ To run the project use the following command in project dir: `python manage.py r
 
 ## Future Work Ideas
 - [ ] Currently some part of the application is build with React. Convert the front-end side with SSR React.
-- [ ] Currently some module have REST API. Create full REST API for the application.
+- [ ] Currently some module have REST API. Create full REST API for the application must include permission and authorization.
 - [ ] Add plagrism support to assignment module.
 - [ ] Intigrate Turnitin with assignment module.
 - [ ] Add support for google docs, spreadsheets and slides so user can create directly from assignment detail page.
