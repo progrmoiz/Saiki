@@ -155,7 +155,7 @@ WSGI_APPLICATION = 'saiki.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'SaikiDB_8',
+        'NAME': 'SAIKI_DB',
         'USER': 'postgres',
         'PASSWORD': '123456',
         'HOST': 'localhost',
