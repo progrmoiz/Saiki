@@ -64,6 +64,7 @@ To get this project up and running locally on your computer:
  ```
  6. Open a browser to http://127.0.0.1:8000/admin/ to open the admin site
  7. Open tab to http://127.0.0.1:8000 to see the main site.
+ 8. Change the site name via the Django Admin in the Sites app (/admin/sites/site/).
 
 ## Requirements
 To install all required modules use the following command in project dir: `pip install -r requirements.txt`
